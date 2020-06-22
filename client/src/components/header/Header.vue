@@ -1,14 +1,32 @@
 <template>
-  <h2>Header component</h2>
+  <div class="nav">
+    hola
+    <Login></Login>
+  </div>
 </template>
 
-<script>
-export default class Header extends Vue {
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import Login from '../login/Login.vue';
 
+@Component({
+  components: {
+    Login,
+  },
+})
+export default class Header extends Vue {
 }
 
 </script>
 
 <style lang="scss">
+@import './../../variables/_variables.scss';
 
+.nav {
+  background-color: $color-sp-grey;
+  height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
