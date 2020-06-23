@@ -4,9 +4,23 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>-->
+
+    <Header></Header>
     <router-view />
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import Header from '@/components/header/Header.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Header,
+  },
+};
+</script>
 
 <style lang="scss">
 @import './variables/_variables.scss';

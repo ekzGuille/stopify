@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
-    hola
-    <LoginButton></LoginButton>
+    <h3>Stopify</h3>
+    <LoginButton font-size="0.8rem" padding="8px" width="120px"></LoginButton>
   </div>
 </template>
 
@@ -22,11 +22,15 @@ export default class Header extends Vue {
 <style lang="scss">
 @import './../../variables/_variables.scss';
 
-.nav {
+div.nav {
   background-color: $color-sp-grey;
   height: 8vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+
+  h3 {
+    background-color: $color-sp-grey;
+  }
 }
 </style>

@@ -1,12 +1,28 @@
 <template>
-  <div class="login-btn">Login</div>
+  <div class="login-btn" :style="cssVariables">Iniciar sesión</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-@Component
-export default class LoginButton extends Vue {}
+@Component({
+  computed: {
+    cssVariables() {
+      return {
+        '--font-size': this.$props.fontSize,
+        '--padding': this.$props.padding,
+        '--width': this.$props.width,
+      };
+    },
+  },
+})
+export default class LoginButton extends Vue {
+  @Prop({ default: '1.1rem' }) fontSize!: string;
+
+  @Prop({ default: '12px' }) padding!: string;
+
+  @Prop({ default: '180px' }) width!: string;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -17,10 +33,9 @@ export default class LoginButton extends Vue {}
   background-color: $color-sp-light-green;
   font-weight: bold;
   border-radius: 500px;
-  // TODO: parametrizar estas propiedades por props
-  font-size: 1.1rem;
-  padding: 12px;
-  width: 110px;
+  font-size: var(--font-size);
+  padding: var(--padding);
+  width: var(--width);
 }
 
 .login-btn:hover {

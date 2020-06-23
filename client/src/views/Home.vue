@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Header></Header>
     <main>
       <div class="content">
         <span>Inicia sesión para disfurtar de todas las características</span>
@@ -12,13 +11,11 @@
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/header/Header.vue';
 import LoginButton from '@/components/login-button/LoginButton.vue';
 
 export default {
   name: 'Home',
   components: {
-    Header,
     LoginButton,
   },
 };
@@ -31,7 +28,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 92vh;
 
   div.content {
     display: flex;
