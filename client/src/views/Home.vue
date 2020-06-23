@@ -4,7 +4,7 @@
     <main>
       <div class="content">
         <span>Inicia sesión para disfurtar de todas las características</span>
-        <Login></Login>
+        <LoginButton></LoginButton>
       </div>
     </main>
   </div>
@@ -13,13 +13,13 @@
 <script>
 // @ is an alias to /src
 import Header from '@/components/header/Header.vue';
-import Login from '@/components/login/Login.vue';
+import LoginButton from '@/components/login-button/LoginButton.vue';
 
 export default {
   name: 'Home',
   components: {
     Header,
-    Login,
+    LoginButton,
   },
 };
 // https://class-component.vuejs.org/guide/class-component.html

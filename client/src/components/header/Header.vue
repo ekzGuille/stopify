@@ -1,17 +1,17 @@
 <template>
   <div class="nav">
     hola
-    <Login></Login>
+    <LoginButton></LoginButton>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Login from '../login/Login.vue';
+import LoginButton from '../login-button/LoginButton.vue';
 
 @Component({
   components: {
-    Login,
+    LoginButton,
   },
 })
 export default class Header extends Vue {
