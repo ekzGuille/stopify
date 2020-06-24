@@ -1,9 +1,15 @@
 <template>
-  <div class="login-btn" :style="cssVariables">Iniciar sesión</div>
+  <div
+    class="login-btn"
+   :style="cssVariables"
+    @click="launchLogin()">
+    Iniciar sesión
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { login } from '@/api/api';
 
 @Component({
   computed: {
@@ -13,6 +19,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
         '--padding': this.$props.padding,
         '--width': this.$props.width,
       };
+    },
+  },
+  methods: {
+    async launchLogin() {
+      await login();
+      console.log('login');
     },
   },
 })
