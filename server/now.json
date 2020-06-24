@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "stopify-api",
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.js"
+    }
+  ],
+  "alias": [
+    "stopify-api"
+  ]
+}
