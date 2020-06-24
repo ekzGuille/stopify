@@ -23,8 +23,10 @@ export default class Header extends Vue {
 @import './../../variables/_variables.scss';
 
 div.nav {
+  position: absolute;
   background-color: $color-sp-grey;
-  height: 8vh;
+  height: 65px;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
