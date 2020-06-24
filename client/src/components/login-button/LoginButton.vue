@@ -21,7 +21,7 @@ export default class LoginButton extends Vue {
 
   @Prop({ default: '12px' }) padding!: string;
 
-  @Prop({ default: '180px' }) width!: string;
+  @Prop({ default: '200px' }) width!: string;
 }
 </script>
 
