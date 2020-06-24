@@ -4,7 +4,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
-require('dotenv').config();
+// require('dotenv').config();
+const { env } = require('./config');
 
 const middlewares = require('./middlewares');
 const api = require('./api');
@@ -24,11 +25,11 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄'
+    message: '🎵🎶🎵'
   });
 });
 
-app.use('/api/v1', api);
+app.use('/api', api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);

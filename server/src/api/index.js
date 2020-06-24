@@ -1,15 +1,17 @@
 const express = require('express');
-
-const emojis = require('./emojis');
+const axios = require('axios').default;
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
   res.json({
-    message: 'API - 👋🌎🌍🌏'
+    message: 'Stopify API 🔝'
   });
 });
 
-router.use('/emojis', emojis);
-
+router.post('/login', (req, res) => {
+  res.json({
+    message: 'Login'
+  });
+});
 module.exports = router;
