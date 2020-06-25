@@ -4,10 +4,8 @@ import env from '../config';
 axios.create({});
 const BACKEND_URL = env.VUE_APP_BACKEND_ENDPOINT || 'localhost:5000';
 
-export async function login(): Promise<any> {
-  const { data }: AxiosResponse = await axios.post(`${BACKEND_URL}/api/login`);
-  console.log(data);
-  return data;
+export function login(): void {
+  window.location.href = `${BACKEND_URL}/login`;
 }
 
 export function print() {

@@ -22,9 +22,8 @@ import { login } from '@/api/api';
     },
   },
   methods: {
-    async launchLogin() {
-      await login();
-      console.log('login');
+    launchLogin() {
+      login();
     },
   },
 })
