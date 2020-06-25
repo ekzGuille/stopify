@@ -8,6 +8,9 @@ const {
   INVALID_TOKEN_ERROR, GRANT_AUTHORIZATION, GRANT_REFRESH_TOKEN
 } = spotifyConfig;
 
+const REDIRECT_URI = process.env.NODE_ENV === 'production' ? env.SPOTIFY_CALLBACK_REDIRECT : 'http://localhost:5000/callback';
+const FRONT_URL = process.env.NODE_ENV === 'production' ? env.FRONT_URL : 'http://localhost:8080/redirect';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -24,7 +27,7 @@ router.get('/login', (req, res) => {
     response_type: RESPONSE_TYPE,
     client_id: env.SPOTIFY_CLIENT_ID || '',
     scope: SCOPE,
-    redirect_uri: env.SPOTIFY_CALLBACK_REDIRECT,
+    redirect_uri: REDIRECT_URI,
     state,
   });
   res.redirect(`${env.SPOTIFY_DEV_ENDPOINT}/authorize?${params.toString()}`);
@@ -35,14 +38,14 @@ router.get('/callback', async (req, res, next) => {
   const storedState = req.cookies ? req.cookies[STATE_KEY] : null;
 
   if (state === null || state !== storedState) {
-    res.redirect(`${env.FRONT_URL}?${new URLSearchParams({ login_error: MISMATCH_STATE_ERROR }).toString()}`);
+    res.redirect(`${FRONT_URL}?${new URLSearchParams({ login_error: MISMATCH_STATE_ERROR }).toString()}`);
     // next(new Error(MISMATCH_STATE_ERROR));
   } else {
     res.clearCookie(STATE_KEY);
 
     const formParams = new URLSearchParams({
       code,
-      redirect_uri: env.SPOTIFY_CALLBACK_REDIRECT,
+      redirect_uri: REDIRECT_URI,
       grant_type: GRANT_AUTHORIZATION,
     });
     try {
@@ -64,13 +67,13 @@ router.get('/callback', async (req, res, next) => {
         console.log(getResponse.data); */
 
         // Devolver al frontal la informacion del login
-        res.redirect(`${env.FRONT_URL}?${new URLSearchParams({
+        res.redirect(`${FRONT_URL}?${new URLSearchParams({
           access_token,
           refresh_token,
         }).toString()}`);
       }
     } catch (error) {
-      res.redirect(`${env.FRONT_URL}?${new URLSearchParams({ login_error: INVALID_TOKEN_ERROR }).toString()}`);
+      res.redirect(`${FRONT_URL}?${new URLSearchParams({ login_error: INVALID_TOKEN_ERROR }).toString()}`);
       // next(new Error(INVALID_TOKEN_ERROR));
     }
   }
