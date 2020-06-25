@@ -7,3 +7,7 @@ const BACKEND_URL = process.env.NODE_ENV === 'production' ? env.VUE_APP_BACKEND_
 export function login(): void {
   window.location.href = `${BACKEND_URL}/login`;
 }
+
+export function getProfileInfo(): void {
+  console.log('WIP');
+}
