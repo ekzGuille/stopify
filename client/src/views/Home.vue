@@ -3,7 +3,7 @@
     <main>
       <div class="content">
         <span>Inicia sesión para disfurtar de todas las características</span>
-        <LoginButton></LoginButton>
+        <Button></Button>
       </div>
     </main>
   </div>
@@ -11,12 +11,12 @@
 
 <script>
 // @ is an alias to /src
-import LoginButton from '@/components/login-button/LoginButton.vue';
+import Button from '@/components/button/Button.vue';
 
 export default {
   name: 'Home',
   components: {
-    LoginButton,
+    Button,
   },
 };
 // https://class-component.vuejs.org/guide/class-component.html

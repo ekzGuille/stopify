@@ -24,6 +24,7 @@ const routes: Array<RouteConfig> = [
     path: '/redirect',
     name: 'Redirect',
     component: Redirect,
+    // redirect: '/',
   },
   {
     path: '*',
@@ -33,7 +34,7 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'history', // TODO: Mirar si con 'hash' funciona bien
   base: process.env.BASE_URL,
   routes,
 });

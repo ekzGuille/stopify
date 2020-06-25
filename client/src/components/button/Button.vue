@@ -27,7 +27,7 @@ import { login } from '@/api/api';
     },
   },
 })
-export default class LoginButton extends Vue {
+export default class Button extends Vue {
   @Prop({ default: '1.1rem' }) fontSize!: string;
 
   @Prop({ default: '12px' }) padding!: string;

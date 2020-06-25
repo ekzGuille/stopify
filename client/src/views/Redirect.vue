@@ -1,5 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <LoginRedirect></LoginRedirect>
 </template>
+
+<script lang="ts">
+import LoginRedirect from '@/components/login-redirect/LoginRedirect.vue';
+
+export default {
+  name: 'Redirect',
+  components: {
+    LoginRedirect,
+  },
+};
+</script>
