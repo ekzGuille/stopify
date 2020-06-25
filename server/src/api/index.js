@@ -35,8 +35,8 @@ router.get('/callback', async (req, res, next) => {
   const storedState = req.cookies ? req.cookies[STATE_KEY] : null;
 
   if (state === null || state !== storedState) {
-    // res.redirect(`/#${new URLSearchParams({ error: MISMATCH_STATE_ERROR }).toString()}`);
-    next(new Error(MISMATCH_STATE_ERROR));
+    res.redirect(`${env.FRONT_URL}?${new URLSearchParams({ login_error: MISMATCH_STATE_ERROR }).toString()}`);
+    // next(new Error(MISMATCH_STATE_ERROR));
   } else {
     res.clearCookie(STATE_KEY);
 
@@ -70,8 +70,8 @@ router.get('/callback', async (req, res, next) => {
         }).toString()}`);
       }
     } catch (error) {
-      // res.redirect(`/#${new URLSearchParams({ error: INVALID_TOKEN_ERROR }).toString()}`);
-      next(new Error(INVALID_TOKEN_ERROR));
+      res.redirect(`${env.FRONT_URL}?${new URLSearchParams({ login_error: INVALID_TOKEN_ERROR }).toString()}`);
+      // next(new Error(INVALID_TOKEN_ERROR));
     }
   }
 });
