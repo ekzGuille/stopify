@@ -15,5 +15,24 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'max-len': ['error', { code: 120 }],
+    'no-param-reassign': 1,
+    'no-shadow': 1,
+    'class-methods-use-this': 0,
+    // 'class-methods-use-this': ['error', {
+    //   exceptMethods: [
+    //     // vue lifecycle methods
+    //     'beforeCreate',
+    //     'created',
+    //     'beforeMount',
+    //     'mounted',
+    //     'beforeUpdate',
+    //     'updated',
+    //     'activated',
+    //     'deactivated',
+    //     'beforeDestroy',
+    //     'destroyed',
+    //     'errorCaptured',
+    //   ],
+    // }],
   },
 };
