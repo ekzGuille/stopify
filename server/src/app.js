@@ -12,9 +12,12 @@ const api = require('./api');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
+// 10 peticiones/min
 const limit = rateLimit({
-  windowMs: 2 * 60 * 1000,
-  max: 20,
+  windowMs: 60 * 1000,
+  max: 10,
 });
 
 app.use(limit);
@@ -24,13 +27,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.json({
-    message: '🎵🎶🎵'
-  });
-});
-
-app.use('/api', api);
+app.use('/', api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);

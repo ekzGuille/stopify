@@ -20,10 +20,10 @@ const spotifyConfig = require('./spotify');
  * @typedef ENV
  * @property {string} SPOTIFY_CLIENT_ID App client id
  * @property {string} SPOTIFY_CLIENT_ID_SECRET App clien id **SECRET**
- * @property {string} SPOTIFY_CALLBACK_HOST Callback host
- * @property {string} SPOTIFY_CALLBACK_ENDPOINT Callback endpoint
+ * @property {string} SPOTIFY_CALLBACK_REDIRECT Callback redirect url
  * @property {string} SPOTIFY_DEV_ENDPOINT Spotify account developers endpoint
  * @property {string} SPOTIFY_API_ENDPOINT Spotify api developers endpoint
+ * @property {string} FRONT_URL Front redirect
  */
 
 /**
