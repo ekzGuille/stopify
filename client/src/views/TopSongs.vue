@@ -1,13 +1,12 @@
 <template>
-<div class="not-found">
-  <div class="error-title">Ooops😳</div>
-  <div class="error-descriptcion">aquí no hay nada...</div>
-</div>
+  <div class="wrapper">
+    <div class="content">🎶💯</div>
+  </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'NotFound',
+  name: 'TopSongs',
 };
 </script>
 
@@ -18,17 +17,14 @@ export default {
     justify-content: center;
     height: 100vh;
 
-    div.not-found {
+    div.wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
 
       div {
-        &.error-title {
-          font-size: 3rem;
-        }
-        &.error-descriptcion {
-          font-size: 2rem;
+        &.content {
+          font-size: 4rem;
         }
         height: 15vmax;
       }

@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
-import Redirect from '../views/Redirect.vue';
-import NotFound from '../views/NotFound.vue';
+import Home from '@/views/Home.vue';
+import Redirect from '@/views/Redirect.vue';
+import NotFound from '@/views/NotFound.vue';
+import TopSongs from '@/views/TopSongs.vue';
+import Me from '@/views/Me.vue';
 
 Vue.use(VueRouter);
 
@@ -25,6 +27,16 @@ const routes: Array<RouteConfig> = [
     name: 'Redirect',
     component: Redirect,
     // redirect: '/',
+  },
+  {
+    path: '/top',
+    name: 'TopSongs',
+    component: TopSongs,
+  },
+  {
+    path: '/me',
+    name: 'Me',
+    component: Me,
   },
   {
     path: '*',

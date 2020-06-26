@@ -27,7 +27,7 @@ const actions = {
   storeRefreshToken({ commit }: VuexCommit, refreshToken: string) {
     commit('setRefreshToken', refreshToken);
   },
-  storeIsLoged({ commit }: VuexCommit, isLogged: string) {
+  storeIsLogged({ commit }: VuexCommit, isLogged: string) {
     commit('setLogged', isLogged);
   },
 };

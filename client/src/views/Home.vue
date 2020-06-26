@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <main>
-      <div v-if="isLogged" class="content">
+      <div v-if="getIsLogged" class="content">
         <h2>WIP</h2>
           <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
              srcset="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif">
       </div>
-      <div v-if="!isLogged" class="no-logged">
-        <span>Inicia sesión para disfurtar de todas las características</span>
+      <div v-if="!getIsLogged" class="no-logged">
+        <span>Inicia sesión para disfrutar de todas las características</span>
         <Button></Button>
       </div>
     </main>
@@ -17,23 +17,17 @@
 <script>
 // @ is an alias to /src
 import Button from '@/components/button/Button.vue';
-import { mapMutations, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
   components: {
     Button,
   },
-  methods: {
-    ...mapMutations('userCredentials', ['setLogged']),
-    getUser() {
-      // console.log('getting user...');
-    },
+  computed: {
+    ...mapGetters('userCredentials', ['getIsLogged']),
   },
-  computed: mapState('userCredentials', ['isLogged']),
-  mounted() {
-    this.getUser();
-    // console.log(`Usuario loggeado: ${this.isLogged}`);
+  methods: {
   },
 };
 // https://class-component.vuejs.org/guide/class-component.html

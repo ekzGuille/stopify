@@ -1,7 +1,7 @@
 <template>
   <div class="redirect">
-    <div class="login-title" v-if="isLogged">¡Login satisfactorio!</div>
-    <div class="login-title" v-else>Ha habido un problema</div>
+    <div class="login-title" v-if="getIsLogged">¡Login satisfactorio!</div>
+    <div class="login-title" v-if="!getIsLogged">Ha habido un problema</div>
     <div class="login-description">Volviendo al inicio...</div>
   </div>
 </template>
@@ -10,48 +10,39 @@
 
 import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
-import {
-  mapState, mapActions, mapGetters, mapMutations,
-} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 @Component({
-  computed: mapState('userCredentials', ['accessToken', 'refreshToken', 'isLogged']),
-  methods: mapMutations('userCredentials', ['setAccessToken', 'setRefreshToken', 'setLogged']),
+  computed: {
+    ...mapGetters('userCredentials', ['getIsLogged']),
+  },
+  methods: {
+    ...mapActions('userCredentials', ['storeAccessToken', 'storeRefreshToken', 'storeIsLogged']),
+  },
 })
 export default class Redirect extends Vue {
-  accessToken!: string;
+  storeAccessToken!: (_: string) => void;
 
-  refreshToken!: string;
+  storeRefreshToken!: (_: string) => void;
 
-  isLogged!: boolean;
+  storeIsLogged!: (_: boolean) => void;
 
-  setAccessToken!: (_: string) => void;
-
-  setRefreshToken!: (_: string) => void;
-
-  setLogged!: (_: boolean) => void;
-
-  getUrlAndStore(key: string, expectedType: 'boolean' | 'string', vuexSetter: Function) {
-    let storeData;
-    if (expectedType === 'string') {
-      storeData = new URLSearchParams(window.location.search).get(key);
-    } else if (expectedType === 'boolean') {
-      storeData = !new URLSearchParams(window.location.search).get(key);
-    }
-    localStorage.removeItem(key);
-    if (storeData) {
-      localStorage.setItem(key, storeData.toString());
-      vuexSetter(storeData);
-    }
+  getUrlAndStore(key: string, vuexSetter: Function, alias?: string) {
+    const storeData = new URLSearchParams(window.location.search).get(key) || 'null';
+    localStorage.removeItem(alias || key);
+    localStorage.setItem(alias || key, storeData);
+    vuexSetter(storeData);
   }
 
   mounted() {
     // TODO: Gestionar si hay algun error al logearse y que redirija al login logeado o no
     // https://blog.sqreen.com/authentication-best-practices-vue/
 
-    this.getUrlAndStore('access_token', 'string', this.setAccessToken);
-    this.getUrlAndStore('refresh_token', 'string', this.setRefreshToken);
-    this.getUrlAndStore('login_error', 'boolean', this.setLogged);
+    this.getUrlAndStore('access_token', this.storeAccessToken);
+    this.getUrlAndStore('refresh_token', this.storeRefreshToken);
+    this.getUrlAndStore('login_error', (data: null | boolean) => {
+      this.storeIsLogged(!!data);
+    });
 
     setTimeout(async () => {
       if (router.currentRoute.name !== 'Home') {
