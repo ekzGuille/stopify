@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
+<!--    <div id="nav">-->
+<!--      <router-link to="/">Home</router-link> |-->
+<!--      <router-link to="/about">About</router-link>-->
+<!--    </div>-->
 
     <Header></Header>
     <router-view />
@@ -13,11 +13,19 @@
 <script>
 // @ is an alias to /src
 import Header from '@/components/header/Header.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Header,
+  },
+  methods: {
+    ...mapActions('userCredentials', ['storeIsLogged']),
+  },
+  mounted() {
+    this.storeIsLogged(!!localStorage.getItem('login_error') && !!localStorage.getItem('access_token'));
+    console.log('user loaded');
   },
 };
 </script>

@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+import Home from '@/views/Home.vue';
+import Redirect from '@/views/Redirect.vue';
+import NotFound from '@/views/NotFound.vue';
+import TopSongs from '@/views/TopSongs.vue';
+import Me from '@/views/Me.vue';
 
 Vue.use(VueRouter);
 
@@ -18,10 +22,31 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/redirect',
+    name: 'Redirect',
+    component: Redirect,
+    // redirect: '/',
+  },
+  {
+    path: '/top',
+    name: 'TopSongs',
+    component: TopSongs,
+  },
+  {
+    path: '/me',
+    name: 'Me',
+    component: Me,
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
+  },
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'history', // TODO: Mirar si con 'hash' funciona bien
   base: process.env.BASE_URL,
   routes,
 });

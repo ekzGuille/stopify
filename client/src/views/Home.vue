@@ -1,9 +1,14 @@
 <template>
   <div class="home">
     <main>
-      <div class="content">
-        <span>Inicia sesión para disfurtar de todas las características</span>
-        <LoginButton></LoginButton>
+      <div v-if="getIsLogged" class="content">
+        <h2>WIP</h2>
+          <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
+             srcset="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif">
+      </div>
+      <div v-if="!getIsLogged" class="no-logged">
+        <span>Inicia sesión para disfrutar de todas las características</span>
+        <Button></Button>
       </div>
     </main>
   </div>
@@ -11,12 +16,18 @@
 
 <script>
 // @ is an alias to /src
-import LoginButton from '@/components/login-button/LoginButton.vue';
+import Button from '@/components/button/Button.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
   components: {
-    LoginButton,
+    Button,
+  },
+  computed: {
+    ...mapGetters('userCredentials', ['getIsLogged']),
+  },
+  methods: {
   },
 };
 // https://class-component.vuejs.org/guide/class-component.html
@@ -30,7 +41,15 @@ main {
   justify-content: center;
   height: 100vh;
 
-  div.content {
+    div.content {
+      //TODO: Borrrar
+      img {
+        margin: 5%;
+        width: 80%;
+      }
+    }
+
+    div.no-logged {
     display: flex;
     flex-direction: column;
     align-items: center;

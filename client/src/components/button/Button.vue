@@ -1,27 +1,35 @@
 <template>
-  <div class="login-btn" :style="cssVariables">Iniciar sesión</div>
+  <div
+    class="login-btn"
+   :style="cssVariables"
+    @click="launchLogin">
+    Iniciar sesión
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { login } from '@/api/api';
 
-@Component({
-  computed: {
-    cssVariables() {
-      return {
-        '--font-size': this.$props.fontSize,
-        '--padding': this.$props.padding,
-        '--width': this.$props.width,
-      };
-    },
-  },
-})
-export default class LoginButton extends Vue {
+@Component
+export default class Button extends Vue {
   @Prop({ default: '1.1rem' }) fontSize!: string;
 
   @Prop({ default: '12px' }) padding!: string;
 
   @Prop({ default: '200px' }) width!: string;
+
+  launchLogin() {
+    login();
+  }
+
+  get cssVariables() {
+    return {
+      '--font-size': this.$props.fontSize,
+      '--padding': this.$props.padding,
+      '--width': this.$props.width,
+    };
+  }
 }
 </script>
 
