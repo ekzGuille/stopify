@@ -6,24 +6,25 @@
 import { Component, Vue } from 'vue-property-decorator';
 
   @Component
-export default class Search extends Vue {
-
+export default class Loading extends Vue {
 }
 
 </script>
 
-<style lang="scss">
-  .loading {
+<style lang="scss" scoped>
+  @import '../../variables/_variables.scss';
+
+  div.loading {
     display: inline-block;
     border: 4px solid rgb(230, 230, 230);
-    border-left-color: #7983ff;
+    border-left-color: $color-sp-accent-green;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: donut-spin 1.2s linear infinite;
+    width: 30px !important;
+    height: 30px !important;
+    animation: spin 1.5s linear infinite;
   }
 
-  @keyframes donut-spin {
+  @keyframes spin {
     0% {
       transform: rotate(0deg);
     }

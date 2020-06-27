@@ -3,6 +3,7 @@
     <div class="login-title" v-if="getIsLogged">¡Login satisfactorio!</div>
     <div class="login-title" v-if="!getIsLogged">Ha habido un problema</div>
     <div class="login-description">Volviendo al inicio...</div>
+    <Loading></Loading>
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
+import Loading from '@/components/loading/Loading.vue';
 
 @Component({
   computed: {
@@ -18,6 +20,9 @@ import { mapActions, mapGetters } from 'vuex';
   },
   methods: {
     ...mapActions('userCredentials', ['storeAccessToken', 'storeRefreshToken', 'storeIsLogged']),
+  },
+  components: {
+    Loading,
   },
 })
 export default class Redirect extends Vue {
@@ -48,7 +53,7 @@ export default class Redirect extends Vue {
       if (router.currentRoute.name !== 'Home') {
         await router.push({ name: 'Home' });
       }
-    }, 1000);
+    }, 1500);
   }
 }
 </script>
