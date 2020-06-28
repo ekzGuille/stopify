@@ -23,10 +23,6 @@ export default {
   methods: {
     ...mapActions('userCredentials', ['storeIsLogged']),
   },
-  mounted() {
-    this.storeIsLogged(!!localStorage.getItem('login_error') && !!localStorage.getItem('access_token'));
-    console.log('user loaded');
-  },
 };
 </script>
 
