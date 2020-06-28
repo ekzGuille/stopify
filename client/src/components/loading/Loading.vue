@@ -16,7 +16,8 @@ export default class Loading extends Vue {
 
   div.loading {
     display: inline-block;
-    border: 4px solid rgb(230, 230, 230);
+    /*border: 4px solid rgb(230, 230, 230);*/
+    border: 4px solid $color-sp-light-grey;
     border-left-color: $color-sp-accent-green;
     border-radius: 50%;
     width: 30px !important;
