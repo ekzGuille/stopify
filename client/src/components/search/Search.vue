@@ -1,9 +1,9 @@
 <template>
-  <h2>Searc component</h2>
+  <h2>Search component</h2>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Search extends Vue {
