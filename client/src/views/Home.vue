@@ -8,7 +8,14 @@
       </div>
       <div v-if="!getIsLogged" class="no-logged">
         <span>Inicia sesión para disfrutar de todas las características</span>
-        <Button></Button>
+        <Button
+          font-size="1.1rem"
+          padding="12px"
+          width="200px"
+          bg-color="#1db954"
+          text-value="iniciar sesión"
+          :action="makeLogin"
+        ></Button>
       </div>
     </main>
   </div>
@@ -18,6 +25,7 @@
 // @ is an alias to /src
 import Button from '@/components/button/Button.vue';
 import { mapGetters } from 'vuex';
+import { login } from '@/api';
 
 export default {
   name: 'Home',
@@ -28,6 +36,9 @@ export default {
     ...mapGetters('userCredentials', ['getIsLogged']),
   },
   methods: {
+    makeLogin() {
+      login();
+    },
   },
 };
 // https://class-component.vuejs.org/guide/class-component.html

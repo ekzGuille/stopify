@@ -2,22 +2,30 @@
   <div
     class="login-btn"
    :style="cssVariables"
-    @click="launchLogin">
-    Iniciar sesión
+    @click="action">
+    {{ textValue }}
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { login } from '@/api/api';
+import { login } from '@/api';
 
 @Component
 export default class Button extends Vue {
-  @Prop({ default: '1.1rem' }) fontSize!: string;
+  @Prop() fontSize!: string;
 
-  @Prop({ default: '12px' }) padding!: string;
+  @Prop() padding!: string;
 
-  @Prop({ default: '200px' }) width!: string;
+  @Prop() width!: string;
+
+  @Prop() bgColor!: string;
+
+  @Prop() textValue!: string;
+
+  @Prop() border!: string;
+
+  @Prop() action!: Function;
 
   launchLogin() {
     login();
@@ -28,6 +36,8 @@ export default class Button extends Vue {
       '--font-size': this.$props.fontSize,
       '--padding': this.$props.padding,
       '--width': this.$props.width,
+      '--bg-color': this.$props.bgColor,
+      '--border': this.$props.border,
     };
   }
 }
@@ -38,9 +48,10 @@ export default class Button extends Vue {
 
 .login-btn {
   text-transform: uppercase;
-  background-color: $color-sp-light-green;
+  background-color: var(--bg-color);
   font-weight: bold;
   border-radius: 500px;
+  border: var(--border);
   font-size: var(--font-size);
   padding: var(--padding);
   width: var(--width);

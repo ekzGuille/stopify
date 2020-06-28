@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <h3 @click="goToLogin" class="header-name">Stopify</h3>
+    <h3 @click="goHome" class="header-name">Stopify</h3>
     <div v-if="getIsLogged" class="header-content">
       <router-link class="header-item" to="/top">
         Mi top
@@ -10,7 +10,23 @@
       </router-link>
     </div>
     <div class="button-wrapper">
-      <Button v-if="!getIsLogged" font-size="0.8rem" padding="8px" width="120px"></Button>
+      <Button
+        v-if="getIsLogged"
+        font-size="0.8rem"
+        padding="8px"
+        width="120px"
+        border="2px solid #fff"
+        text-value="Cerrar sesión"
+        :action="makeLogout"
+      ></Button>
+      <Button
+        v-if="!getIsLogged"
+        font-size="0.8rem"
+        padding="8px" width="120px"
+        bg-color="#1db954"
+        text-value="Iniciar sesión"
+        :action="makeLogin"
+      ></Button>
     </div>
   </div>
 </template>
@@ -18,7 +34,8 @@
 <script lang="ts">
 import router from '@/router';
 import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import { login } from '@/api';
 import Button from '../button/Button.vue';
 
 @Component({
@@ -28,12 +45,25 @@ import Button from '../button/Button.vue';
   computed: {
     ...mapGetters('userCredentials', ['getIsLogged']),
   },
+  methods: {
+    ...mapActions('userCredentials', ['logOut']),
+  },
 })
 export default class Header extends Vue {
-  async goToLogin() {
+  logOut!: () => void;
+
+  async goHome() {
     if (router.currentRoute.name !== 'Home') {
       await router.push({ name: 'Home' });
     }
+  }
+
+  makeLogin() {
+    login();
+  }
+
+  makeLogout() {
+    this.logOut();
   }
 }
 
@@ -63,12 +93,14 @@ export default class Header extends Vue {
       display: flex;
       justify-content: flex-start;
 
-      &:hover {
-        cursor: pointer;
-      }
       a {
         text-decoration: none;
         color: $color-white;
+        text-shadow: 0px 0px 5px $color-black;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
       a.router-link-exact-active {
         font-weight: bold;
