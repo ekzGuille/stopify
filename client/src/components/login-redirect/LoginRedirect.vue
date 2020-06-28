@@ -13,40 +13,33 @@ import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
+import Constants from '@/utils/constants';
 
 @Component({
   computed: {
     ...mapGetters('userCredentials', ['getIsLogged']),
   },
   methods: {
-    ...mapActions('userCredentials', ['storeAccessToken', 'storeRefreshToken', 'storeIsLogged']),
+    ...mapActions('userCredentials', ['storeLocalData']),
   },
   components: {
     Loading,
   },
 })
 export default class Redirect extends Vue {
-  storeAccessToken!: (_: string) => void;
-
-  storeRefreshToken!: (_: string) => void;
-
-  storeIsLogged!: (_: boolean) => void;
-
-  getUrlAndStore(key: string, vuexSetter: Function, alias?: string) {
-    const storeData = new URLSearchParams(window.location.search).get(key) || 'null';
-    localStorage.removeItem(alias || key);
-    localStorage.setItem(alias || key, storeData);
-    vuexSetter(storeData);
-  }
+  storeLocalData!: (
+    { accessToken, refreshToken, loginError }:
+    { accessToken?: string; refreshToken?: string; loginError?: string }
+  ) => void;
 
   mounted() {
     // TODO: Gestionar si hay algun error al logearse y que redirija al login logeado o no
     // https://blog.sqreen.com/authentication-best-practices-vue/
 
-    this.getUrlAndStore('access_token', this.storeAccessToken);
-    this.getUrlAndStore('refresh_token', this.storeRefreshToken);
-    this.getUrlAndStore('login_error', (data: null | boolean) => {
-      this.storeIsLogged(!!data);
+    this.storeLocalData({
+      accessToken: Constants.accessToken,
+      refreshToken: Constants.refreshToken,
+      loginError: Constants.loginError,
     });
 
     setTimeout(async () => {
