@@ -52,29 +52,22 @@ export default class Redirect extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  * {
+  div.redirect {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
 
-    div.redirect {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    div {
+      margin: 1%;
+      &.login-title {
+        font-size: 3rem;
+      }
 
-      div {
-        &.login-title {
-          font-size: 3rem;
-        }
-
-        &.login-description {
-          font-size: 2rem;
-        }
-
-        height: 15vmax;
+      &.login-description {
+        font-size: 2rem;
       }
     }
   }
-
 </style>

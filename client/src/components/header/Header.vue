@@ -14,7 +14,7 @@
         v-if="getIsLogged"
         font-size="0.8rem"
         padding="8px"
-        width="120px"
+        width="150px"
         border="2px solid #fff"
         :action="makeLogout">
         Cerrar sesión
@@ -22,7 +22,8 @@
       <Button
         v-if="!getIsLogged"
         font-size="0.8rem"
-        padding="8px" width="120px"
+        padding="8px"
+        width="150px"
         bg-color="#1db954"
         :action="makeLogin">
         Iniciar sesión
@@ -78,7 +79,7 @@ export default class Header extends Vue {
   div.nav {
     position: absolute;
     height: 65px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,5 +123,4 @@ export default class Header extends Vue {
     margin: 0 4%;
   }
 }
-
 </style>

@@ -41,16 +41,21 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
 * {
-  background-color: $color-sp-background-dark;
-  color: $color-white;
   font-family: CircularStd-Medium, Helvetica Neue, Helvetica,
   Arial, Hiragino Kaku Gothic Pro, Meiryo,MS Gothic, sans-serif;
+  color: $color-white;
+  box-sizing: border-box;
+  background-color: $color-sp-background-dark;
   margin: 0;
   padding: 0;
+}
+
+body {
   -moz-user-select: none;
   -webkit-user-select: none;
+  width: 100vw;
+  height: 100vh;
 }
 
 #app {
@@ -59,11 +64,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $color-vue-dark;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
-#nav {
+/*#nav {
   padding: 30px;
 
   a {
@@ -74,5 +79,5 @@ export default {
       color: $color-vue-green;
     }
   }
-}
+}*/
 </style>

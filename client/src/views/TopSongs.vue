@@ -11,24 +11,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  * {
+  div.wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
 
-    div.wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      div {
-        &.content {
-          font-size: 4rem;
-        }
-        height: 15vmax;
+    div {
+      &.content {
+        font-size: 4rem;
       }
     }
   }
-
 </style>

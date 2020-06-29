@@ -12,27 +12,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  * {
+  div.not-found {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 
-    div.not-found {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      div {
-        &.error-title {
-          font-size: 3rem;
-        }
-        &.error-descriptcion {
-          font-size: 2rem;
-        }
-        height: 15vmax;
+    div {
+      margin: 1%;
+      &.error-title {
+        font-size: 3rem;
+      }
+      &.error-descriptcion {
+        font-size: 2rem;
       }
     }
   }
-
 </style>

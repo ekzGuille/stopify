@@ -1,11 +1,6 @@
 <template>
   <div class="home">
     <main>
-      <div v-if="getIsLogged" class="content">
-        <h2>WIP</h2>
-          <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
-             srcset="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif">
-      </div>
       <div v-if="!getIsLogged" class="no-logged">
         <span>Inicia sesión para disfrutar de todas las características</span>
         <Button
@@ -16,6 +11,11 @@
           :action="makeLogin">
           Iniciar sesión
         </Button>
+      </div>
+      <div v-if="getIsLogged" class="content">
+        <h2>WIP</h2>
+          <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
+             srcset="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif">
       </div>
     </main>
   </div>
@@ -45,12 +45,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-main {
+.home {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
     div.content {
       //TODO: Borrrar
