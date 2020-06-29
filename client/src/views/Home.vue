@@ -33,7 +33,7 @@ export default {
     Button,
   },
   computed: {
-    ...mapGetters('userCredentials', ['getIsLogged']),
+    ...mapGetters('credentials', ['getIsLogged']),
   },
   methods: {
     makeLogin() {

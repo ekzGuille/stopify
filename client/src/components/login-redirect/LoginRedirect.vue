@@ -17,10 +17,10 @@ import Constants from '@/utils/constants';
 
 @Component({
   computed: {
-    ...mapGetters('userCredentials', ['getIsLogged']),
+    ...mapGetters('credentials', ['getIsLogged']),
   },
   methods: {
-    ...mapActions('userCredentials', ['storeLocalData']),
+    ...mapActions('credentials', ['storeLocalData']),
   },
   components: {
     Loading,

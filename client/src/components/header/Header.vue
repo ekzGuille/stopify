@@ -44,10 +44,10 @@ import Button from '../button/Button.vue';
     Button,
   },
   computed: {
-    ...mapGetters('userCredentials', ['getIsLogged']),
+    ...mapGetters('credentials', ['getIsLogged']),
   },
   methods: {
-    ...mapActions('userCredentials', ['logOut']),
+    ...mapActions('credentials', ['logOut']),
   },
 })
 export default class Header extends Vue {

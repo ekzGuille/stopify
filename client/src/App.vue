@@ -21,7 +21,7 @@ export default {
     Header,
   },
   methods: {
-    ...mapActions('userCredentials', ['storeIsLogged']),
+    ...mapActions('credentials', ['storeIsLogged']),
   },
 };
 </script>

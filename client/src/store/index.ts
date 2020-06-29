@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import credentials from './credentials';
+import _credentials from './credentials';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    userCredentials: {
+    credentials: {
       namespaced: true,
-      ...credentials,
+      ..._credentials,
     },
   },
 });
