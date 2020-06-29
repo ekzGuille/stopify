@@ -13,9 +13,9 @@
           padding="12px"
           width="200px"
           bg-color="#1db954"
-          text-value="iniciar sesión"
-          :action="makeLogin"
-        ></Button>
+          :action="makeLogin">
+          Iniciar sesión
+        </Button>
       </div>
     </main>
   </div>

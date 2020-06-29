@@ -16,17 +16,17 @@
         padding="8px"
         width="120px"
         border="2px solid #fff"
-        text-value="Cerrar sesión"
-        :action="makeLogout"
-      ></Button>
+        :action="makeLogout">
+        Cerrar sesión
+      </Button>
       <Button
         v-if="!getIsLogged"
         font-size="0.8rem"
         padding="8px" width="120px"
         bg-color="#1db954"
-        text-value="Iniciar sesión"
-        :action="makeLogin"
-      ></Button>
+        :action="makeLogin">
+        Iniciar sesión
+      </Button>
     </div>
   </div>
 </template>

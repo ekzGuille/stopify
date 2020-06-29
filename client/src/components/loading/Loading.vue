@@ -20,6 +20,8 @@ export default class Loading extends Vue {
     border: 4px solid $color-sp-light-grey;
     border-left-color: $color-sp-accent-green;
     border-radius: 50%;
+    // width: 30px;
+    // height: 30px;
     width: 30px !important;
     height: 30px !important;
     animation: spin 1.5s linear infinite;

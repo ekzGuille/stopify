@@ -3,7 +3,7 @@
     class="login-btn"
    :style="cssVariables"
     @click="action">
-    {{ textValue }}
+    <slot/>
   </div>
 </template>
 
@@ -20,8 +20,6 @@ export default class Button extends Vue {
   @Prop() width!: string;
 
   @Prop() bgColor!: string;
-
-  @Prop() textValue!: string;
 
   @Prop() border!: string;
 
