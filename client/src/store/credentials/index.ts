@@ -1,5 +1,6 @@
 import { getUrlData } from '@/utils';
 import Constants from '@/utils/constants';
+import BACKEND_URL from '@/api';
 
 interface VuexStateCredential {
   accessToken: string;
@@ -14,7 +15,8 @@ interface VuexCommit {
 const state = {
   accessToken: localStorage.getItem('access_token') || '',
   refreshToken: localStorage.getItem('refresh_token') || '',
-  isLogged: !!localStorage.getItem('login_error') || false,
+  isLogged: !!localStorage.getItem('access_token')
+    || !!localStorage.getItem('login_error') || false,
 };
 
 const getters = {
@@ -35,15 +37,21 @@ const actions = {
   },
   storeLocalData({ commit }: VuexCommit, { accessToken, refreshToken, loginError }:
     { accessToken?: string; refreshToken?: string; loginError?: string }) {
+    let loginChecker = null;
     if (accessToken) {
+      loginChecker = getUrlData(accessToken);
       commit('setAccessToken', getUrlData(accessToken));
     }
     if (refreshToken) {
       commit('setRefreshToken', getUrlData(refreshToken));
     }
     if (loginError) {
-      commit('setLogged', !!getUrlData(loginError));
+      const isLogged = getUrlData(loginError) || !!loginChecker;
+      commit('setLogged', isLogged);
     }
+  },
+  logIn() {
+    window.location.href = `${BACKEND_URL}/login`;
   },
   logOut({ commit }: VuexCommit) {
     localStorage.removeItem(Constants.accessToken);

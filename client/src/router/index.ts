@@ -1,12 +1,29 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import VueRouter, { NavigationGuardNext, Route, RouteConfig } from 'vue-router';
 import Home from '@/views/Home.vue';
 import Redirect from '@/views/Redirect.vue';
 import NotFound from '@/views/NotFound.vue';
 import TopSongs from '@/views/TopSongs.vue';
 import Me from '@/views/Me.vue';
+import store from '@/store';
 
 Vue.use(VueRouter);
+
+const checkIfAuthenticated = (to: Route, from: Route, next: NavigationGuardNext<Vue>) => {
+  if (store.getters['credentials/getIsLogged']) {
+    next();
+    return;
+  }
+  next('/');
+};
+
+const checkIfNotAuthenticated = (to: Route, from: Route, next: NavigationGuardNext<Vue>) => {
+  if (store.getters['credentials/getIsLogged']) {
+    next('/');
+    return;
+  }
+  next();
+};
 
 const routes: Array<RouteConfig> = [
   {
@@ -15,28 +32,22 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-  {
     path: '/redirect',
     name: 'Redirect',
     component: Redirect,
-    // redirect: '/',
+    beforeEnter: checkIfNotAuthenticated,
   },
   {
     path: '/top',
     name: 'TopSongs',
     component: TopSongs,
+    beforeEnter: checkIfAuthenticated,
   },
   {
     path: '/me',
     name: 'Me',
     component: Me,
+    beforeEnter: checkIfAuthenticated,
   },
   {
     path: '*',

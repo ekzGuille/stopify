@@ -16,7 +16,7 @@
         padding="8px"
         width="150px"
         border="2px solid #fff"
-        :action="makeLogout">
+        :action="logOut">
         Cerrar sesión
       </Button>
       <Button
@@ -25,7 +25,7 @@
         padding="8px"
         width="150px"
         bg-color="#1db954"
-        :action="makeLogin">
+        :action="logIn">
         Iniciar sesión
       </Button>
     </div>
@@ -36,7 +36,6 @@
 import router from '@/router';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
-import { login } from '@/api';
 import Button from '../button/Button.vue';
 
 @Component({
@@ -47,24 +46,14 @@ import Button from '../button/Button.vue';
     ...mapGetters('credentials', ['getIsLogged']),
   },
   methods: {
-    ...mapActions('credentials', ['logOut']),
+    ...mapActions('credentials', ['logOut', 'logIn']),
   },
 })
 export default class Header extends Vue {
-  logOut!: () => void;
-
   async goHome() {
     if (router.currentRoute.name !== 'Home') {
       await router.push({ name: 'Home' });
     }
-  }
-
-  makeLogin() {
-    login();
-  }
-
-  makeLogout() {
-    this.logOut();
   }
 }
 
@@ -97,7 +86,7 @@ export default class Header extends Vue {
       a {
         text-decoration: none;
         color: $color-white;
-        text-shadow: 0px 0px 5px $color-black;
+        text-shadow: 0 0 5px $color-black;
 
         &:hover {
           cursor: pointer;
@@ -114,10 +103,6 @@ export default class Header extends Vue {
         cursor: pointer;
       }
     }
-
-  .button-wrapper {
-    min-width: 130px;
-  }
 
   .button-wrapper, .header-name {
     margin: 0 4%;

@@ -1,7 +1,9 @@
 export function getUrlData(key: string): string {
-  const data = new URLSearchParams(window.location.search).get(key) || 'null';
+  const data = new URLSearchParams(window.location.search).get(key) || '';
   localStorage.removeItem(key);
-  localStorage.setItem(key, data);
+  if (data) {
+    localStorage.setItem(key, data);
+  }
   return data;
 }
 

@@ -15,13 +15,12 @@ export default class Loading extends Vue {
 
   div.loading {
     display: inline-block;
-    // border: 4px solid rgb(230, 230, 230);
-    border: 4px solid $color-sp-light-grey;
+    border: 4px solid $color-sp-background-dark;
     border-left-color: $color-sp-accent-green;
     border-radius: 50%;
     width: 35px;
     height: 35px;
-    animation: spin 1.5s linear infinite;
+    animation: spin 1.5s cubic-bezier(0.15, 0.51, 0.74, 0.2) infinite;
   }
 
   @keyframes spin {

@@ -17,7 +17,7 @@ import Constants from '@/utils/constants';
 
 @Component({
   computed: {
-    ...mapGetters('credentials', ['getIsLogged']),
+    ...mapGetters('credentials', ['getIsLogged', 'getAccessToken']),
   },
   methods: {
     ...mapActions('credentials', ['storeLocalData']),

@@ -8,7 +8,7 @@
           padding="12px"
           width="200px"
           bg-color="#1db954"
-          :action="makeLogin">
+          :action="logIn">
           Iniciar sesión
         </Button>
       </div>
@@ -24,8 +24,7 @@
 <script>
 // @ is an alias to /src
 import Button from '@/components/button/Button.vue';
-import { mapGetters } from 'vuex';
-import { login } from '@/api';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Home',
@@ -36,9 +35,7 @@ export default {
     ...mapGetters('credentials', ['getIsLogged']),
   },
   methods: {
-    makeLogin() {
-      login();
-    },
+    ...mapActions('credentials', ['logIn']),
   },
 };
 // https://class-component.vuejs.org/guide/class-component.html

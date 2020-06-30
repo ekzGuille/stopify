@@ -9,7 +9,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { login } from '@/api';
 
 @Component
 export default class Button extends Vue {
@@ -24,10 +23,6 @@ export default class Button extends Vue {
   @Prop() border!: string;
 
   @Prop() action!: Function;
-
-  launchLogin() {
-    login();
-  }
 
   get cssVariables() {
     return {
