@@ -16,7 +16,7 @@
         padding="8px"
         width="150px"
         border="2px solid #fff"
-        :action="logOut">
+        :action="logout">
         Cerrar sesión
       </Button>
       <Button
@@ -50,13 +50,19 @@ import Button from '../button/Button.vue';
   },
 })
 export default class Header extends Vue {
+  logOut!: () => void;
+
   async goHome() {
     if (router.currentRoute.name !== 'Home') {
       await router.push({ name: 'Home' });
     }
   }
-}
 
+  async logout() {
+    this.logOut();
+    await router.go(0);
+  }
+}
 </script>
 
 <style lang="scss" scoped>

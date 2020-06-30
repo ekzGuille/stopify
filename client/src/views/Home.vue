@@ -13,6 +13,7 @@
         </Button>
       </div>
       <div v-if="getIsLogged" class="content">
+        <UserInfo></UserInfo>
         <h2>WIP</h2>
           <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
              srcset="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif">
@@ -22,13 +23,15 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Button from '@/components/button/Button.vue';
 import { mapGetters, mapActions } from 'vuex';
+// import store from '@/store';
+import UserInfo from '@/components/user-info/UserInfo.vue';
 
 export default {
   name: 'Home',
   components: {
+    UserInfo,
     Button,
   },
   computed: {
@@ -37,6 +40,10 @@ export default {
   methods: {
     ...mapActions('credentials', ['logIn']),
   },
+  // mounted() {
+  //   console.log(store.getters['credentials/getIsLogged']);
+  //
+  // },
 };
 // https://class-component.vuejs.org/guide/class-component.html
 </script>
