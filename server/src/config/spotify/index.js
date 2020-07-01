@@ -3,7 +3,16 @@
  */
 
 const STATE_KEY = 'spotify_auth_state';
-const SCOPE = 'user-read-private user-read-email';
+const SCOPE = [
+  'user-read-email',
+  'playlist-read-collaborative',
+  'user-read-private',
+  'user-top-read',
+  'playlist-read-private',
+  'user-follow-read',
+  'user-read-recently-played',
+  'user-library-read'
+].join(' ');
 const RESPONSE_TYPE = 'code';
 const MISMATCH_STATE_ERROR = 'state_mismatch';
 const GRANT_AUTHORIZATION = 'authorization_code';
