@@ -39,7 +39,6 @@ router.get('/callback', async (req, res, next) => {
 
   if (state === null || state !== storedState) {
     res.redirect(`${FRONT_URL}?${new URLSearchParams({ login_error: MISMATCH_STATE_ERROR }).toString()}`);
-    // next(new Error(MISMATCH_STATE_ERROR));
   } else {
     res.clearCookie(STATE_KEY);
 
@@ -74,7 +73,6 @@ router.get('/callback', async (req, res, next) => {
       }
     } catch (error) {
       res.redirect(`${FRONT_URL}?${new URLSearchParams({ login_error: INVALID_TOKEN_ERROR }).toString()}`);
-      // next(new Error(INVALID_TOKEN_ERROR));
     }
   }
 });
