@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "stopify",
   "builds": [
     {
       "src": "package.json",
@@ -21,6 +20,5 @@
       "src": ".*",
       "dest": "/"
     }
-  ],
-  "alias": "stopify"
+  ]
 }
