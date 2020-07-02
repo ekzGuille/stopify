@@ -14,10 +14,11 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'max-len': ['error', { code: 120 }],
-    'no-param-reassign': 1,
-    'no-shadow': 1,
-    'class-methods-use-this': 0,
+    'max-len': ['error', { code: 125 }],
+    'no-param-reassign': 'warn',
+    'no-shadow': 'warn',
+    '@typescript-eslint/camelcase': 'warn',
+    'class-methods-use-this': 'off',
     // 'class-methods-use-this': ['error', {
     //   exceptMethods: [
     //     // vue lifecycle methods

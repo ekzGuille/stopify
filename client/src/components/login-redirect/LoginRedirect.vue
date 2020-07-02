@@ -1,7 +1,7 @@
 <template>
   <div class="redirect">
-    <div class="login-title" v-if="getIsLogged">¡Login satisfactorio!</div>
-    <div class="login-title" v-if="!getIsLogged">Ha habido un problema</div>
+    <div class="login-title" v-if="isLogged">¡Login satisfactorio!</div>
+    <div class="login-title" v-if="!isLogged">No se ha podido hacer el login</div>
     <div class="login-description">Volviendo al inicio...</div>
     <Loading></Loading>
   </div>
@@ -11,13 +11,14 @@
 
 import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
 import Constants from '@/utils/constants';
+import { VuexLocalStorage } from '@/utils/types';
 
 @Component({
   computed: {
-    ...mapGetters('credentials', ['getIsLogged', 'getAccessToken']),
+    ...mapState('credentials', ['isLogged']),
   },
   methods: {
     ...mapActions('credentials', ['storeLocalData']),
@@ -28,18 +29,19 @@ import Constants from '@/utils/constants';
 })
 export default class Redirect extends Vue {
   storeLocalData!: (
-    { accessToken, refreshToken, loginError }:
-    { accessToken?: string; refreshToken?: string; loginError?: string }
-  ) => void;
+    {
+      accessToken, refreshToken, loginError, expiresIn, lastRefresh,
+    }: VuexLocalStorage) => void;
 
   mounted() {
-    // TODO: Gestionar si hay algun error al logearse y que redirija al login logeado o no
     // https://blog.sqreen.com/authentication-best-practices-vue/
 
     this.storeLocalData({
       accessToken: Constants.accessToken,
       refreshToken: Constants.refreshToken,
       loginError: Constants.loginError,
+      expiresIn: Constants.expiresIn,
+      lastRefresh: Constants.lastTokenRefresh,
     });
 
     setTimeout(async () => {

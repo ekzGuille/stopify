@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <main>
-      <div v-if="!getIsLogged" class="no-logged">
+      <div v-if="!isLogged" class="no-logged">
         <span>Inicia sesión para disfrutar de todas las características</span>
         <Button
           font-size="1.1rem"
@@ -12,7 +12,7 @@
           Iniciar sesión
         </Button>
       </div>
-      <div v-if="getIsLogged" class="content">
+      <div v-if="isLogged" class="content">
         <UserInfo></UserInfo>
         <h2>WIP</h2>
           <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
@@ -24,8 +24,7 @@
 
 <script>
 import Button from '@/components/button/Button.vue';
-import { mapGetters, mapActions } from 'vuex';
-// import store from '@/store';
+import { mapState, mapActions } from 'vuex';
 import UserInfo from '@/components/user-info/UserInfo.vue';
 
 export default {
@@ -35,17 +34,12 @@ export default {
     Button,
   },
   computed: {
-    ...mapGetters('credentials', ['getIsLogged']),
+    ...mapState('credentials', ['isLogged']),
   },
   methods: {
     ...mapActions('credentials', ['logIn']),
   },
-  // mounted() {
-  //   console.log(store.getters['credentials/getIsLogged']);
-  //
-  // },
 };
-// https://class-component.vuejs.org/guide/class-component.html
 </script>
 
 <style lang="scss" scoped>

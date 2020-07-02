@@ -20,9 +20,6 @@ export default {
   components: {
     Header,
   },
-  methods: {
-    ...mapActions('credentials', ['storeIsLogged']),
-  },
 };
 </script>
 

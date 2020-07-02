@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
     <h3 @click="goHome" class="header-name">Stopify</h3>
-    <div v-if="getIsLogged" class="header-content">
+    <div v-if="isLogged" class="header-content">
       <router-link class="header-item" to="/top">
         Mi top
       </router-link>
@@ -11,7 +11,7 @@
     </div>
     <div class="button-wrapper">
       <Button
-        v-if="getIsLogged"
+        v-if="isLogged"
         font-size="0.8rem"
         padding="8px"
         width="150px"
@@ -20,7 +20,7 @@
         Cerrar sesión
       </Button>
       <Button
-        v-if="!getIsLogged"
+        v-if="!isLogged"
         font-size="0.8rem"
         padding="8px"
         width="150px"
@@ -35,7 +35,7 @@
 <script lang="ts">
 import router from '@/router';
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Button from '../button/Button.vue';
 
 @Component({
@@ -43,7 +43,7 @@ import Button from '../button/Button.vue';
     Button,
   },
   computed: {
-    ...mapGetters('credentials', ['getIsLogged']),
+    ...mapState('credentials', ['isLogged']),
   },
   methods: {
     ...mapActions('credentials', ['logOut', 'logIn']),
@@ -60,6 +60,7 @@ export default class Header extends Vue {
 
   async logout() {
     this.logOut();
+    await this.goHome();
     await router.go(0);
   }
 }
