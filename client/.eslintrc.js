@@ -18,6 +18,7 @@ module.exports = {
     'no-param-reassign': 'warn',
     'no-shadow': 'warn',
     '@typescript-eslint/camelcase': 'warn',
+    'no-underscore-dangle': 'warn',
     'class-methods-use-this': 'off',
     // 'class-methods-use-this': ['error', {
     //   exceptMethods: [

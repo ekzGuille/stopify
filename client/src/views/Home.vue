@@ -14,9 +14,6 @@
       </div>
       <div v-if="isLogged" class="content">
         <UserInfo></UserInfo>
-        <h2>WIP</h2>
-          <img src="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif" alt="wip"
-             srcset="https://media.giphy.com/media/4oHyOIBIt57ag/giphy.gif">
       </div>
     </main>
   </div>
@@ -49,14 +46,6 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
-
-    div.content {
-      //TODO: Borrrar
-      img {
-        margin: 5%;
-        width: 80%;
-      }
-    }
 
     div.no-logged {
     display: flex;

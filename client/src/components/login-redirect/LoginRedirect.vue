@@ -13,8 +13,8 @@ import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
-import Constants from '@/utils/constants';
-import { VuexLocalStorage } from '@/utils/types';
+import { UserCredentials } from '@/utils/constants';
+import { VuexLocalStorage } from '@/types/vuex';
 
 @Component({
   computed: {
@@ -37,18 +37,18 @@ export default class Redirect extends Vue {
     // https://blog.sqreen.com/authentication-best-practices-vue/
 
     this.storeLocalData({
-      accessToken: Constants.accessToken,
-      refreshToken: Constants.refreshToken,
-      loginError: Constants.loginError,
-      expiresIn: Constants.expiresIn,
-      lastRefresh: Constants.lastTokenRefresh,
+      accessToken: UserCredentials.accessToken,
+      refreshToken: UserCredentials.refreshToken,
+      loginError: UserCredentials.loginError,
+      expiresIn: UserCredentials.expiresIn,
+      lastRefresh: UserCredentials.lastTokenRefresh,
     });
 
     setTimeout(async () => {
       if (router.currentRoute.name !== 'Home') {
         await router.push({ name: 'Home' });
       }
-    }, 1500);
+    }, 1000);
   }
 }
 </script>

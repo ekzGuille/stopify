@@ -1,17 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
 import { getUrlData } from '@/utils/functions';
-import Constants from '@/utils/constants';
+import { UserCredentials, UserData } from '@/utils/constants';
 import BACKEND_URL from '@/api';
 import env from '@/config';
 import { ActionContext } from 'vuex';
-import { VuexLocalStorage, VuexStateCredential } from '@/utils/types';
+import { VuexLocalStorage, VuexStateCredential } from '@/types/vuex';
 
-const state = {
-  accessToken: localStorage.getItem(Constants.accessToken) || '',
-  refreshToken: localStorage.getItem(Constants.refreshToken) || '',
-  isLogged: !!localStorage.getItem(Constants.accessToken) || false,
-  expiresIn: localStorage.getItem(Constants.expiresIn) || 3600,
-  lastRefresh: localStorage.getItem(Constants.lastTokenRefresh) || Date.now(),
+const state: VuexStateCredential = {
+  accessToken: localStorage.getItem(UserCredentials.accessToken) || '',
+  refreshToken: localStorage.getItem(UserCredentials.refreshToken) || '',
+  isLogged: !!localStorage.getItem(UserCredentials.accessToken) || false,
+  expiresIn: +(localStorage.getItem(UserCredentials.expiresIn) || 3600),
+  lastRefresh: +(localStorage.getItem(UserCredentials.lastTokenRefresh) || Date.now()),
 };
 
 const getters = {};
@@ -48,17 +48,18 @@ const actions = {
     window.location.href = `${BACKEND_URL}/login`;
   },
   logOut({ commit }: ActionContext<VuexStateCredential, any>) {
-    localStorage.removeItem(Constants.accessToken);
-    localStorage.removeItem(Constants.refreshToken);
-    localStorage.removeItem(Constants.loginError);
-    localStorage.removeItem(Constants.expiresIn);
-    localStorage.removeItem(Constants.lastTokenRefresh);
+    localStorage.removeItem(UserCredentials.accessToken);
+    localStorage.removeItem(UserCredentials.refreshToken);
+    localStorage.removeItem(UserCredentials.loginError);
+    localStorage.removeItem(UserCredentials.expiresIn);
+    localStorage.removeItem(UserCredentials.lastTokenRefresh);
+    localStorage.removeItem(UserData.profileData);
     commit('logOut');
   },
   async updateAccessToken({ commit, state }: ActionContext<VuexStateCredential, any>) {
     if (state.lastRefresh + state.expiresIn < Date.now()) {
       try {
-        const { data: { access_token } } = await axios
+        const { data: { access_token } }: AxiosResponse = await axios
           .get(`${BACKEND_URL}/refresh_token${new URLSearchParams({ refresh_token: state.refreshToken })}`);
         commit('setAccessToken', access_token);
         commit('setLastRefresh', Date.now());

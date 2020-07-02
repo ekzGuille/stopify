@@ -1,3 +1,5 @@
+import { UserProfile } from '@/types/spotify';
+
 export interface VuexStateCredential {
   accessToken: string;
   refreshToken: string;
@@ -15,5 +17,5 @@ export interface VuexLocalStorage {
 }
 
 export interface VuexStateUser {
-  userInformation: string; // TODO: No sera string sino la interfaz con los datos de la API de Spotify
+  userInformation: string;
 }
