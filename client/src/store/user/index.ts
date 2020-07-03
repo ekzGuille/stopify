@@ -8,6 +8,8 @@ import { UserData } from '@/utils/constants';
 
 const { state: credentialsState } = credentialsStore;
 
+const API_SPOTIFY = env.VUE_APP_SPOTIFY_API_ENDPOINT || 'https://api.spotify.com';
+
 const state: VuexStateUser = {
   userInformation: localStorage.getItem(UserData.profileData) || '',
 };
@@ -29,7 +31,7 @@ const getters = {
 const actions = {
   async queryUserInformation({ commit, dispatch }: ActionContext<VuexStateUser, any>) {
     try {
-      const { data }: AxiosResponse<SPUserProfile> = await axios.get(`${env.VUE_APP_SPOTIFY_API_ENDPOINT}/v1/me`, {
+      const { data }: AxiosResponse<SPUserProfile> = await axios.get(`${API_SPOTIFY}/v1/me`, {
         headers: { Authorization: `Bearer ${credentialsState.accessToken}` },
       });
       await dispatch('saveUserProfile', data);
