@@ -33,7 +33,7 @@ router.get('/login', (req, res) => {
   res.redirect(`${env.SPOTIFY_DEV_ENDPOINT}/authorize?${params.toString()}`);
 });
 
-router.get('/callback', async (req, res, next) => {
+router.get('/callback', async (req, res) => {
   const { code, state } = req.query;
   const storedState = req.cookies ? req.cookies[STATE_KEY] : null;
 
@@ -98,6 +98,5 @@ router.get('/refresh_token', async (req, res, next) => {
     next(error);
   }
 });
-
 
 module.exports = router;
