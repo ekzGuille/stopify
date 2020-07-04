@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="content">🎶💯</div>
+    🎶💯
   </div>
 </template>
 
@@ -18,11 +18,5 @@ export default {
     justify-content: center;
     height: 100%;
     width: 100%;
-
-    div {
-      &.content {
-        font-size: 4rem;
-      }
-    }
   }
 </style>

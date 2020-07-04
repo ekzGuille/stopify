@@ -11,7 +11,7 @@ export default class Loading extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../variables/_variables.scss';
+  @import '../../styles/_variables.scss';
 
   div.loading {
     display: inline-block;

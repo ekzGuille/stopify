@@ -1,12 +1,15 @@
 <template>
   <div class="wrapper">
-    <div class="content">👨🏻‍💻</div>
+    <UserInfo></UserInfo>
   </div>
 </template>
 
 <script lang="ts">
+import UserInfo from '@/components/user-info/UserInfo.vue';
+
 export default {
   name: 'Me',
+  components: { UserInfo },
 };
 </script>
 
@@ -18,9 +21,5 @@ export default {
     justify-content: center;
     height: 100%;
     width: 100%;
-
-    div.content {
-      font-size: 4rem;
-    }
   }
 </style>

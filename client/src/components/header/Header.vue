@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <header>
     <h3 @click="goHome" class="header-name">Stopify</h3>
     <div v-if="isLogged" class="header-content">
       <router-link class="header-item" to="/top">
@@ -29,7 +29,7 @@
         Iniciar sesión
       </Button>
     </div>
-  </div>
+  </header>
 </template>
 
 <script lang="ts">
@@ -67,12 +67,12 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import './../../variables/_variables.scss';
+  @import '../../styles/_variables.scss';
   * {
     background-color: $color-sp-grey;
   }
 
-  div.nav {
+  header {
     position: absolute;
     height: 65px;
     width: 100%;

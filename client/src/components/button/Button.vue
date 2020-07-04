@@ -37,7 +37,7 @@ export default class Button extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import './../../variables/_variables.scss';
+@import '../../styles/_variables.scss';
 
 .login-btn {
   text-transform: uppercase;

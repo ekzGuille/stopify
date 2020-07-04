@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './variables/_variables.scss';
+@import 'styles/_variables.scss';
 
 @font-face {
   font-family: "CircularStd-Medium";
