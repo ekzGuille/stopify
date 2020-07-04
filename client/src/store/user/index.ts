@@ -40,11 +40,19 @@ const actions = {
     }
   },
   saveUserProfile({ commit }: ActionContext<VuexStateUser, any>, data: SPUserProfile) {
-    const { display_name, images } = data;
-    const dataToStore = JSON.stringify({
+    const {
+      display_name, images, id, followers, product, external_urls, country,
+    } = data;
+    const payloadData: UserProfile = {
+      id,
       display_name,
       image: images.length ? images[0].url : '',
-    });
+      country,
+      followersCount: followers.total,
+      product,
+      spotifyProfileUrl: external_urls.spotify,
+    };
+    const dataToStore = JSON.stringify(payloadData);
     localStorage.setItem(UserData.profileData, dataToStore);
     commit('setUserInformation', dataToStore);
   },

@@ -13,7 +13,7 @@
         </Button>
       </div>
       <div v-if="isLogged" class="content">
-        <UserInfo></UserInfo>
+        Bienvenido
       </div>
     </main>
   </div>
@@ -22,12 +22,10 @@
 <script>
 import Button from '@/components/button/Button.vue';
 import { mapState, mapActions } from 'vuex';
-import UserInfo from '@/components/user-info/UserInfo.vue';
 
 export default {
   name: 'Home',
   components: {
-    UserInfo,
     Button,
   },
   computed: {

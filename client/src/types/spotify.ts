@@ -13,8 +13,13 @@ export interface SPUserProfile {
 }
 
 export interface UserProfile {
+  id: string;
   display_name: string;
   image: string;
+  product: string;
+  spotifyProfileUrl: string;
+  country: string;
+  followersCount: number;
 }
 
 export interface SPExternalUrls {
