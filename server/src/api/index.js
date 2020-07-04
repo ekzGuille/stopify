@@ -59,12 +59,6 @@ router.get('/callback', async (req, res, next) => {
       if (status === 200) {
         const { access_token, refresh_token, expires_in } = data;
 
-        /* const getResponse = await axios.get(`${env.SPOTIFY_API_ENDPOINT}/v1/me`, {
-          headers: { Authorization: `Bearer ${access_token}` }
-        });
-
-        console.log(getResponse.data); */
-
         // Devolver al frontal la informacion del login
         res.redirect(`${FRONT_URL}?${new URLSearchParams({
           access_token,
