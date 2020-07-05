@@ -60,7 +60,7 @@ const actions = {
     if (state.lastRefresh + state.expiresIn < Date.now()) {
       try {
         const { data: { access_token } }: AxiosResponse = await axios
-          .get(`${BACKEND_URL}/refresh_token${new URLSearchParams({ refresh_token: state.refreshToken })}`);
+          .get(`${BACKEND_URL}/refresh_token?${new URLSearchParams({ refresh_token: state.refreshToken })}`);
         commit('setAccessToken', access_token);
         commit('setLastRefresh', Date.now());
       } catch (e) {
