@@ -1,9 +1,8 @@
 <template>
   <div class="playlist-content">
-    <div class="playlist-data">
-      <img class="playlist-cover" :src="playList.image.url" :alt="playList.name">
-      <p class="playlist-pl-title">{{ playList.name }}</p>
-    </div>
+    <a :href="playlist.url" target="_blank" class="playlist-pl-title">
+      <img class="playlist-cover" :src="playlist.image.url" :alt="playlist.name">
+      {{ playlist.name }}</a>
   </div>
 </template>
 
@@ -16,7 +15,7 @@ import Loading from '@/components/loading/Loading.vue';
   components: { Loading },
 })
 export default class UserPlaylists extends Vue {
-  @Prop({ required: true }) playList!: Item;
+  @Prop({ required: true }) playlist!: Item;
 }
 </script>
 
@@ -28,12 +27,19 @@ export default class UserPlaylists extends Vue {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    div.playlist-data {
-      margin: 2rem;
-      display: flex;
-      flex-direction: column;
+    margin: 2rem;
+
+    a.playlist-pl-title {
+      text-decoration: none;
+      margin-top: 4%;
+      width: 180px;
+      word-break: break-word;
+      &:hover {
+        color: $color-sp-accent-green;
+      }
+
       img.playlist-cover {
-        width: 200px;
+        width: 180px;
       }
     }
   }

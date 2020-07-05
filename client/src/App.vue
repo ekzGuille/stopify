@@ -43,7 +43,6 @@ export default {
   Arial, Hiragino Kaku Gothic Pro, Meiryo,MS Gothic, sans-serif;
   color: $color-white;
   box-sizing: border-box;
-  background-color: $color-sp-background-dark;
   margin: 0;
   padding: 0;
 }
@@ -53,6 +52,7 @@ body {
   -webkit-user-select: none;
   width: 100vw;
   height: 100vh;
+  background-color: $color-sp-background-dark;
 }
 
 #app {

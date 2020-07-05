@@ -76,7 +76,7 @@ export default class UserInfo extends Vue {
 
   async mounted() {
     if (!this.getUserInformation) {
-      // await this.updateAccessToken();
+      await this.updateAccessToken();
       await this.queryUserInformation();
       this.contentLoaded = true;
     } else {
@@ -94,13 +94,16 @@ div.usr-info-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 
   div.usr-info-data {
     display: flex;
     flex-direction: row;
+    width: 100%;
     div.usr-info-profile-wrapper {
       display: flex;
       flex-direction: column;
+      width: 35%;
       p {
         font-size: 1.5rem;
         margin-bottom: 4%;
@@ -123,7 +126,6 @@ div.usr-info-content {
           background: $color-sp-grey;
 
           svg {
-            background-color: transparent;
             width: 8rem;
             height: 8rem;
             stroke: $color-sp-stroke-light-grey;
@@ -138,12 +140,10 @@ div.usr-info-content {
           color: $color-white;
           bottom: 0;
           width: 35px;
-          left: calc(15%);
-          background-color: transparent;
+          left: calc(25%);
 
           span.usr-info-followers-count,
           svg.usr-info-followers-icon {
-            background-color: transparent;
           }
           span.usr-info-followers-count {
             font-size: 1rem;
@@ -163,14 +163,13 @@ div.usr-info-content {
             position: absolute;
             bottom: 0;
             border-radius: 0;
-            right: calc(15%);
+            right: calc(25%);
             width: 35px;
-            background: transparent;
           }
         }
       }
       p.usr-info-open-sp-wrapper {
-        margin-top: 4%;
+        margin: 4% 2%;
         font-size: 1.5rem;
         display: block;
         text-decoration: none;
@@ -189,6 +188,7 @@ div.usr-info-content {
     div.usr-info-playlist-wrapper {
       display: flex;
       flex-direction: column;
+      width: 65%;
       p.usr-info-playlist-title {
         font-size: 2rem;
       }
@@ -201,11 +201,14 @@ div.usr-info-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: auto;
 
     div.usr-info-data {
       display: flex;
       flex-direction: column;
+      width: auto;
       div.usr-info-profile-wrapper {
+        width: auto;
         .usr-info-profile-image-wrapper {
           div.usr-info-profile-backup {
             width: 150px;
@@ -230,11 +233,11 @@ div.usr-info-content {
           }
         }
         p.usr-info-open-sp-wrapper {
-          margin-top: 4%;
           font-size: 1.3rem;
         }
       }
       div.usr-info-playlist-wrapper {
+        width: auto;
         p.usr-info-playlist-title {
           font-size: 1.5rem;
         }
