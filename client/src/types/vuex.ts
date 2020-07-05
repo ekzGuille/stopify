@@ -1,4 +1,4 @@
-import { UserProfile } from '@/types/spotify';
+import { UserPlaylist, UserProfile } from '@/types/spotify';
 
 export interface VuexStateCredential {
   accessToken: string;
@@ -17,5 +17,6 @@ export interface VuexLocalStorage {
 }
 
 export interface VuexStateUser {
-  userInformation: string;
+  userInformation: UserProfile | null;
+  userPlaylists: UserPlaylist | null;
 }

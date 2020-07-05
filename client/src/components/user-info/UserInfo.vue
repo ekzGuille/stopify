@@ -1,19 +1,48 @@
 <template>
-  <div class="content">
-    <div class="data" v-if="contentLoaded">
-      <p>Hola {{ getUserInformation.display_name }}
-
-      </p>
-      <div class="profile-image-wrapper">
-        <img class="profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
-        <img
-          class="flag"
-          :src="`https://www.countryflags.io/${getUserInformation.country}/flat/64.png`"
-          :alt="getUserInformation.country">
+  <div class="usr-info-content">
+    <div class="usr-info-data" v-if="contentLoaded">
+      <div class="usr-info-profile-wrapper">
+        <p>Hola {{ getUserInformation.display_name }}
+        </p>
+        <div class="usr-info-profile-image-wrapper">
+          <div class="usr-info-followers">
+            <span class="usr-info-followers-count">{{ getUserInformation.followersCount }}</span>
+            <svg  class="usr-info-followers-icon" viewBox="0 0 24 24" width="24"
+                  height="24" stroke="currentColor"
+                  stroke-width="2" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87">
+              </path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75">
+              </path>
+            </svg>
+          </div>
+          <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
+          <div class="usr-info-profile-backup" v-if="!getUserInformation.image">
+            <svg viewBox="0 0 24 24"
+                 width="24" height="24" stroke="currentColor" stroke-width="1"
+                 fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <img
+            class="usr-info-flag"
+            :src="`https://www.countryflags.io/${getUserInformation.country}/flat/64.png`"
+            :alt="getUserInformation.country">
+        </div>
+        <p class="usr-info-open-sp-wrapper">Ver perfil completo en
+          <a class="usr-info-accent" :href="getUserInformation.spotifyProfileUrl" target="_blank">Spotify</a>
+        </p>
       </div>
-      <p class="open-sp-wrapper">Ver en
-        <a :href="getUserInformation.spotifyProfileUrl" target="_blank" class="spotify">Spotify</a>
-      </p>
+<!--      <hr>-->
+      <div class="usr-info-playlist-wrapper">
+        <p class="usr-info-playlist-title">Playlists recientes</p>
+        <UserPlaylists :v-if="getUserInformation && getUserInformation.id"
+                       :userId="getUserInformation.id"></UserPlaylists>
+      </div>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
   </div>
@@ -24,9 +53,10 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import { UserProfile } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
+import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 
 @Component({
-  components: { Loading },
+  components: { UserPlaylists, Loading },
   computed: {
     ...mapGetters('user', ['getUserInformation']),
   },
@@ -59,46 +89,154 @@ export default class UserInfo extends Vue {
 <style lang="scss" scoped>
 @import '../../styles/_variables.scss';
 
-div.content {
+div.usr-info-content {
+  margin-top: 5%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  .data {
-    p {
-      font-size: 1.5rem;
-      margin-bottom: 4%;
+
+  div.usr-info-data {
+    display: flex;
+    flex-direction: row;
+    div.usr-info-profile-wrapper {
       display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-    .profile-image-wrapper {
-      position: relative;
-      img {
-        &.profile {
+      flex-direction: column;
+      p {
+        font-size: 1.5rem;
+        margin-bottom: 4%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+      .usr-info-profile-image-wrapper {
+        position: relative;
+
+        div.usr-info-profile-backup {
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 200px;
+          height: 200px;
           border-radius: 50%;
+          background: $color-sp-grey;
+
+          svg {
+            background-color: transparent;
+            width: 8rem;
+            height: 8rem;
+            stroke: $color-sp-stroke-light-grey;
+          }
         }
-        &.flag {
-          width: 30px;
-          background: transparent;
+
+        div.usr-info-followers {
+          display: flex;
+          flex-direction: row;
           position: absolute;
+          align-items: center;
+          color: $color-white;
           bottom: 0;
-          /*right: 0;*/
-          right: calc(20%);
-          border-radius: 0;
+          width: 35px;
+          left: calc(15%);
+          background-color: transparent;
+
+          span.usr-info-followers-count,
+          svg.usr-info-followers-icon {
+            background-color: transparent;
+          }
+          span.usr-info-followers-count {
+            font-size: 1rem;
+            margin-right: 5px;
+          }
+          svg.usr-info-followers-icon {
+            width: 15px;
+            height: 15px;
+          }
+        }
+        img {
+          &.usr-info-profile {
+            width: 200px;
+            border-radius: 50%;
+          }
+          &.usr-info-flag {
+            position: absolute;
+            bottom: 0;
+            border-radius: 0;
+            right: calc(15%);
+            width: 35px;
+            background: transparent;
+          }
         }
       }
-    }
-    p.open-sp-wrapper {
-      margin-top: 4%;
-      font-size: 1.5rem;
-      display: block;
-      text-decoration: none;
-      a {
+      p.usr-info-open-sp-wrapper {
+        margin-top: 4%;
+        font-size: 1.5rem;
+        display: block;
         text-decoration: none;
-        &.spotify {
-          color: $color-sp-accent-green;
+        a {
+          text-decoration: none;
+          &.usr-info-accent {
+            color: $color-sp-accent-green;
+          }
+        }
+      }
+      hr {
+        margin: 5% 2%;
+        border: 1px solid $color-sp-grey;
+      }
+    }
+    div.usr-info-playlist-wrapper {
+      display: flex;
+      flex-direction: column;
+      p.usr-info-playlist-title {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  div.usr-info-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div.usr-info-data {
+      display: flex;
+      flex-direction: column;
+      div.usr-info-profile-wrapper {
+        .usr-info-profile-image-wrapper {
+          div.usr-info-profile-backup {
+            width: 150px;
+            height: 150px;
+            svg {
+              width: 6rem;
+              height: 6rem;
+            }
+          }
+
+          div.usr-info-followers {
+            left: calc(20%);
+          }
+
+          img {
+            &.usr-info-profile {
+              width: 150px;
+            }
+            &.usr-info-flag {
+              right: calc(20%);
+            }
+          }
+        }
+        p.usr-info-open-sp-wrapper {
+          margin-top: 4%;
+          font-size: 1.3rem;
+        }
+      }
+      div.usr-info-playlist-wrapper {
+        p.usr-info-playlist-title {
+          font-size: 1.5rem;
         }
       }
     }
