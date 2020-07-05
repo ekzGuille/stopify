@@ -1,10 +1,16 @@
 <template>
   <div class="usr-pl-content">
     <div class="usr-pl-data" v-if="contentLoaded">
-      <p>Mostrando las <span class="usr-pl-accent">{{ getUserPlaylists.limit }}</span> playlists más recientes.</p>
+      <p>Mostrando las
+        <span class="usr-pl-accent">
+        {{ getUserPlaylists.limit > getUserPlaylists.total ? getUserPlaylists.total : getUserPlaylists.limit }}
+        </span> playlists más recientes.
+      </p>
       <p>Tienes <span class="usr-pl-accent">{{ getUserPlaylists.total }}</span> totales.</p>
       <div class="usr-pl-playlist-wrapper">
-        <Playlist v-for="playlist of getUserPlaylists.items" :key="playlist.id" :play-list="playlist"></Playlist>
+        <Playlist v-for="playlist of getUserPlaylists.items" :key="playlist.id" :playlist="playlist"></Playlist>
+        <div class="usr-pl-playlist-wrapper-scroll">
+        </div>
       </div>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
@@ -59,16 +65,41 @@ export default class UserPlaylists extends Vue {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    div.usr-pl-data {
+      width: 100%;
+      p {
+        span.usr-pl-accent {
+          color: $color-sp-accent-green;
+        }
+      }
 
-    p {
-      span.usr-pl-accent {
-        color: $color-sp-accent-green;
+      div.usr-pl-playlist-wrapper {
+        margin: 2% 0 0 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 70vh;
+        overflow: scroll;
+        justify-content: center;
       }
     }
-    div.usr-pl-playlist-wrapper {
-      display: flex;
-      /*flex-direction: row;*/
-      flex-direction: column;
+  }
+
+@media (max-width: $breakpoint-tablet) {
+  div.usr-pl-content {
+    width: auto;
+    div.usr-pl-data {
+      width: auto;
+      div.usr-pl-playlist-wrapper {
+        margin: 2% 0 0 0;
+        display: flex;
+        flex-wrap: nowrap;
+        height: auto;
+        justify-content: center;
+        flex-direction: column;
+      }
     }
   }
+}
 </style>
