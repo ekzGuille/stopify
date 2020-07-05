@@ -20,25 +20,8 @@ const state: VuexStateUser = {
 
 const getters = {
   getUserInformation: (state: VuexStateUser) => state.userInformation, // let _userInfo;
-  // if (state.userInformation) {
-  //   try {
-  //     _userInfo = JSON.parse(state.userInformation) as UserProfile;
-  //   } catch (e) {
-  //     console.error(process.env.NODE_ENV === 'production' ? 'Malformed JSON' : e);
-  //   }
-  // }
-  // return _userInfo;
 
   getUserPlaylists: (state: VuexStateUser) => state.userPlaylists
-  // let _userPlaylists;
-  // if (state.userPlaylists) {
-  //   try {
-  //     _userPlaylists = JSON.parse(state.userPlaylists) as UserPlaylist;
-  //   } catch (e) {
-  //     console.error(process.env.NODE_ENV === 'production' ? 'Malformed JSON' : e);
-  //   }
-  // }
-  // return _userPlaylists;
   ,
 };
 
@@ -61,7 +44,7 @@ const actions = {
         product,
         spotifyProfileUrl: external_urls.spotify,
       };
-      // const dataToStore = JSON.stringify(payloadData);
+
       localStorage.setItem(UserData.profileData, JSON.stringify(payloadData));
       commit('setUserInformation', payloadData);
     } catch (e) {
@@ -71,8 +54,12 @@ const actions = {
   async queryUserPlaylists({ commit, getters, dispatch }: ActionContext<VuexStateUser, any>, userId: string) {
     try {
       // Mostrar las últimas 10 añadidas
+      const queryStringData = {
+        limit: '10',
+        offset: '0',
+      };
       const { data }: AxiosResponse<SPUserPlaylist> = await axios
-        .get(`${API_SPOTIFY}/v1/users/${userId}/playlists?limit=5`, {
+        .get(`${API_SPOTIFY}/v1/users/${userId}/playlists?${new URLSearchParams(queryStringData).toString()}`, {
           headers: { Authorization: `Bearer ${credentialsState.accessToken}` },
         });
 

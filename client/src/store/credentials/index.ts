@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { getUrlData } from '@/utils/functions';
+import { getUrlData, getTime } from '@/utils/functions';
 import { UserCredentials, UserData } from '@/utils/constants';
 import BACKEND_URL from '@/api';
 import env from '@/config';
@@ -11,7 +11,7 @@ const state: VuexStateCredential = {
   refreshToken: localStorage.getItem(UserCredentials.refreshToken) || '',
   isLogged: !!localStorage.getItem(UserCredentials.accessToken) || false,
   expiresIn: +(localStorage.getItem(UserCredentials.expiresIn) || 3600),
-  lastRefresh: +(localStorage.getItem(UserCredentials.lastTokenRefresh) || Date.now()),
+  lastRefresh: +(localStorage.getItem(UserCredentials.lastTokenRefresh) || getTime()),
 };
 
 const getters = {};
@@ -37,7 +37,7 @@ const actions = {
       commit('setExpires', +getUrlData(expiresIn));
     }
     if (lastRefresh) {
-      const dateToStore = Date.now();
+      const dateToStore = getTime();
       if (isLogged) {
         localStorage.setItem(lastRefresh, `${dateToStore}`);
         commit('setLastRefresh', dateToStore);
@@ -57,12 +57,15 @@ const actions = {
     commit('logOut');
   },
   async updateAccessToken({ commit, state }: ActionContext<VuexStateCredential, any>) {
-    if (state.lastRefresh + state.expiresIn < Date.now()) {
+    if (state.lastRefresh + state.expiresIn < getTime()) {
       try {
         const { data: { access_token } }: AxiosResponse = await axios
           .get(`${BACKEND_URL}/refresh_token?${new URLSearchParams({ refresh_token: state.refreshToken })}`);
         commit('setAccessToken', access_token);
-        commit('setLastRefresh', Date.now());
+        localStorage.setItem(UserCredentials.accessToken, access_token);
+        const newDate = Date.now();
+        localStorage.setItem(UserCredentials.lastTokenRefresh, `${newDate}`);
+        commit('setLastRefresh', newDate);
       } catch (e) {
         console.error(process.env.NODE_ENV === 'production' ? 'Cannot refresh user\'s token' : e);
       }
@@ -90,7 +93,7 @@ const mutations = {
     state.refreshToken = '';
     state.isLogged = false;
     state.expiresIn = 3600;
-    state.lastRefresh = Date.now();
+    state.lastRefresh = getTime();
   },
 };
 

@@ -19,6 +19,7 @@ module.exports = {
     'no-shadow': 'warn',
     '@typescript-eslint/camelcase': 'warn',
     'no-underscore-dangle': 'warn',
+    'no-bitwise': 'warn',
     'class-methods-use-this': 'off',
     // 'class-methods-use-this': ['error', {
     //   exceptMethods: [

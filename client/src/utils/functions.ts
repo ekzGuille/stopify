@@ -7,6 +7,9 @@ export function getUrlData(key: string): string {
   return data;
 }
 
-export function print() {
-  console.log('print');
+export function getTime(miliseconds?: boolean) {
+  if (miliseconds) {
+    return Date.now();
+  }
+  return ~~(Date.now() / 1000);
 }
