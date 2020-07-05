@@ -38,12 +38,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
+div.home {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+  /*overflow: hidden; // TODO: Quitar dependiendo del contenido a albergar*/
 
     div.no-logged {
     display: flex;

@@ -73,7 +73,6 @@ export default class Header extends Vue {
   }
 
   header {
-    position: absolute;
     height: 65px;
     width: 100%;
     display: flex;

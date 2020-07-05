@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="top-songs-wrapper">
     🎶💯
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  div.wrapper {
+  div.top-songs-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;

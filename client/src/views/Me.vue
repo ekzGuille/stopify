@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="me-wrapper">
     <UserInfo></UserInfo>
   </div>
 </template>
@@ -9,17 +9,19 @@ import UserInfo from '@/components/user-info/UserInfo.vue';
 
 export default {
   name: 'Me',
-  components: { UserInfo },
+  components: {
+    UserInfo,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-  div.wrapper {
+  div.me-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
   }
 </style>

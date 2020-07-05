@@ -1,8 +1,8 @@
 <template>
-  <div class="redirect">
-    <div class="login-title" v-if="isLogged">¡Login satisfactorio!</div>
-    <div class="login-title" v-if="!isLogged">No se ha podido hacer el login</div>
-    <div class="login-description">Volviendo al inicio...</div>
+  <div class="rdr-redirect">
+    <div class="rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
+    <div class="rdr-login-title" v-if="!isLogged">No se ha podido hacer el login</div>
+    <div class="rdr-login-description">Volviendo al inicio...</div>
     <Loading></Loading>
   </div>
 </template>
@@ -34,8 +34,6 @@ export default class Redirect extends Vue {
     }: VuexLocalStorage) => void;
 
   mounted() {
-    // https://blog.sqreen.com/authentication-best-practices-vue/
-
     this.storeLocalData({
       accessToken: UserCredentials.accessToken,
       refreshToken: UserCredentials.refreshToken,
@@ -54,7 +52,7 @@ export default class Redirect extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  div.redirect {
+  div.rdr-redirect {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,11 +61,11 @@ export default class Redirect extends Vue {
 
     div {
       margin: 1%;
-      &.login-title {
+      &.rdr-login-title {
         font-size: 3rem;
       }
 
-      &.login-description {
+      &.rdr-login-description {
         font-size: 2rem;
       }
     }
