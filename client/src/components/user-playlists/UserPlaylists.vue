@@ -6,7 +6,7 @@
         {{ getUserPlaylists.limit > getUserPlaylists.total ? getUserPlaylists.total : getUserPlaylists.limit }}
         </span> playlists más recientes.
       </p>
-      <p>Tienes <span class="usr-pl-accent">{{ getUserPlaylists.total }}</span> totales.</p>
+      <p>Tienes <span class="usr-pl-accent">{{ getUserPlaylists.total }}</span> en total.</p>
       <div class="usr-pl-playlist-wrapper">
         <Playlist v-for="playlist of getUserPlaylists.items" :key="playlist.id" :playlist="playlist"></Playlist>
         <div class="usr-pl-playlist-wrapper-scroll">
