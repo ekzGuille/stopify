@@ -38,12 +38,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '/../styles/_variables.scss';
 div.home {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  overflow: scroll;
+  height: calc(100% - #{$header-height});
   /*overflow: hidden; // TODO: Quitar dependiendo del contenido a albergar*/
 
     div.no-logged {

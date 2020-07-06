@@ -10,7 +10,6 @@ import store from '@/store';
 Vue.use(VueRouter);
 
 const checkIfAuthenticated = (to: Route, from: Route, next: NavigationGuardNext<Vue>) => {
-  console.log();
   if (store.state.credentials.isLogged) {
     next();
     return;

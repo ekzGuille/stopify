@@ -37,11 +37,21 @@
           <a class="usr-info-accent" :href="getUserInformation.spotifyProfileUrl" target="_blank">Spotify</a>
         </p>
       </div>
-<!--      <hr>-->
       <div class="usr-info-playlist-wrapper">
         <p class="usr-info-playlist-title">Playlists recientes</p>
         <UserPlaylists :v-if="getUserInformation && getUserInformation.id"
                        :userId="getUserInformation.id"></UserPlaylists>
+      </div>
+      <div class="usr-info-playlist-scrolltop-wrapper">
+        <div class="usr-info-playlist-scrolltop" @click="scroll">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+               fill="none"  stroke-linecap="round" stroke-linejoin="round" >
+            <line x1="12" y1="19" x2="12" y2="5">
+            </line>
+            <polyline points="5 12 12 5 19 12">
+            </polyline>
+          </svg>
+        </div>
       </div>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
@@ -68,11 +78,18 @@ import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 export default class UserInfo extends Vue {
   contentLoaded = false;
 
+  element: Element | undefined;
+
   getUserInformation!: UserProfile;
 
   queryUserInformation!: () => UserProfile;
 
   updateAccessToken!: () => UserProfile;
+
+  scroll() {
+    if (!this.element) return;
+    this.element.scrollIntoView({ behavior: 'smooth' });
+  }
 
   async mounted() {
     if (!this.getUserInformation) {
@@ -82,6 +99,9 @@ export default class UserInfo extends Vue {
     } else {
       this.contentLoaded = true;
     }
+    setTimeout(() => {
+      this.element = this.$el.querySelector('div.usr-info-playlist-wrapper p.usr-info-playlist-title') || undefined;
+    });
   }
 }
 </script>
@@ -90,11 +110,12 @@ export default class UserInfo extends Vue {
 @import '../../styles/_variables.scss';
 
 div.usr-info-content {
-  margin-top: 5%;
+  margin-top: 3%;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
 
   div.usr-info-data {
     display: flex;
@@ -140,7 +161,7 @@ div.usr-info-content {
           color: $color-white;
           bottom: 0;
           width: 35px;
-          left: calc(25%);
+          left: 25%;
 
           span.usr-info-followers-count,
           svg.usr-info-followers-icon {
@@ -163,7 +184,7 @@ div.usr-info-content {
             position: absolute;
             bottom: 0;
             border-radius: 0;
-            right: calc(25%);
+            right: 25%;
             width: 35px;
           }
         }
@@ -180,10 +201,6 @@ div.usr-info-content {
           }
         }
       }
-      hr {
-        margin: 5% 2%;
-        border: 1px solid $color-sp-grey;
-      }
     }
     div.usr-info-playlist-wrapper {
       display: flex;
@@ -191,6 +208,29 @@ div.usr-info-content {
       width: 65%;
       p.usr-info-playlist-title {
         font-size: 2rem;
+      }
+    }
+    div.usr-info-playlist-scrolltop-wrapper {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      div.usr-info-playlist-scrolltop {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        background: $color-sp-light-green;
+        &:hover {
+          cursor: pointer;
+        }
+        &:active {
+          transform: scale(0.95);
+          transition: all 0.1s ease-in-out;
+        }
       }
     }
   }
@@ -202,6 +242,7 @@ div.usr-info-content {
     flex-direction: column;
     align-items: center;
     width: auto;
+    margin-top: 5%;
 
     div.usr-info-data {
       display: flex;
@@ -220,7 +261,7 @@ div.usr-info-content {
           }
 
           div.usr-info-followers {
-            left: calc(20%);
+            left: 20%;
           }
 
           img {
@@ -228,7 +269,7 @@ div.usr-info-content {
               width: 150px;
             }
             &.usr-info-flag {
-              right: calc(20%);
+              right: 20%;
             }
           }
         }
@@ -241,6 +282,9 @@ div.usr-info-content {
         p.usr-info-playlist-title {
           font-size: 1.5rem;
         }
+      }
+      div.usr-info-playlist-scrolltop-wrapper {
+        display: initial;
       }
     }
   }

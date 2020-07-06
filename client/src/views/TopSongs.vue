@@ -11,12 +11,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  div.top-songs-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-  }
+@import '/../styles/_variables.scss';
+div.top-songs-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - #{$header-height});
+  width: 100%;
+}
 </style>

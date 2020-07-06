@@ -16,12 +16,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  div.me-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /*height: 100%;*/
-    width: 100%;
-  }
+@import '/../styles/_variables.scss';
+div.me-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+  height: calc(100% - #{$header-height});
+  width: 100%;
+}
 </style>

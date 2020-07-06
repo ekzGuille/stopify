@@ -13,7 +13,6 @@
 <script>
 // @ is an alias to /src
 import Header from '@/components/header/Header.vue';
-import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -53,6 +52,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: $color-sp-background-dark;
+  overflow: hidden;
 }
 
 #app {
@@ -65,16 +65,25 @@ body {
   height: 100%;
 }
 
-/*#nav {
-  padding: 30px;
+::-webkit-scrollbar {
+  width: 12px;
+}
 
-  a {
-    font-weight: bold;
-    color: $color-vue-dark;
+::-webkit-scrollbar-track {
+  // background: $color-sp-dark-grey;
+  // border-radius: 10px;
+}
 
-    &.router-link-exact-active {
-      color: $color-vue-green;
-    }
-  }
-}*/
+::-webkit-scrollbar-thumb {
+  background: $color-sp-light-green;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $color-sp-accent-green;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 </style>

@@ -67,48 +67,46 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../styles/_variables.scss';
+@import '../../styles/_variables.scss';
+
+header {
+  height: 65px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-sp-grey;
+
   * {
-    background-color: $color-sp-grey;
+    margin: 0 1%;
   }
 
-  header {
-    height: 65px;
+  .header-content {
+    margin: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
 
-    * {
-      margin: 0 1%;
-    }
+    a {
+      text-decoration: none;
+      color: $color-white;
+      text-shadow: 0 0 5px $color-black;
 
-    .header-content {
-      margin: 0;
-      width: 100%;
-      display: flex;
-      justify-content: flex-start;
-
-      a {
-        text-decoration: none;
-        color: $color-white;
-        text-shadow: 0 0 5px $color-black;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-      a.router-link-exact-active {
-        font-weight: bold;
-        color: $color-sp-accent-green;
-      }
-    }
-
-    h3.header-name {
       &:hover {
         cursor: pointer;
       }
     }
+    a.router-link-exact-active {
+      font-weight: bold;
+      color: $color-sp-accent-green;
+    }
+  }
+
+  h3.header-name {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   .button-wrapper, .header-name {
     margin: 0 4%;
