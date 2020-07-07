@@ -66,12 +66,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  // background: $color-sp-dark-grey;
-  // border-radius: 10px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
