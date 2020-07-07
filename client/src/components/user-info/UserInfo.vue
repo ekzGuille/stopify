@@ -78,7 +78,7 @@ import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 export default class UserInfo extends Vue {
   contentLoaded = false;
 
-  element: Element | undefined;
+  header: Element | undefined;
 
   getUserInformation!: UserProfile;
 
@@ -87,8 +87,7 @@ export default class UserInfo extends Vue {
   updateAccessToken!: () => UserProfile;
 
   scroll() {
-    if (!this.element) return;
-    this.element.scrollIntoView({ behavior: 'smooth' });
+    this.$el.scrollIntoView({ behavior: 'smooth' });
   }
 
   async mounted() {
@@ -99,8 +98,16 @@ export default class UserInfo extends Vue {
     } else {
       this.contentLoaded = true;
     }
-    setTimeout(() => {
-      this.element = this.$el.querySelector('div.usr-info-playlist-wrapper p.usr-info-playlist-title') || undefined;
+
+    // Scrolling behaviour
+    this.header = document.querySelector('header') || undefined;
+    const toScrollElement = this.$el.parentElement;
+    if (!toScrollElement) return;
+    toScrollElement.addEventListener('scroll', () => {
+      if (!this.header) return;
+      if (toScrollElement.scrollTop < this.header.clientHeight) {
+        this.header.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   }
 }
