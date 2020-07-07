@@ -38,7 +38,6 @@
         </p>
       </div>
       <div class="usr-info-playlist-wrapper">
-        <p class="usr-info-playlist-title">Playlists recientes</p>
         <UserPlaylists :v-if="getUserInformation && getUserInformation.id"
                        :userId="getUserInformation.id"></UserPlaylists>
       </div>
@@ -61,7 +60,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
-import { UserProfile } from '@/types/spotify';
+import { Item, UserProfile } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 
@@ -213,9 +212,6 @@ div.usr-info-content {
       display: flex;
       flex-direction: column;
       width: 65%;
-      p.usr-info-playlist-title {
-        font-size: 2rem;
-      }
     }
     div.usr-info-playlist-scrolltop-wrapper {
       position: absolute;
@@ -286,9 +282,6 @@ div.usr-info-content {
       }
       div.usr-info-playlist-wrapper {
         width: auto;
-        p.usr-info-playlist-title {
-          font-size: 1.5rem;
-        }
       }
       div.usr-info-playlist-scrolltop-wrapper {
         display: initial;

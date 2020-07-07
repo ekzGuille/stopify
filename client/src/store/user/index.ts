@@ -21,8 +21,7 @@ const state: VuexStateUser = {
 const getters = {
   getUserInformation: (state: VuexStateUser) => state.userInformation, // let _userInfo;
 
-  getUserPlaylists: (state: VuexStateUser) => state.userPlaylists
-  ,
+  getUserPlaylists: (state: VuexStateUser) => state.userPlaylists,
 };
 
 const actions = {
