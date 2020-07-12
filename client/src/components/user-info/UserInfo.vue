@@ -79,6 +79,8 @@ export default class UserInfo extends Vue {
 
   toScrollElement: Element | undefined;
 
+  favButton: Element | undefined;
+
   getUserInformation!: UserProfile;
 
   queryUserInformation!: () => UserProfile;
@@ -101,6 +103,30 @@ export default class UserInfo extends Vue {
 
     // Scroll
     this.toScrollElement = this.$el.parentElement || undefined;
+
+    // Query elements
+    setTimeout(() => {
+      this.favButton = this.$el.querySelector('.usr-info-playlist-scrolltop-wrapper') || undefined;
+      console.log(this.favButton);
+    });
+
+    const scrollTopListener = () => {
+      if (!this.toScrollElement) return;
+      if (!this.favButton) return;
+      if (this.toScrollElement.scrollTop === 0) {
+        if (this.favButton.classList.contains('show')) {
+          this.favButton.classList.remove('show');
+          this.favButton.classList.add('hide');
+        }
+      } else if (!this.favButton.classList.contains('show')) {
+        this.favButton.classList.remove('hide');
+        this.favButton.classList.add('show');
+      }
+    };
+
+    if (!this.toScrollElement) return;
+    this.toScrollElement.removeEventListener('fullscreenchange', scrollTopListener);
+    this.toScrollElement.addEventListener('scroll', scrollTopListener);
   }
 }
 </script>
@@ -108,7 +134,7 @@ export default class UserInfo extends Vue {
 <style lang="scss" scoped>
 @import '../../styles/_variables.scss';
 
-div.usr-info-content {
+.usr-info-content {
   margin-top: 3%;
   display: flex;
   flex-direction: column;
@@ -116,11 +142,11 @@ div.usr-info-content {
   width: 100%;
   height: 100%;
 
-  div.usr-info-data {
+  .usr-info-data {
     display: flex;
     flex-direction: row;
     width: 100%;
-    div.usr-info-profile-wrapper {
+    .usr-info-profile-wrapper {
       display: flex;
       flex-direction: column;
       width: 35%;
@@ -135,7 +161,7 @@ div.usr-info-content {
       .usr-info-profile-image-wrapper {
         position: relative;
 
-        div.usr-info-profile-backup {
+        .usr-info-profile-backup {
           margin: 0 auto;
           display: flex;
           justify-content: center;
@@ -152,7 +178,7 @@ div.usr-info-content {
           }
         }
 
-        div.usr-info-followers {
+        .usr-info-followers {
           display: flex;
           flex-direction: row;
           position: absolute;
@@ -201,17 +227,20 @@ div.usr-info-content {
         }
       }
     }
-    div.usr-info-playlist-wrapper {
+
+    .usr-info-playlist-wrapper {
       display: flex;
       flex-direction: column;
       width: 65%;
     }
-    div.usr-info-playlist-scrolltop-wrapper {
+    .usr-info-playlist-scrolltop-wrapper {
       position: absolute;
       bottom: 20px;
       right: 20px;
       display: none;
-      div.usr-info-playlist-scrolltop {
+      opacity: 0;
+
+      .usr-info-playlist-scrolltop {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -233,21 +262,21 @@ div.usr-info-content {
 }
 
 @media (max-width: $breakpoint-tablet) {
-  div.usr-info-content {
+  .usr-info-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: auto;
     margin-top: 5%;
 
-    div.usr-info-data {
+    .usr-info-data {
       display: flex;
       flex-direction: column;
       width: auto;
-      div.usr-info-profile-wrapper {
+      .usr-info-profile-wrapper {
         width: auto;
         .usr-info-profile-image-wrapper {
-          div.usr-info-profile-backup {
+          .usr-info-profile-backup {
             width: 150px;
             height: 150px;
             svg {
@@ -256,7 +285,7 @@ div.usr-info-content {
             }
           }
 
-          div.usr-info-followers {
+          .usr-info-followers {
             left: 20%;
           }
 
@@ -269,15 +298,24 @@ div.usr-info-content {
             }
           }
         }
+
         p.usr-info-open-sp-wrapper {
           font-size: 1.3rem;
         }
       }
-      div.usr-info-playlist-wrapper {
+
+      .usr-info-playlist-wrapper {
         width: auto;
       }
-      div.usr-info-playlist-scrolltop-wrapper {
+
+      .usr-info-playlist-scrolltop-wrapper.hide {
+        display: none;
+        opacity: 0;
+      }
+
+      .usr-info-playlist-scrolltop-wrapper.show {
         display: initial;
+        opacity: 1;
       }
     }
   }

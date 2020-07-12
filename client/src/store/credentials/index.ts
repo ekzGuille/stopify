@@ -63,7 +63,7 @@ const actions = {
           .get(`${BACKEND_URL}/refresh_token?${new URLSearchParams({ refresh_token: state.refreshToken })}`);
         commit('setAccessToken', access_token);
         localStorage.setItem(UserCredentials.accessToken, access_token);
-        const newDate = Date.now();
+        const newDate = getTime();
         localStorage.setItem(UserCredentials.lastTokenRefresh, `${newDate}`);
         commit('setLastRefresh', newDate);
       } catch (e) {

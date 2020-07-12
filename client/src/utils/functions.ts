@@ -7,8 +7,8 @@ export function getUrlData(key: string): string {
   return data;
 }
 
-export function getTime(miliseconds?: boolean) {
-  if (miliseconds) {
+export function getTime(milliseconds?: boolean) {
+  if (milliseconds) {
     return Date.now();
   }
   return ~~(Date.now() / 1000);
