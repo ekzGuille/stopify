@@ -60,7 +60,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
-import { Item, UserProfile } from '@/types/spotify';
+import { UserProfile } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 
@@ -77,7 +77,7 @@ import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 export default class UserInfo extends Vue {
   contentLoaded = false;
 
-  header: Element | undefined;
+  toScrollElement: Element | undefined;
 
   getUserInformation!: UserProfile;
 
@@ -86,7 +86,8 @@ export default class UserInfo extends Vue {
   updateAccessToken!: () => UserProfile;
 
   scroll() {
-    this.$el.scrollIntoView({ behavior: 'smooth' });
+    if (!this.toScrollElement) return;
+    this.toScrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   async mounted() {
@@ -98,16 +99,8 @@ export default class UserInfo extends Vue {
       this.contentLoaded = true;
     }
 
-    // Scrolling behaviour
-    this.header = document.querySelector('header') || undefined;
-    const toScrollElement = this.$el.parentElement;
-    if (!toScrollElement) return;
-    toScrollElement.addEventListener('scroll', () => {
-      if (!this.header) return;
-      if (toScrollElement.scrollTop < this.header.clientHeight) {
-        this.header.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
+    // Scroll
+    this.toScrollElement = this.$el.parentElement || undefined;
   }
 }
 </script>
