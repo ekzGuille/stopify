@@ -1,0 +1,73 @@
+<template>
+  <div class="rdr-redirect">
+    <div class="rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
+    <div class="rdr-login-title" v-if="!isLogged">No se ha podido hacer el login</div>
+    <div class="rdr-login-description">Volviendo al inicio...</div>
+    <Loading></Loading>
+  </div>
+</template>
+
+<script lang="ts">
+
+import router from '@/router';
+import { Vue, Component } from 'vue-property-decorator';
+import { mapActions, mapState } from 'vuex';
+import Loading from '@/components/loading/Loading.vue';
+import { UserCredentials } from '@/utils/constants';
+import { VuexLocalStorage } from '@/types/vuex';
+
+@Component({
+  computed: {
+    ...mapState('credentials', ['isLogged']),
+  },
+  methods: {
+    ...mapActions('credentials', ['storeLocalData']),
+  },
+  components: {
+    Loading,
+  },
+})
+export default class Redirect extends Vue {
+  storeLocalData!: (
+    {
+      accessToken, refreshToken, loginError, expiresIn, lastRefresh,
+    }: VuexLocalStorage) => void;
+
+  mounted() {
+    this.storeLocalData({
+      accessToken: UserCredentials.accessToken,
+      refreshToken: UserCredentials.refreshToken,
+      loginError: UserCredentials.loginError,
+      expiresIn: UserCredentials.expiresIn,
+      lastRefresh: UserCredentials.lastTokenRefresh,
+    });
+
+    setTimeout(async () => {
+      if (router.currentRoute.name !== 'Home') {
+        await router.push({ name: 'Home' });
+      }
+    }, 1000);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  div.rdr-redirect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    div {
+      margin: 1%;
+      &.rdr-login-title {
+        font-size: 3rem;
+      }
+
+      &.rdr-login-description {
+        font-size: 2rem;
+      }
+    }
+  }
+</style>
