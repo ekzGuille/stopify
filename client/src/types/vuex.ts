@@ -20,3 +20,8 @@ export interface VuexStateUser {
   userInformation: UserProfile | null;
   userPlaylists: UserPlaylist | null;
 }
+
+export interface QueryPlaylistAttributes {
+  userId: string;
+  queryOffset?: number;
+}

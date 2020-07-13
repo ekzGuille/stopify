@@ -22,7 +22,7 @@
           <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
           <div class="usr-info-profile-backup" v-if="!getUserInformation.image">
             <svg viewBox="0 0 24 24"
-                 width="24" height="24" stroke="currentColor" stroke-width="1"
+                 width="24" height="24" stroke="currentColor" stroke-width="0.5"
                  fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
@@ -83,9 +83,9 @@ export default class UserInfo extends Vue {
 
   getUserInformation!: UserProfile;
 
-  queryUserInformation!: () => UserProfile;
+  queryUserInformation!: () => Promise<void>;
 
-  updateAccessToken!: () => UserProfile;
+  updateAccessToken!: () => Promise<void>;
 
   scroll() {
     if (!this.toScrollElement) return;
@@ -107,7 +107,6 @@ export default class UserInfo extends Vue {
     // Query elements
     setTimeout(() => {
       this.favButton = this.$el.querySelector('.usr-info-playlist-scrolltop-wrapper') || undefined;
-      console.log(this.favButton);
     });
 
     const scrollTopListener = () => {
@@ -172,8 +171,8 @@ export default class UserInfo extends Vue {
           background: $color-sp-grey;
 
           svg {
-            width: 8rem;
-            height: 8rem;
+            width: 7rem;
+            height: 7rem;
             stroke: $color-sp-stroke-light-grey;
           }
         }
@@ -280,8 +279,8 @@ export default class UserInfo extends Vue {
             width: 150px;
             height: 150px;
             svg {
-              width: 6rem;
-              height: 6rem;
+              width: 5rem;
+              height: 5rem;
             }
           }
 

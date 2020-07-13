@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ActionContext } from 'vuex';
-import { VuexStateUser } from '@/types/vuex';
+import { VuexStateUser, QueryPlaylistAttributes } from '@/types/vuex';
 import credentialsStore from '@/store/credentials';
 import env from '@/config';
 import {
@@ -19,7 +19,7 @@ const state: VuexStateUser = {
 };
 
 const getters = {
-  getUserInformation: (state: VuexStateUser) => state.userInformation, // let _userInfo;
+  getUserInformation: (state: VuexStateUser) => state.userInformation,
 
   getUserPlaylists: (state: VuexStateUser) => state.userPlaylists,
 };
@@ -50,12 +50,15 @@ const actions = {
       console.error(process.env.NODE_ENV === 'production' ? 'Cannot get user\'s profile' : e);
     }
   },
-  async queryUserPlaylists({ commit, getters, dispatch }: ActionContext<VuexStateUser, any>, userId: string) {
+  async queryUserPlaylists({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
+    { userId, queryOffset }: QueryPlaylistAttributes) {
+    const storedPlaylists = state.userPlaylists ? state.userPlaylists.items : [];
+
     try {
       // Mostrar las últimas 10 añadidas
       const queryStringData = {
         limit: '10',
-        offset: '0',
+        offset: `${queryOffset || 0}`,
       };
       const { data }: AxiosResponse<SPUserPlaylist> = await axios
         .get(`${API_SPOTIFY}/v1/users/${userId}/playlists?${new URLSearchParams(queryStringData).toString()}`, {
@@ -70,14 +73,14 @@ const actions = {
         limit,
         total,
         offset,
-        items: items.map((i: SPItem) => ({
+        items: [...storedPlaylists, ...items.map((i: SPItem) => ({
           id: i.id,
           name: i.name,
           public: i.public,
           trackCount: i.tracks.total,
           url: i.external_urls.spotify,
           image: i.images[0],
-        })),
+        }))],
       };
 
       commit('setUserPlaylists', payloadData);
