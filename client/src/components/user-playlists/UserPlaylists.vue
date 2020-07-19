@@ -10,8 +10,7 @@
       <p>Tienes <span class="usr-pl-accent">{{ getUserPlaylists.total }}</span> en total.</p>
       <div class="usr-pl-load-more-wrapper">
         <Button
-          v-bind:class="{'usr-pl-btn-load-more': loadingMore ||
-          (this.getUserPlaylists.limit + this.getUserPlaylists.offset) > this.getUserPlaylists.total }"
+          v-bind:class="{ 'usr-pl-btn-load-more': loadingMore || this.maxPlaylist() }"
           font-size="0.8rem"
           padding="5px"
           width="130px"
@@ -80,7 +79,7 @@ export default class UserPlaylists extends Vue {
   }
 
   async loadMore() {
-    if (!this.loadingMore && (this.getUserPlaylists.limit + this.getUserPlaylists.offset) < this.getUserPlaylists.total) {
+    if (!this.loadingMore && !this.maxPlaylist()) {
       this.loadingMore = true;
       const queryOffset = this.getUserPlaylists.limit + this.getUserPlaylists.offset;
       await this.queryUserPlaylists({ userId: this.userId, queryOffset });
@@ -95,9 +94,10 @@ export default class UserPlaylists extends Vue {
   }
 
   calculatePlaylistCount() {
-    return (this.getUserPlaylists.limit + this.getUserPlaylists.offset) > this.getUserPlaylists.total
-      ? this.getUserPlaylists.total : (this.getUserPlaylists.limit + this.getUserPlaylists.offset);
+    return this.maxPlaylist() ? this.getUserPlaylists.total : (this.getUserPlaylists.limit + this.getUserPlaylists.offset);
   }
+
+  maxPlaylist() { return (this.getUserPlaylists.limit + this.getUserPlaylists.offset) >= this.getUserPlaylists.total; }
 }
 </script>
 
