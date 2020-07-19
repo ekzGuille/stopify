@@ -101,15 +101,18 @@ export default class UserInfo extends Vue {
       this.contentLoaded = true;
     }
 
-    // Scroll
+    // scroll
     this.toScrollElement = this.$el.parentElement || undefined;
 
-    // Query elements
+    // query elements
     setTimeout(() => {
       this.favButton = this.$el.querySelector('.usr-info-playlist-scrolltop-wrapper') || undefined;
     });
 
-    const scrollTopListener = () => {
+    if (!this.toScrollElement) return;
+
+    // listener
+    const scrollListener = () => {
       if (!this.toScrollElement) return;
       if (!this.favButton) return;
       if (this.toScrollElement.scrollTop === 0) {
@@ -123,9 +126,8 @@ export default class UserInfo extends Vue {
       }
     };
 
-    if (!this.toScrollElement) return;
-    this.toScrollElement.removeEventListener('fullscreenchange', scrollTopListener);
-    this.toScrollElement.addEventListener('scroll', scrollTopListener);
+    this.toScrollElement.removeEventListener('scroll', scrollListener);
+    this.toScrollElement.addEventListener('scroll', scrollListener);
   }
 }
 </script>
@@ -262,11 +264,11 @@ export default class UserInfo extends Vue {
 
 @media (max-width: $breakpoint-tablet) {
   .usr-info-content {
+    margin-top: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: auto;
-    margin-top: 5%;
 
     .usr-info-data {
       display: flex;
