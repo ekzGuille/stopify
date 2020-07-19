@@ -53,7 +53,9 @@
         </div>
       </div>
     </div>
-    <Loading v-if="!contentLoaded"></Loading>
+    <div class="usr-loading-wrapper" v-if="!contentLoaded">
+      <Loading></Loading>
+    </div>
   </div>
 </template>
 
@@ -63,6 +65,7 @@ import { mapActions, mapGetters } from 'vuex';
 import { UserProfile } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
+import { wait } from '@/utils/functions';
 
 @Component({
   components: { UserPlaylists, Loading },
@@ -93,13 +96,9 @@ export default class UserInfo extends Vue {
   }
 
   async mounted() {
-    if (!this.getUserInformation) {
-      await this.updateAccessToken();
-      await this.queryUserInformation();
-      this.contentLoaded = true;
-    } else {
-      this.contentLoaded = true;
-    }
+    // NOTE: Es necesario el timeout?
+    await wait(250);
+    this.contentLoaded = true;
 
     // scroll
     this.toScrollElement = this.$el.parentElement || undefined;
@@ -259,6 +258,14 @@ export default class UserInfo extends Vue {
         }
       }
     }
+  }
+  .usr-loading-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 

@@ -17,7 +17,7 @@
           border="none"
           color="#00D66E"
           @click.native="loadMore()">
-          Cargar más
+          {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
         </Button>
         <Loading v-if="loadingMore"></Loading>
       </div>
@@ -127,12 +127,12 @@ div.usr-pl-content {
 
     .usr-pl-load-more-wrapper {
       position: relative;
-      height: $spinner-size * 2;
+      height: $spinner-size * 1.5;
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      margin: 2.5% 0 0 0;
+      margin: 2% 0 0 0;
 
       .usr-pl-btn-load-more {
         color: rgba(0, 214, 110, 0.5);
@@ -153,7 +153,6 @@ div.usr-pl-content {
     }
 
     div.usr-pl-playlist-wrapper {
-      /*margin: 2% 0 0 0;*/
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -174,7 +173,6 @@ div.usr-pl-content {
         font-size: 1.5rem;
       }
       div.usr-pl-playlist-wrapper {
-        /*margin: 2% 0 0 0;*/
         display: flex;
         flex-wrap: nowrap;
         height: auto;
@@ -183,7 +181,7 @@ div.usr-pl-content {
       }
 
       .usr-pl-load-more-wrapper {
-        margin: 4% 0 0 0;
+        margin: 2.5% 0 0 0;
       }
     }
   }

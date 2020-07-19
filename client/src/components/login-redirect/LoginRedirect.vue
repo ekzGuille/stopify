@@ -3,7 +3,7 @@
     <div class="rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
     <div class="rdr-login-title" v-if="!isLogged">No se ha podido hacer el login</div>
     <div class="rdr-login-description">Volviendo al inicio...</div>
-    <Loading></Loading>
+    <Loading v-if="queryData"></Loading>
   </div>
 </template>
 
@@ -11,17 +11,22 @@
 
 import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
 import { UserCredentials } from '@/utils/constants';
 import { VuexLocalStorage } from '@/types/vuex';
+import { goHome } from '@/utils/functions/routes';
+import { UserProfile } from '@/types/spotify';
+import { wait } from '@/utils/functions';
 
 @Component({
   computed: {
     ...mapState('credentials', ['isLogged']),
+    ...mapGetters('user', ['getUserInformation']),
   },
   methods: {
-    ...mapActions('credentials', ['storeLocalData']),
+    ...mapActions('credentials', ['storeLocalData', 'updateAccessToken']),
+    ...mapActions('user', ['queryUserInformation']),
   },
   components: {
     Loading,
@@ -33,7 +38,15 @@ export default class Redirect extends Vue {
       accessToken, refreshToken, loginError, expiresIn, lastRefresh,
     }: VuexLocalStorage) => void;
 
-  mounted() {
+  queryData = true;
+
+  getUserInformation!: UserProfile;
+
+  queryUserInformation!: () => Promise<void>;
+
+  updateAccessToken!: () => Promise<void>;
+
+  async mounted() {
     this.storeLocalData({
       accessToken: UserCredentials.accessToken,
       refreshToken: UserCredentials.refreshToken,
@@ -42,11 +55,15 @@ export default class Redirect extends Vue {
       lastRefresh: UserCredentials.lastTokenRefresh,
     });
 
-    setTimeout(async () => {
-      if (router.currentRoute.name !== 'Home') {
-        await router.push({ name: 'Home' });
-      }
-    }, 1000);
+    if (!this.getUserInformation) {
+      await this.updateAccessToken();
+      await this.queryUserInformation();
+      await wait(1000);
+    } else {
+      await wait(1500);
+    }
+    await goHome();
+    this.queryData = false;
   }
 }
 </script>
