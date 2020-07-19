@@ -1,10 +1,9 @@
 <template>
-  <div
+  <button
     class="login-btn"
-   :style="cssVariables"
-    @click="action">
+   :style="cssVariables">
     <slot/>
-  </div>
+  </button>
 </template>
 
 <script lang="ts">
@@ -23,8 +22,6 @@ export default class Button extends Vue {
   @Prop() border!: string;
 
   @Prop() color!: string;
-
-  @Prop() action!: Function;
 
   get cssVariables() {
     return {
@@ -52,16 +49,21 @@ export default class Button extends Vue {
   font-size: var(--font-size);
   padding: var(--padding);
   width: var(--width);
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    transition: all 0.1s ease-in-out;
+  }
+
+  &:active {
+    transform: scale(0.98);
+    transition: all 0.1s ease-in-out;
+  }
+
+  &:focus {
+    outline: 0;
+  }
 }
 
-.login-btn:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-  transition: all 0.1s ease-in-out;
-}
-
-.login-btn:active {
-  transform: scale(0.98);
-  transition: all 0.1s ease-in-out;
-}
 </style>

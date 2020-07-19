@@ -17,7 +17,7 @@
           width="130px"
           border="none"
           color="#00D66E"
-          :action="loadMore">
+          @click.native="loadMore()">
           Cargar más
         </Button>
         <Loading v-if="loadingMore"></Loading>
