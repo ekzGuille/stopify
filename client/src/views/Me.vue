@@ -15,15 +15,22 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '/../styles/_variables.scss';
 div.me-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: scroll;
+  overflow: hidden;
   height: calc(100% - #{$header-height});
   width: 100%;
 }
+
+@media (max-width: $breakpoint-tablet) {
+  div.me-wrapper {
+    overflow: scroll;
+  }
+}
+
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div id="app">
+    <!--    TODO: Remove-->
 <!--    <div id="nav">-->
 <!--      <router-link to="/">Home</router-link> |-->
 <!--      <router-link to="/about">About</router-link>-->
 <!--    </div>-->
-
     <Header></Header>
     <router-view />
   </div>
@@ -18,6 +18,26 @@ export default {
   name: 'App',
   components: {
     Header,
+  },
+  data: () => ({
+    vh: 0,
+  }),
+  mounted() {
+    // HACK: Fixes mobile resizing when hiding navigation bar
+    this.vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${this.vh}px`);
+
+    /**
+     * @see https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+     */
+    const resizeEvent = () => {
+      const vh = window.innerHeight * 0.01;
+      this.vh = vh;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    window.removeEventListener('resize', resizeEvent);
+    window.addEventListener('resize', resizeEvent);
   },
 };
 </script>
@@ -50,9 +70,10 @@ body {
   -moz-user-select: none;
   -webkit-user-select: none;
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: $color-sp-background-dark;
   overflow: hidden;
+  /*position: fixed;*/
 }
 
 html {
