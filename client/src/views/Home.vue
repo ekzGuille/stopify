@@ -8,7 +8,7 @@
           padding="12px"
           width="200px"
           bg-color="#1db954"
-          :action="logIn">
+          @click.native="logIn()">
           Iniciar sesión
         </Button>
       </div>
@@ -37,7 +37,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  //TODO scoped quitado
 @import '/../styles/_variables.scss';
 div.home {
   display: flex;

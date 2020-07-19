@@ -16,7 +16,7 @@
         padding="8px"
         width="150px"
         border="2px solid #fff"
-        :action="logout">
+        @click.native="logout()">
         Cerrar sesión
       </Button>
       <Button
@@ -25,7 +25,7 @@
         padding="8px"
         width="150px"
         bg-color="#1db954"
-        :action="logIn">
+        @click.native="logIn()">
         Iniciar sesión
       </Button>
     </div>
