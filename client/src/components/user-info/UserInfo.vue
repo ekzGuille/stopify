@@ -1,5 +1,7 @@
 <template>
   <div class="usr-info-content">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css"
+          integrity="sha256-0n6YDYIexWJmHyTKtRRHTXvoanQrXpFfpsfv0h53qvk=" crossorigin="anonymous">
     <div class="usr-info-data" v-if="contentLoaded">
       <div class="usr-info-profile-wrapper">
         <p>Hola {{ getUserInformation.display_name }}
@@ -24,10 +26,7 @@
             v-if="!getUserInformation.image"
             type="user"
           ></NoImage>
-          <img
-            class="usr-info-flag"
-            :src="`https://www.countryflags.io/${getUserInformation.country}/flat/64.png`"
-            :alt="getUserInformation.country">
+          <span :class="`usr-info-flag flag-icon flag-icon-${getUserInformation.country.toLowerCase()}`"></span>
         </div>
         <p class="usr-info-open-sp-wrapper">Ver perfil completo en
           <a class="usr-info-accent" :href="getUserInformation.spotifyProfileUrl" target="_blank">Spotify</a>
@@ -82,10 +81,6 @@ export default class UserInfo extends Vue {
   favButton: Element | undefined;
 
   getUserInformation!: UserProfile;
-
-  queryUserInformation!: () => Promise<void>;
-
-  updateAccessToken!: () => Promise<void>;
 
   scroll() {
     if (!this.toScrollElement) return;
@@ -168,9 +163,6 @@ export default class UserInfo extends Vue {
           width: 35px;
           left: 25%;
 
-          span.usr-info-followers-count,
-          svg.usr-info-followers-icon {
-          }
           span.usr-info-followers-count {
             font-size: 1rem;
             margin-right: 5px;
@@ -180,18 +172,17 @@ export default class UserInfo extends Vue {
             height: 15px;
           }
         }
-        img {
-          &.usr-info-profile {
+        .usr-info-profile {
             width: 200px;
             border-radius: 50%;
-          }
-          &.usr-info-flag {
-            position: absolute;
-            bottom: 0;
-            border-radius: 0;
-            right: 25%;
-            width: 35px;
-          }
+        }
+        .usr-info-flag {
+          position: absolute;
+          bottom: 4px;
+          font-size: 1rem;
+          border-radius: 0;
+          right: 25%;
+          width: 35px;
         }
       }
       p.usr-info-open-sp-wrapper {
@@ -268,15 +259,13 @@ export default class UserInfo extends Vue {
             left: 20%;
           }
 
-          img {
-            &.usr-info-profile {
+          .usr-info-profile {
               width: 150px;
             }
-            &.usr-info-flag {
+          .usr-info-flag {
               right: 20%;
             }
           }
-        }
 
         p.usr-info-open-sp-wrapper {
           font-size: 1.3rem;
