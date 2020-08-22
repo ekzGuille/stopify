@@ -20,14 +20,10 @@
             </svg>
           </div>
           <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
-          <div class="usr-info-profile-backup" v-if="!getUserInformation.image">
-            <svg viewBox="0 0 24 24"
-                 width="24" height="24" stroke="currentColor" stroke-width="0.5"
-                 fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
+          <NoImage
+            v-if="!getUserInformation.image"
+            type="user"
+          ></NoImage>
           <img
             class="usr-info-flag"
             :src="`https://www.countryflags.io/${getUserInformation.country}/flat/64.png`"
@@ -65,10 +61,11 @@ import { mapActions, mapGetters } from 'vuex';
 import { UserProfile } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
+import NoImage from '@/components/no-image/NoImage.vue';
 import { wait } from '@/utils/functions';
 
 @Component({
-  components: { UserPlaylists, Loading },
+  components: { UserPlaylists, Loading, NoImage },
   computed: {
     ...mapGetters('user', ['getUserInformation']),
   },
@@ -160,23 +157,6 @@ export default class UserInfo extends Vue {
       }
       .usr-info-profile-image-wrapper {
         position: relative;
-
-        .usr-info-profile-backup {
-          margin: 0 auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          background: $color-sp-grey;
-
-          svg {
-            width: 7rem;
-            height: 7rem;
-            stroke: $color-sp-stroke-light-grey;
-          }
-        }
 
         .usr-info-followers {
           display: flex;
@@ -284,15 +264,6 @@ export default class UserInfo extends Vue {
       .usr-info-profile-wrapper {
         width: auto;
         .usr-info-profile-image-wrapper {
-          .usr-info-profile-backup {
-            width: 150px;
-            height: 150px;
-            svg {
-              width: 5rem;
-              height: 5rem;
-            }
-          }
-
           .usr-info-followers {
             left: 20%;
           }
