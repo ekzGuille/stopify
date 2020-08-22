@@ -10,22 +10,19 @@
       <p>Tienes <span class="usr-pl-accent">{{ getUserPlaylists.total }}</span> en total.</p>
       <div class="usr-pl-load-more-wrapper">
         <Button
-          v-bind:class="{'usr-pl-btn-load-more': loadingMore ||
-          (this.getUserPlaylists.limit + this.getUserPlaylists.offset) > this.getUserPlaylists.total }"
+          v-bind:class="{ 'usr-pl-btn-load-more': loadingMore || this.maxPlaylist() }"
           font-size="0.8rem"
           padding="5px"
           width="130px"
           border="none"
           color="#00D66E"
-          :action="loadMore">
-          Cargar más
+          @click.native="loadMore()">
+          {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
         </Button>
         <Loading v-if="loadingMore"></Loading>
       </div>
       <div class="usr-pl-playlist-wrapper">
         <Playlist v-for="playlist of userPlaylists" :key="playlist.id" :playlist="playlist"></Playlist>
-        <div class="usr-pl-playlist-wrapper-scroll">
-        </div>
       </div>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
@@ -80,7 +77,7 @@ export default class UserPlaylists extends Vue {
   }
 
   async loadMore() {
-    if (!this.loadingMore && (this.getUserPlaylists.limit + this.getUserPlaylists.offset) < this.getUserPlaylists.total) {
+    if (!this.loadingMore && !this.maxPlaylist()) {
       this.loadingMore = true;
       const queryOffset = this.getUserPlaylists.limit + this.getUserPlaylists.offset;
       await this.queryUserPlaylists({ userId: this.userId, queryOffset });
@@ -95,9 +92,10 @@ export default class UserPlaylists extends Vue {
   }
 
   calculatePlaylistCount() {
-    return (this.getUserPlaylists.limit + this.getUserPlaylists.offset) > this.getUserPlaylists.total
-      ? this.getUserPlaylists.total : (this.getUserPlaylists.limit + this.getUserPlaylists.offset);
+    return this.maxPlaylist() ? this.getUserPlaylists.total : (this.getUserPlaylists.limit + this.getUserPlaylists.offset);
   }
+
+  maxPlaylist() { return (this.getUserPlaylists.limit + this.getUserPlaylists.offset) >= this.getUserPlaylists.total; }
 }
 </script>
 
@@ -127,12 +125,12 @@ div.usr-pl-content {
 
     .usr-pl-load-more-wrapper {
       position: relative;
-      height: $spinner-size * 2;
+      height: $spinner-size * 1.5;
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      margin: 2.5% 0 0 0;
+      margin: 2% 0 0 0;
 
       .usr-pl-btn-load-more {
         color: rgba(0, 214, 110, 0.5);
@@ -153,7 +151,6 @@ div.usr-pl-content {
     }
 
     div.usr-pl-playlist-wrapper {
-      /*margin: 2% 0 0 0;*/
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -174,7 +171,6 @@ div.usr-pl-content {
         font-size: 1.5rem;
       }
       div.usr-pl-playlist-wrapper {
-        /*margin: 2% 0 0 0;*/
         display: flex;
         flex-wrap: nowrap;
         height: auto;
@@ -183,7 +179,7 @@ div.usr-pl-content {
       }
 
       .usr-pl-load-more-wrapper {
-        margin: 4% 0 0 0;
+        margin: 2.5% 0 0 0;
       }
     }
   }

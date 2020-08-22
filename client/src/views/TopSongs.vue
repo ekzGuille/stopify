@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '/../styles/_variables.scss';
 div.top-songs-wrapper {
   display: flex;

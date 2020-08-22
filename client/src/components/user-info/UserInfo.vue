@@ -1,5 +1,7 @@
 <template>
   <div class="usr-info-content">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css"
+          integrity="sha256-0n6YDYIexWJmHyTKtRRHTXvoanQrXpFfpsfv0h53qvk=" crossorigin="anonymous">
     <div class="usr-info-data" v-if="contentLoaded">
       <div class="usr-info-profile-wrapper">
         <p>Hola {{ getUserInformation.display_name }}
@@ -20,18 +22,11 @@
             </svg>
           </div>
           <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
-          <div class="usr-info-profile-backup" v-if="!getUserInformation.image">
-            <svg viewBox="0 0 24 24"
-                 width="24" height="24" stroke="currentColor" stroke-width="0.5"
-                 fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
-          <img
-            class="usr-info-flag"
-            :src="`https://www.countryflags.io/${getUserInformation.country}/flat/64.png`"
-            :alt="getUserInformation.country">
+          <NoImage
+            v-if="!getUserInformation.image"
+            type="user"
+          ></NoImage>
+          <span :class="`usr-info-flag flag-icon flag-icon-${getUserInformation.country.toLowerCase()}`"></span>
         </div>
         <p class="usr-info-open-sp-wrapper">Ver perfil completo en
           <a class="usr-info-accent" :href="getUserInformation.spotifyProfileUrl" target="_blank">Spotify</a>
@@ -53,7 +48,9 @@
         </div>
       </div>
     </div>
-    <Loading v-if="!contentLoaded"></Loading>
+    <div class="usr-loading-wrapper" v-if="!contentLoaded">
+      <Loading></Loading>
+    </div>
   </div>
 </template>
 
@@ -63,9 +60,11 @@ import { mapActions, mapGetters } from 'vuex';
 import { UserProfile } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
+import NoImage from '@/components/no-image/NoImage.vue';
+import { wait } from '@/utils/functions';
 
 @Component({
-  components: { UserPlaylists, Loading },
+  components: { UserPlaylists, Loading, NoImage },
   computed: {
     ...mapGetters('user', ['getUserInformation']),
   },
@@ -83,33 +82,28 @@ export default class UserInfo extends Vue {
 
   getUserInformation!: UserProfile;
 
-  queryUserInformation!: () => Promise<void>;
-
-  updateAccessToken!: () => Promise<void>;
-
   scroll() {
     if (!this.toScrollElement) return;
     this.toScrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   async mounted() {
-    if (!this.getUserInformation) {
-      await this.updateAccessToken();
-      await this.queryUserInformation();
-      this.contentLoaded = true;
-    } else {
-      this.contentLoaded = true;
-    }
+    // NOTE: Es necesario el timeout?
+    await wait(250);
+    this.contentLoaded = true;
 
-    // Scroll
+    // scroll
     this.toScrollElement = this.$el.parentElement || undefined;
 
-    // Query elements
+    // query elements
     setTimeout(() => {
       this.favButton = this.$el.querySelector('.usr-info-playlist-scrolltop-wrapper') || undefined;
     });
 
-    const scrollTopListener = () => {
+    if (!this.toScrollElement) return;
+
+    // listener
+    const scrollListener = () => {
       if (!this.toScrollElement) return;
       if (!this.favButton) return;
       if (this.toScrollElement.scrollTop === 0) {
@@ -123,9 +117,8 @@ export default class UserInfo extends Vue {
       }
     };
 
-    if (!this.toScrollElement) return;
-    this.toScrollElement.removeEventListener('fullscreenchange', scrollTopListener);
-    this.toScrollElement.addEventListener('scroll', scrollTopListener);
+    this.toScrollElement.removeEventListener('scroll', scrollListener);
+    this.toScrollElement.addEventListener('scroll', scrollListener);
   }
 }
 </script>
@@ -160,23 +153,6 @@ export default class UserInfo extends Vue {
       .usr-info-profile-image-wrapper {
         position: relative;
 
-        .usr-info-profile-backup {
-          margin: 0 auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          background: $color-sp-grey;
-
-          svg {
-            width: 7rem;
-            height: 7rem;
-            stroke: $color-sp-stroke-light-grey;
-          }
-        }
-
         .usr-info-followers {
           display: flex;
           flex-direction: row;
@@ -187,9 +163,6 @@ export default class UserInfo extends Vue {
           width: 35px;
           left: 25%;
 
-          span.usr-info-followers-count,
-          svg.usr-info-followers-icon {
-          }
           span.usr-info-followers-count {
             font-size: 1rem;
             margin-right: 5px;
@@ -199,18 +172,17 @@ export default class UserInfo extends Vue {
             height: 15px;
           }
         }
-        img {
-          &.usr-info-profile {
+        .usr-info-profile {
             width: 200px;
             border-radius: 50%;
-          }
-          &.usr-info-flag {
-            position: absolute;
-            bottom: 0;
-            border-radius: 0;
-            right: 25%;
-            width: 35px;
-          }
+        }
+        .usr-info-flag {
+          position: absolute;
+          bottom: 4px;
+          font-size: 1rem;
+          border-radius: 0;
+          right: 25%;
+          width: 35px;
         }
       }
       p.usr-info-open-sp-wrapper {
@@ -258,15 +230,23 @@ export default class UserInfo extends Vue {
       }
     }
   }
+  .usr-loading-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media (max-width: $breakpoint-tablet) {
   .usr-info-content {
+    margin-top: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: auto;
-    margin-top: 5%;
 
     .usr-info-data {
       display: flex;
@@ -275,28 +255,17 @@ export default class UserInfo extends Vue {
       .usr-info-profile-wrapper {
         width: auto;
         .usr-info-profile-image-wrapper {
-          .usr-info-profile-backup {
-            width: 150px;
-            height: 150px;
-            svg {
-              width: 5rem;
-              height: 5rem;
-            }
-          }
-
           .usr-info-followers {
             left: 20%;
           }
 
-          img {
-            &.usr-info-profile {
+          .usr-info-profile {
               width: 150px;
             }
-            &.usr-info-flag {
+          .usr-info-flag {
               right: 20%;
             }
           }
-        }
 
         p.usr-info-open-sp-wrapper {
           font-size: 1.3rem;

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h3 @click="goHome" class="header-name">Stopify</h3>
+    <h3 @click="clickHome()" class="header-name">Stopify</h3>
     <div v-if="isLogged" class="header-content">
       <router-link class="header-item" to="/top">
         Mi top
@@ -16,7 +16,7 @@
         padding="8px"
         width="150px"
         border="2px solid #fff"
-        :action="logout">
+        @click.native="logout()">
         Cerrar sesión
       </Button>
       <Button
@@ -25,7 +25,7 @@
         padding="8px"
         width="150px"
         bg-color="#1db954"
-        :action="logIn">
+        @click.native="logIn()">
         Iniciar sesión
       </Button>
     </div>
@@ -36,6 +36,7 @@
 import router from '@/router';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
+import { goHome } from '@/utils/functions/routes';
 import Button from '../button/Button.vue';
 
 @Component({
@@ -52,16 +53,14 @@ import Button from '../button/Button.vue';
 export default class Header extends Vue {
   logOut!: () => void;
 
-  async goHome() {
-    if (router.currentRoute.name !== 'Home') {
-      await router.push({ name: 'Home' });
-    }
-  }
-
   async logout() {
     this.logOut();
-    await this.goHome();
+    await goHome();
     await router.go(0);
+  }
+
+  clickHome() {
+    goHome();
   }
 }
 </script>
