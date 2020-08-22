@@ -23,8 +23,6 @@
       </div>
       <div class="usr-pl-playlist-wrapper">
         <Playlist v-for="playlist of userPlaylists" :key="playlist.id" :playlist="playlist"></Playlist>
-        <div class="usr-pl-playlist-wrapper-scroll">
-        </div>
       </div>
     </div>
     <Loading v-if="!contentLoaded"></Loading>

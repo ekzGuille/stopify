@@ -6,7 +6,7 @@
         v-if="!playlist.image"
         type="song"
       ></NoImage>
-      {{ playlist.name }}
+      {{ fixLength(playlist.name) }}
     </a>
   </div>
 </template>
@@ -16,13 +16,19 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Item } from '@/types/spotify';
 import Loading from '@/components/loading/Loading.vue';
 import NoImage from '@/components/no-image/NoImage.vue';
+import { lengthNormalizer } from '@/utils/functions';
 
 @Component({
   components: { NoImage, Loading },
 })
 export default class UserPlaylists extends Vue {
   @Prop({ required: true }) playlist!: Item;
+
+  fixLength(toFixString: string) {
+    return lengthNormalizer(toFixString);
+  }
 }
+
 </script>
 
 <style lang="scss" scoped>
