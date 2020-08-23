@@ -33,8 +33,7 @@
         </p>
       </div>
       <div class="usr-info-playlist-wrapper">
-        <UserPlaylists :v-if="getUserInformation && getUserInformation.id"
-                       :userId="getUserInformation.id"></UserPlaylists>
+        <UserPlaylists :v-if="getUserInformation && getUserInformation.id"></UserPlaylists>
       </div>
       <div class="usr-info-playlist-scrolltop-wrapper">
         <div class="usr-info-playlist-scrolltop" @click="scroll">
@@ -57,7 +56,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
-import { UserProfile } from '@/types/spotify';
+import { UserProfile } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 import NoImage from '@/components/no-image/NoImage.vue';

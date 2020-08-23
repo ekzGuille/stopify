@@ -16,7 +16,7 @@ import Loading from '@/components/loading/Loading.vue';
 import { UserCredentials } from '@/utils/constants';
 import { VuexLocalStorage } from '@/types/vuex';
 import { goHome } from '@/utils/functions/routes';
-import { UserProfile } from '@/types/spotify';
+import { UserProfile } from '@/types/custom';
 import { wait } from '@/utils/functions';
 
 @Component({

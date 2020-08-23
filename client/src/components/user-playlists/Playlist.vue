@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Item } from '@/types/spotify';
+import { PlaylistItem } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
 import NoImage from '@/components/no-image/NoImage.vue';
 import { lengthNormalizer } from '@/utils/functions';
@@ -22,7 +22,7 @@ import { lengthNormalizer } from '@/utils/functions';
   components: { NoImage, Loading },
 })
 export default class UserPlaylists extends Vue {
-  @Prop({ required: true }) playlist!: Item;
+  @Prop({ required: true }) playlist!: PlaylistItem;
 
   fixLength(toFixString: string) {
     return lengthNormalizer(toFixString);
