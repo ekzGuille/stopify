@@ -1,10 +1,8 @@
 import {
-  AlbumType, ReleaseDatePrecision,
   SpotifyAlbum,
-  SpotifyArtist,
+  SpotifyArtist, SpotifyFollowers,
   SpotifyImage,
   SpotifyLinkedFrom,
-  Type,
 } from '@/types/spotify';
 
 type Image = SpotifyImage
@@ -29,8 +27,8 @@ export interface UserPlaylist extends UserQuery{
   items: PlaylistItem[];
 }
 
-export interface UserTopAlbums extends UserQuery {
-  items: Album[];
+export interface UserTopArtists extends UserQuery {
+  items: Artist[];
 }
 
 export interface UserTopTracks extends UserQuery {
@@ -51,6 +49,7 @@ export interface PlaylistItem {
 }
 
 export interface TrackItem {
+  added_at?: Date;
   album: SpotifyAlbum;
   artists: SpotifyArtist[];
   duration_ms: number;
@@ -61,19 +60,15 @@ export interface TrackItem {
   preview_url: string;
   track_number: number;
   uri: string;
-  linked_from: SpotifyLinkedFrom;
-  // WIP
+  linked_from: SpotifyLinkedFrom; // TODO: borrar?
 }
 
-export interface Album {
-  artists: SpotifyArtist[];
-  external_urls: Record<string, string>;
+export interface Artist {
+  followers: SpotifyFollowers;
+  genres: string[];
   href: string;
+  popularity: number;
+  image: SpotifyImage;
   id: string;
-  images: SpotifyImage;
   name: string;
-  release_date: Date;
-  total_tracks: number;
-  uri: string;
-  // WIP
 }

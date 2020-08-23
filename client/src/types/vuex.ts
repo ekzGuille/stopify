@@ -2,7 +2,7 @@ import {
   UserPlaylist,
   UserProfile,
   UserSavedTracks,
-  UserTopAlbums,
+  UserTopArtists,
   UserTopTracks,
 } from '@/types/custom';
 
@@ -26,7 +26,8 @@ export interface VuexStateUser {
   userInformation: UserProfile | null;
   userPlaylists: UserPlaylist | null;
   userSavedTracks: UserSavedTracks | null;
-  userTopResources: UserTopAlbums | UserTopTracks | null;
+  userTopArtists: UserTopArtists | null;
+  userTopTracks: UserTopTracks | null;
 }
 
 interface SpotifyQuery {

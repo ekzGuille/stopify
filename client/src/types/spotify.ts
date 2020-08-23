@@ -73,15 +73,15 @@ export interface SpotifyTopArtists extends SpotifyResponse {
 }
 
 export interface SpotifyTopTracks extends SpotifyResponse {
-  items: SpotifyTrack[];
+  items: SpotifyTrackItem[];
 }
 
 export interface SpotifySavedTrackItem {
   added_at: Date;
-  track: SpotifyTrack;
+  track: SpotifyTrackItem;
 }
 
-export interface SpotifyTrack {
+export interface SpotifyTrackItem {
   album: SpotifyAlbum;
   artists: SpotifyArtist[];
   available_markets: string[];
