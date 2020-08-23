@@ -38,7 +38,6 @@ export default {
 </script>
 
 <style lang="scss">
-  //TODO scoped quitado
 @import '/../styles/_variables.scss';
 div.home {
   display: flex;
