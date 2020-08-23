@@ -1,4 +1,10 @@
-import { UserPlaylist, UserProfile } from '@/types/spotify';
+import {
+  UserPlaylist,
+  UserProfile,
+  UserSavedTracks,
+  UserTopAlbums,
+  UserTopTracks,
+} from '@/types/custom';
 
 export interface VuexStateCredential {
   accessToken: string;
@@ -19,9 +25,16 @@ export interface VuexLocalStorage {
 export interface VuexStateUser {
   userInformation: UserProfile | null;
   userPlaylists: UserPlaylist | null;
+  userSavedTracks: UserSavedTracks | null;
+  userTopResources: UserTopAlbums | UserTopTracks | null;
 }
 
-export interface QueryPlaylistAttributes {
-  userId: string;
+interface SpotifyQuery {
   queryOffset?: number;
+}
+
+export type QueryAPI = SpotifyQuery
+
+export interface QueryTopResources extends SpotifyQuery {
+  type: 'artists' | 'tracks';
 }
