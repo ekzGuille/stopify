@@ -13,6 +13,7 @@ import {
   SpotifySavedTrackItem, SpotifySavedTracks, SpotifyArtist,
 } from '@/types/spotify';
 import {
+  TrackItem,
   UserPlaylist,
   UserProfile,
   UserSavedTracks,
@@ -24,6 +25,21 @@ import { UserData } from '@/utils/constants';
 const { state: credentialsState } = credentialsStore;
 
 const API_SPOTIFY = env.VUE_APP_SPOTIFY_API_ENDPOINT || 'https://api.spotify.com';
+
+export function mapTrack(track: SpotifyTrackItem): TrackItem {
+  return {
+    album: track.album,
+    artists: track.artists,
+    duration_ms: track.duration_ms,
+    url: track.external_urls.spotify,
+    id: track.id,
+    name: track.name,
+    popularity: track.popularity,
+    preview_url: track.preview_url,
+    track_number: track.track_number,
+    image: track.album.images[0],
+  };
+}
 
 const state: VuexStateUser = {
   userInformation: localStorage.getItem(UserData.profileData)
@@ -37,9 +53,9 @@ const state: VuexStateUser = {
 const getters = {
   getUserInformation: (state: VuexStateUser) => state.userInformation,
   getUserPlaylists: (state: VuexStateUser) => state.userPlaylists,
-  setUserSavedTracks: (state: VuexStateUser) => state.userSavedTracks,
-  setUserTopArtists: (state: VuexStateUser) => state.userTopArtists,
-  setUserTopTracks: (state: VuexStateUser) => state.userTopTracks,
+  getUserSavedTracks: (state: VuexStateUser) => state.userSavedTracks,
+  getUserTopArtists: (state: VuexStateUser) => state.userTopArtists,
+  getUserTopTracks: (state: VuexStateUser) => state.userTopTracks,
 };
 
 const actions = {
@@ -117,7 +133,7 @@ const actions = {
         offset: `${queryOffset || 0}`,
       };
       const { data }: AxiosResponse<SpotifySavedTracks> = await axios
-        .get(`${API_SPOTIFY}/me/tracks?${new URLSearchParams(queryStringData).toString()}`, {
+        .get(`${API_SPOTIFY}/v1/me/tracks?${new URLSearchParams(queryStringData).toString()}`, {
           headers: { Authorization: `Bearer ${credentialsState.accessToken}` },
         });
 
@@ -131,17 +147,7 @@ const actions = {
         offset,
         items: [...storedSavedTracks, ...items.map((item: SpotifySavedTrackItem) => ({
           added_at: item.added_at,
-          album: item.track.album,
-          artists: item.track.artists,
-          duration_ms: item.track.duration_ms,
-          href: item.track.href,
-          id: item.track.id,
-          linked_from: item.track.linked_from,
-          name: item.track.name,
-          popularity: item.track.popularity,
-          preview_url: item.track.preview_url,
-          track_number: item.track.track_number,
-          uri: item.track.uri,
+          ...mapTrack(item.track),
         }))],
       };
 
@@ -161,7 +167,7 @@ const actions = {
         offset: `${queryOffset || 0}`,
       };
       const { data }: AxiosResponse<SpotifyTopTracks> = await axios
-        .get(`${API_SPOTIFY}/me/top/${type}?${new URLSearchParams(queryStringData).toString()}`, {
+        .get(`${API_SPOTIFY}/v1/me/top/${type}?${new URLSearchParams(queryStringData).toString()}`, {
           headers: { Authorization: `Bearer ${credentialsState.accessToken}` },
         });
 
@@ -173,19 +179,7 @@ const actions = {
         limit,
         total,
         offset,
-        items: [...storedTopTracks, ...items.map((item: SpotifyTrackItem) => ({
-          uri: item.uri,
-          track_number: item.track_number,
-          preview_url: item.preview_url,
-          popularity: item.popularity,
-          name: item.name,
-          id: item.id,
-          href: item.href,
-          duration_ms: item.duration_ms,
-          artists: item.artists,
-          album: item.album,
-          linked_from: item.linked_from,
-        }))],
+        items: [...storedTopTracks, ...items.map(mapTrack)],
       };
 
       commit('setUserTopTracks', payloadData);

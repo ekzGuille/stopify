@@ -2,7 +2,6 @@ import {
   SpotifyAlbum,
   SpotifyArtist, SpotifyFollowers,
   SpotifyImage,
-  SpotifyLinkedFrom,
 } from '@/types/spotify';
 
 type Image = SpotifyImage
@@ -53,14 +52,13 @@ export interface TrackItem {
   album: SpotifyAlbum;
   artists: SpotifyArtist[];
   duration_ms: number;
-  href: string;
+  url: string;
   id: string;
   name: string;
   popularity: number;
   preview_url: string;
   track_number: number;
-  uri: string;
-  linked_from: SpotifyLinkedFrom; // TODO: borrar?
+  image: Image;
 }
 
 export interface Artist {

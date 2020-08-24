@@ -29,7 +29,10 @@
           <span :class="`usr-info-flag flag-icon flag-icon-${getUserInformation.country.toLowerCase()}`"></span>
         </div>
         <p class="usr-info-open-sp-wrapper">Ver perfil completo en
-          <a class="usr-info-accent" :href="getUserInformation.spotifyProfileUrl" target="_blank">Spotify</a>
+          <a class="usr-info-accent"
+             :href="getUserInformation.spotifyProfileUrl"
+             target="_blank"
+             rel="noopener noreferrer">Spotify</a>
         </p>
       </div>
       <div class="usr-info-playlist-wrapper">

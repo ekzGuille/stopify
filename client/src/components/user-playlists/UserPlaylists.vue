@@ -34,7 +34,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import { PlaylistItem, UserPlaylist } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
-import Playlist from '@/components/user-playlists/Playlist.vue';
+import Playlist from '@/components/playlist/Playlist.vue';
 import Button from '@/components/button/Button.vue';
 import { QueryAPI } from '@/types/vuex';
 

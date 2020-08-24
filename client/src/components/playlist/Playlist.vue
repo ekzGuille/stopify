@@ -1,6 +1,6 @@
 <template>
   <div class="playlist-content">
-    <a :href="playlist.url" target="_blank" class="playlist-pl-title">
+    <a :href="playlist.url" target="_blank" class="playlist-pl-title" rel="noopener noreferrer">
       <img v-if="playlist.image" class="playlist-cover" :src="playlist.image.url" :alt="playlist.name">
       <NoImage
         v-if="!playlist.image"
