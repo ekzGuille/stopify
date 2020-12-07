@@ -1,7 +1,7 @@
 <template>
   <div class="usr-saved-songs-content">
     <div class="usr-saved-songs-data" v-if="contentLoaded">
-      <p class="usr-saved-songs-title">Canciones guardadas</p>
+      <p class="usr-saved-songs-title">Estas son tus canciones guardadas</p>
       <p>Mostrando las
         <span class="usr-saved-songs-accent">
         {{ loadedSavedTracksAmount }}
@@ -9,6 +9,7 @@
       </p>
       <p>Tienes <span class="usr-saved-songs-accent">{{ getUserSavedTracks.total }}</span> en total.</p>
       <div class="usr-saved-songs-load-more-wrapper">
+        <!--
         <Button
           v-bind:class="{ 'usr-saved-songs-btn-load-more': loadingMore || this.maxPlaylist() }"
           font-size="0.8rem"
@@ -19,11 +20,12 @@
           @click.native="loadMore()">
           {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
         </Button>
+         -->
         <Loading v-if="loadingMore"></Loading>
       </div>
       <div class="usr-saved-songs-wrapper">
         <!-- wip -->
-        <Song v-for="track of userSavedTracks" :key="track.id" :track="track"></Song>
+        <SongTrack v-for="track of userSavedTracks" :key="track.id" :track="track"></SongTrack>
       </div>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
@@ -37,11 +39,11 @@ import { TrackItem, UserSavedTracks } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
 import Button from '@/components/button/Button.vue';
 import { QueryAPI } from '@/types/vuex';
-import Song from '@/components/track/Track.vue';
+import SongTrack from '@/components/track/SongTrack.vue';
 import { wait } from '@/utils/functions';
 
 @Component({
-  components: { Button, Loading, Song },
+  components: { Button, Loading, SongTrack },
   computed: {
     ...mapGetters('user', ['getUserSavedTracks']),
   },
@@ -106,6 +108,9 @@ export default class UserSavedSongs extends Vue {
 <style lang="scss" scoped>
   @import '../../styles/_variables.scss';
   .usr-saved-songs-content {
+    margin: 2rem 0 0 0;
+    display: flex;
+    justify-content: center;
     width: 90%;
     .usr-saved-songs-data {
 
@@ -113,6 +118,7 @@ export default class UserSavedSongs extends Vue {
 
     .usr-saved-songs-wrapper {
       width: 100%;
+      // NOTE: Remove
       /*display: flex;*/
       /*flex-direction: column;*/
       /*height: 70vh;*/

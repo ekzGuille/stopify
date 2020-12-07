@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrapper">
+  <div class="home-wrapper" v-bind:class="{ 'home-wrapper-centered': !isLogged }">
     <main>
       <div v-if="!isLogged" class="home-no-logged">
         <span>Inicia sesión para disfrutar de todas las características</span>
@@ -42,15 +42,17 @@ export default {
 <style lang="scss">
 @import '/../styles/_variables.scss';
 .home-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &.home-wrapper-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   width: 100%;
   overflow: scroll;
   height: calc(100% - #{$header-height});
   /*overflow: hidden; // TODO: Quitar dependiendo del contenido a albergar*/
 
-    .home-no-logged {
+  .home-no-logged {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,7 +65,9 @@ export default {
   .home-logged {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
   }
 }
 </style>

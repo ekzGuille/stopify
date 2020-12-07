@@ -13,7 +13,8 @@
        <a class="track-artist-link"
           :href="artist.external_urls.spotify"
           target="_blank"
-          rel="noopener noreferrer">{{ artist.name }}</a>
+          :title="artist.name"
+          rel="noopener noreferrer">{{ fixLength(artist.name, 25) }}</a>
       </div>
     </div>
   </div>
@@ -32,8 +33,8 @@ import { lengthNormalizer } from '@/utils/functions';
 export default class UserPlaylists extends Vue {
     @Prop({ required: true }) track!: TrackItem;
 
-    fixLength(toFixString: string) {
-      return lengthNormalizer(toFixString);
+    fixLength(toFixString: string, offset?: number) {
+      return lengthNormalizer(toFixString, offset);
     }
 }
 
@@ -46,13 +47,13 @@ export default class UserPlaylists extends Vue {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 2rem;
+    margin: 1rem;
 
     a.track-title-wrapper {
       text-decoration: none;
       margin: 2%;
-      max-width: 300px;
-      min-width: 300px;
+      max-width: 350px;
+      min-width: 350px;
       font-size: 1.1rem;
       display: flex;
       justify-content: left;
@@ -68,6 +69,10 @@ export default class UserPlaylists extends Vue {
         width: auto;
         height: 80px;
         object-fit: cover;
+        transition: transform 250ms;
+        &:hover {
+          transform: scale(1.08);
+        }
       }
       .track-title {
         justify-content: left;
@@ -76,8 +81,8 @@ export default class UserPlaylists extends Vue {
     .track-artists-wrapper {
       display: flex;
       flex-direction: column;
-      min-width: 120px;
-      max-width: 120px;
+      min-width: 180px;
+      max-width: 180px;
 
       .track-artists {
         .track-artist-link {
@@ -89,6 +94,29 @@ export default class UserPlaylists extends Vue {
           color: $color-sp-stroke-light-grey;
           &:hover {
             color: $color-white;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    div.track-content {
+
+      a.track-title-wrapper {
+        max-width: 200px;
+        min-width: 200px;
+      }
+      .track-artists-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-width: 120px;
+        max-width: 120px;
+
+        .track-artists {
+          .track-artist-link {
+            display: flex;
+            justify-content: center;
           }
         }
       }
