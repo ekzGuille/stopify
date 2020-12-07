@@ -5,7 +5,7 @@
       <p>Mostrando las
         <span class="usr-saved-songs-accent">
         {{ loadedSavedTracksAmount }}
-        </span> playlists más recientes.
+        </span> canciones más recientes.
       </p>
       <p>Tienes <span class="usr-saved-songs-accent">{{ getUserSavedTracks.total }}</span> en total.</p>
       <div class="usr-saved-songs-load-more-wrapper">
