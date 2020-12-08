@@ -3,7 +3,7 @@ import VueRouter, { NavigationGuardNext, Route, RouteConfig } from 'vue-router';
 import Home from '@/views/Home.vue';
 import Redirect from '@/views/Redirect.vue';
 import NotFound from '@/views/NotFound.vue';
-import TopSongs from '@/views/TopSongs.vue';
+import Top from '@/views/Top.vue';
 import Me from '@/views/Me.vue';
 import store from '@/store';
 
@@ -39,8 +39,8 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/top',
-    name: 'TopSongs',
-    component: TopSongs,
+    name: 'Top',
+    component: Top,
     beforeEnter: checkIfAuthenticated,
   },
   {
@@ -57,7 +57,7 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
-  mode: 'history', // TODO: Mirar si con 'hash' funciona bien
+  mode: 'hash', // TODO: Mirar si con 'hash' funciona bien
   base: process.env.BASE_URL,
   routes,
 });
