@@ -5,22 +5,23 @@
 </template>
 
 <script lang="ts">
-  // Credit to https://github.com/CodingGarden/twitch-bot/blob/master/client/src/components/Toggle.vue
-  import { Component, Prop, Vue } from 'vue-property-decorator';
+// Credit to https://github.com/CodingGarden/twitch-bot/blob/master/client/src/components/Toggle.vue
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-  @Component
-  export default class Toggle extends Vue {
-    @Prop() checked!: boolean;
-  };
+@Component
+export default class Toggle extends Vue {
+  @Prop() checked!: boolean;
+}
 </script>
 
 <style lang="scss" scoped>
-  // TODO: Change colors
+  @import '../../styles/_variables.scss';
+
   .toggle {
     --height: 24px;
     width: calc(var(--height) * 2);
     display: inline-block;
-    background: hsl(0, 0%, 18%);
+    background: $color-sp-grey;
     border-radius: calc(var(--height) * 0.5);
     cursor: pointer;
     &-thumb {
@@ -28,14 +29,17 @@
       height: var(--height);
       background: transparent;
       box-sizing: border-box;
-      border: 3px solid hsl(0, 0%, 28%);
+      background: $color-sp-light-grey;
       border-radius: 50%;
       transition: 150ms transform, 100ms background;
     }
-    &.toggle-checked .toggle-thumb {
-      border: 0;
-      background: hsl(121, 43%, 54%);
-      transform: translateX(var(--height));
+    &.toggle-checked {
+      background: $color-sp-light-green;
+      .toggle-thumb {
+        border: 0;
+        background: $color-white;
+        transform: translateX(var(--height));
+      }
     }
   }
 </style>

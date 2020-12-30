@@ -118,14 +118,7 @@ export default class UserSavedSongs extends Vue {
 
     .usr-saved-songs-wrapper {
       width: 100%;
-      // NOTE: Remove
-      /*display: flex;*/
-      /*flex-direction: column;*/
-      /*height: 70vh;*/
-      /*overflow: scroll;*/
-      /*overflow-x: hidden;*/
-      /*justify-content: center;*/
-      }
+    }
   }
 
   @media (max-width: $breakpoint-tablet) {

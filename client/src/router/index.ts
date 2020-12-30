@@ -57,7 +57,7 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
-  mode: 'hash', // TODO: Mirar si con 'hash' funciona bien
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes,
 });

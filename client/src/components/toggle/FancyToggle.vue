@@ -1,19 +1,54 @@
 <template>
-  <input :checked="checked" type="checkbox" id="switch" @click="$emit('clicked', checked)" /><label for="switch">Toggle</label>
+  <div class="fancy-toggle" :style="cssVariables">
+    <input
+      :checked="getChecked"
+      type="checkbox"
+      :id="id"
+      @click="emitClick"/>
+    <label :for="id">Toggle</label>
+  </div>
 </template>
 
 <script lang="ts">
-  // Credit to: https://codepen.io/mburnette/pen/LxNxNg
-  import { Component, Prop, Vue } from 'vue-property-decorator';
+// Credit to: https://codepen.io/mburnette/pen/LxNxNg
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-  @Component
-  export default class FancyToggle extends Vue {
-    @Prop() checked!: boolean;
-  };
+@Component
+export default class FancyToggle extends Vue {
+  @Prop() checked!: boolean;
+
+  @Prop() id!: string;
+
+  @Prop({ default: '24px' }) size!: string;
+
+  @Prop({ default: '2px' }) spacing!: string;
+
+  get cssVariables() {
+    return {
+      '--size': this.size,
+      '--spacing': this.spacing,
+    };
+  }
+
+  get getChecked() {
+    return this.checked;
+  }
+
+  emitClick() {
+    this.$emit('clicked', !this.getChecked);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-  // TODO: Change colors
+  @import '../../styles/_variables.scss';
+
+  .fancy-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   input[type=checkbox] {
     height: 0;
     width: 0;
@@ -23,36 +58,40 @@
   label {
     cursor: pointer;
     text-indent: -9999px;
-    width: 200px;
-    height: 100px;
-    background: grey;
+    width: calc(var(--size) * 2);
+    height: var(--size);
+    background: $color-sp-light-green;
+    // background: $color-blue; // TODO Revisar
+    // background: $color-sp-grey;
     display: block;
-    border-radius: 100px;
+    border-radius: var(--size);
     position: relative;
-  }
 
-  label:after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 90px;
-    height: 90px;
-    background: #fff;
-    border-radius: 90px;
-    transition: 0.3s;
+    &:after {
+      content: '';
+      position: absolute;
+      top: var(--spacing);
+      left: var(--spacing);
+      width: calc(var(--size) - calc(var(--spacing) * 2));
+      height: calc(var(--size) - calc(var(--spacing) * 2));
+      // background: $color-sp-light-grey;
+      background: $color-white;
+      border-radius: calc(var(--size) - calc(var(--spacing) * 2));
+      transition: 0.3s;
+    }
+    &:active:after {
+      width: var(--size);
+    }
   }
 
   input:checked + label {
-    background: #bada55;
+    background: $color-sp-light-green;
+
+    &:after {
+      background: $color-white;
+      left: calc(100% - var(--spacing));
+      transform: translateX(-100%);
+    }
   }
 
-  input:checked + label:after {
-    left: calc(100% - 5px);
-    transform: translateX(-100%);
-  }
-
-  label:active:after {
-    width: 130px;
-  }
 </style>

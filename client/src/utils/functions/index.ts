@@ -4,7 +4,6 @@ function getHashedUrlParams(): URLSearchParams {
 
 export function getUrlData(key: string): string {
   const data = getHashedUrlParams().get(key) || '';
-  console.log(data);
   localStorage.removeItem(key);
   if (data) {
     localStorage.setItem(key, data);

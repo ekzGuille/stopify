@@ -129,7 +129,6 @@ export default class UserInfo extends Vue {
 @import '../../styles/_variables.scss';
 
 .usr-info-content {
-  margin-top: 3%;
   display: flex;
   flex-direction: column;
   align-items: center;
