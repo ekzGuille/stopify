@@ -21,6 +21,7 @@ module.exports = {
     'no-underscore-dangle': 'warn',
     'no-bitwise': 'warn',
     'class-methods-use-this': 'off',
+    'import/prefer-default-export': 'warn',
     // 'class-methods-use-this': ['error', {
     //   exceptMethods: [
     //     // vue lifecycle methods

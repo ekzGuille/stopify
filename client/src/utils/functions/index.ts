@@ -1,5 +1,10 @@
+function getHashedUrlParams(): URLSearchParams {
+  return (new URLSearchParams(window.location.hash.split('?')[1]));
+}
+
 export function getUrlData(key: string): string {
-  const data = new URLSearchParams(window.location.search).get(key) || '';
+  const data = getHashedUrlParams().get(key) || '';
+  console.log(data);
   localStorage.removeItem(key);
   if (data) {
     localStorage.setItem(key, data);
@@ -18,14 +23,13 @@ export function wait(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-export function lengthNormalizer(str = '', _offset = 40) {
-  console.log(_offset);
-  const _str = str.trim();
-  const strLength = _str.length;
-  const extraLength = _offset - strLength;
+export function lengthNormalizer(str = '', offset = 40) {
+  const trimmedStr = str.trim();
+  const strLength = trimmedStr.length;
+  const extraLength = offset - strLength;
   if (extraLength < 0) {
-    const newStr = _str.slice(0, extraLength - 3).trim();
+    const newStr = trimmedStr.slice(0, extraLength - 3).trim();
     return newStr.padEnd(newStr.length + 3, '...');
   }
-  return _str;
+  return trimmedStr;
 }
