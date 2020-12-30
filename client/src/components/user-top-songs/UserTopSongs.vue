@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import Loading from '../loading/Loading.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import Loading from '../loading/Loading.vue';
 
-  @Component({
-    components: { Loading },
-  })
-  export default class UserTopSongs extends Vue {
-  }
+@Component({
+  components: { Loading },
+})
+export default class UserTopSongs extends Vue {
+}
 </script>
 
 <style lang="scss" scoped>

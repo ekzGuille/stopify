@@ -9,7 +9,6 @@
 
 <script lang="ts">
 
-import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
@@ -33,10 +32,13 @@ import { wait } from '@/utils/functions';
   },
 })
 export default class Redirect extends Vue {
-  storeLocalData!: (
-    {
-      accessToken, refreshToken, loginError, expiresIn, lastRefresh,
-    }: VuexLocalStorage) => void;
+  storeLocalData!: ({
+    accessToken,
+    refreshToken,
+    loginError,
+    expiresIn,
+    lastRefresh,
+  }: VuexLocalStorage) => void;
 
   queryData = true;
 

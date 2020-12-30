@@ -27,9 +27,9 @@ import Loading from '@/components/loading/Loading.vue';
 import NoImage from '@/components/no-image/NoImage.vue';
 import { lengthNormalizer } from '@/utils/functions';
 
-  @Component({
-    components: { NoImage, Loading },
-  })
+@Component({
+  components: { NoImage, Loading },
+})
 export default class UserPlaylists extends Vue {
     @Prop({ required: true }) track!: TrackItem;
 
