@@ -91,7 +91,7 @@ export default class UserInfo extends Vue {
 
   async mounted() {
     // NOTE: Es necesario el timeout?
-    await wait(250);
+    // await wait(250);
     this.contentLoaded = true;
 
     // scroll

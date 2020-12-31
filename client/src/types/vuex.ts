@@ -28,6 +28,8 @@ export interface VuexStateUser {
   userSavedTracks: UserSavedTracks | null;
   userTopArtists: UserTopArtists | null;
   userTopTracks: UserTopTracks | null;
+  isTopSongs: boolean;
+  isTopLongTerm: boolean;
 }
 
 interface SpotifyQuery {
@@ -38,4 +40,5 @@ export type QueryAPI = SpotifyQuery
 
 export interface QueryTopResources extends SpotifyQuery {
   type: 'artists' | 'tracks';
+  longTerm: boolean;
 }

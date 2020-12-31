@@ -75,7 +75,8 @@ export default class UserPlaylists extends Vue {
         }
       }
       .track-title {
-        justify-content: left;
+        width: 100%;
+        text-align: center;
       }
     }
     .track-artists-wrapper {
@@ -85,10 +86,10 @@ export default class UserPlaylists extends Vue {
       max-width: 180px;
 
       .track-artists {
+        text-align: center;
         .track-artist-link {
           font-size: 0.8rem;
-          display: flex;
-          justify-content: left;
+          width: 100%;
           text-decoration: none;
           margin: 0 2%;
           color: $color-sp-stroke-light-grey;
@@ -106,6 +107,10 @@ export default class UserPlaylists extends Vue {
       a.track-title-wrapper {
         max-width: 200px;
         min-width: 200px;
+
+        .track-title {
+          font-size: 0.85rem;
+        }
       }
       .track-artists-wrapper {
         display: flex;

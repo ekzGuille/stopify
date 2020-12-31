@@ -10,7 +10,9 @@ import {
   SpotifyTopTracks,
   SpotifyTrackItem,
   SpotifyTopArtists,
-  SpotifySavedTrackItem, SpotifySavedTracks, SpotifyArtist,
+  SpotifySavedTrackItem,
+  SpotifySavedTracks,
+  SpotifyArtist,
 } from '@/types/spotify';
 import {
   TrackItem,
@@ -48,6 +50,8 @@ const state: VuexStateUser = {
   userSavedTracks: null,
   userTopArtists: null,
   userTopTracks: null,
+  isTopSongs: !!localStorage.getItem(UserData.isTopSongs),
+  isTopLongTerm: !!localStorage.getItem(UserData.isTopLongTerm),
 };
 
 const getters = {
@@ -56,6 +60,8 @@ const getters = {
   getUserSavedTracks: (state: VuexStateUser) => state.userSavedTracks,
   getUserTopArtists: (state: VuexStateUser) => state.userTopArtists,
   getUserTopTracks: (state: VuexStateUser) => state.userTopTracks,
+  getIsTopSongs: (state: VuexStateUser) => state.isTopSongs,
+  getIsTopLongTerm: (state: VuexStateUser) => state.isTopLongTerm,
 };
 
 const actions = {
@@ -157,7 +163,7 @@ const actions = {
     }
   },
   async queryUserTopTracks({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
-    { queryOffset, type }: QueryTopResources) {
+    { queryOffset, type, longTerm }: QueryTopResources) {
     const storedTopTracks = state.userTopTracks ? state.userTopTracks.items : [];
 
     try {
@@ -165,6 +171,7 @@ const actions = {
       const queryStringData = {
         limit: '10',
         offset: `${queryOffset || 0}`,
+        time_range: longTerm ? 'long_term' : 'short_term',
       };
       const { data }: AxiosResponse<SpotifyTopTracks> = await axios
         .get(`${API_SPOTIFY}/v1/me/top/${type}?${new URLSearchParams(queryStringData).toString()}`, {
@@ -188,7 +195,7 @@ const actions = {
     }
   },
   async queryUserTopArtist({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
-    { queryOffset, type }: QueryTopResources) {
+    { queryOffset, type, longTerm }: QueryTopResources) {
     const storedTopArtists = state.userTopArtists ? state.userTopArtists.items : [];
 
     try {
@@ -196,6 +203,7 @@ const actions = {
       const queryStringData = {
         limit: '10',
         offset: `${queryOffset || 0}`,
+        time_range: longTerm ? 'long_term' : 'short_term',
       };
       const { data }: AxiosResponse<SpotifyTopArtists> = await axios
         .get(`${API_SPOTIFY}/me/top/${type}?${new URLSearchParams(queryStringData).toString()}`, {
@@ -243,6 +251,14 @@ const mutations = {
   },
   setUserTopArtists: (state: VuexStateUser, userTopArtists: UserTopArtists) => {
     state.userTopArtists = userTopArtists;
+  },
+  setIsTopSongs: (state: VuexStateUser, isTopSongs: boolean) => {
+    localStorage.setItem(UserData.isTopSongs, isTopSongs.toString());
+    state.isTopSongs = isTopSongs;
+  },
+  setIsTopLongTerm: (state: VuexStateUser, isTopLongTerm: boolean) => {
+    localStorage.setItem(UserData.isTopLongTerm, isTopLongTerm.toString());
+    state.isTopLongTerm = isTopLongTerm;
   },
 };
 

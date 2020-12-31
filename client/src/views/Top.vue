@@ -4,28 +4,28 @@
       <span class="top-title">¿Qué quieres ver?</span>
       <div class="toggle-rows">
         <div class="top-row">
-          <span>Canciones</span>
-          <FancyToggle id="type" :checked="getTypeToggle" @clicked="setTypeToggle"/>
-          <span>Artistas</span>
+          <span v-bind:class="{'top-unselected': getIsTopSongs}">Canciones</span>
+          <FancyToggle id="type" :checked="getIsTopSongs" @clicked="setTypeToggle"/>
+          <span v-bind:class="{'top-unselected': !getIsTopSongs}">Artistas</span>
         </div>
         <div class="top-row">
-          <span>Últimos</span>
-          <FancyToggle id="time" :checked="getTimeToggle" @clicked="setTimeToggle"/>
-          <span>Siempre</span>
+          <span v-bind:class="{'top-unselected': getIsTopLongTerm}">Últimos</span>
+          <FancyToggle id="time" :checked="getIsTopLongTerm" @clicked="setTimeToggle"/>
+          <span v-bind:class="{'top-unselected': !getIsTopLongTerm}">Siempre</span>
         </div>
       </div>
     </div>
     <div class="top-text">
       <span>Mostrando tus </span>
-      <span v-if="typeValue"><span class="top-text-accent">artistas</span> más escuchados</span>
-      <span v-if="!typeValue"><span class="top-text-accent">canciones</span> más escuchadas</span>
+      <span v-if="getIsTopSongs"><span class="top-text-accent">artistas</span> más escuchados</span>
+      <span v-if="!getIsTopSongs"><span class="top-text-accent">canciones</span> más escuchadas</span>
       <span> desde </span>
-      <span v-if="timeValue" class="top-text-accent">siempre</span>
-      <span v-if="!timeValue" class="top-text-accent">el último mes</span>
+      <span v-if="getIsTopLongTerm" class="top-text-accent">siempre</span>
+      <span v-if="!getIsTopLongTerm" class="top-text-accent">el último mes</span>
       <span>.</span>
     </div>
-    <UserTopArtists v-if="typeValue" :long-term="timeValue" ></UserTopArtists>
-    <UserTopSongs v-if="!typeValue" :long-term="timeValue" ></UserTopSongs>
+    <UserTopArtists v-if="getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopArtists>
+    <UserTopSongs v-if="!getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopSongs>
   </div>
 </template>
 
@@ -34,40 +34,48 @@
 import UserTopSongs from '@/components/user-top-songs/UserTopSongs.vue';
 import UserTopArtists from '@/components/user-top-artists/UserTopArtists.vue';
 import FancyToggle from '@/components/toggle/FancyToggle.vue';
+import { Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+import store from '@/store';
 
-export default {
+// Added Vue.extend({}) because this.isLongTerm and this.isTopSongs was giving linting error
+export default Vue.extend({
   name: 'TopSongs',
   components: {
     UserTopSongs,
     UserTopArtists,
     FancyToggle,
   },
-  data: () => ({
-    typeValue: false, // TODO: Pasarlo al STORE
-    timeValue: false, // TODO: Pasarlo al STORE
-  }),
+  data() {
+    return {
+      isLongTerm: store.getters['user/getIsTopSongs'],
+      isTopSongs: store.getters['user/getIsTopLongTerm'],
+    };
+  },
   methods: {
     setTimeToggle(value: boolean) {
-      this.timeValue = value;
+      store.commit('user/setIsTopLongTerm', value);
+      this.isLongTerm = value;
     },
     setTypeToggle(value: boolean) {
-      this.typeValue = value;
+      store.commit('user/setIsTopSongs', value);
+      this.isTopSongs = value;
     },
   },
   computed: {
-    getTimeToggle() {
-      return this.timeValue;
-    },
-    getTypeToggle() {
-      return this.typeValue;
-    },
+    ...mapGetters('user', ['getIsTopSongs', 'getIsTopLongTerm']),
   },
-};
+});
 // https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
 </script>
 
 <style lang="scss">
 @import '../styles/_variables.scss';
+
+.top-unselected {
+  color: $color-sp-stroke-light-grey;
+}
+
 .top-wrapper {
   display: flex;
   flex-direction: column;

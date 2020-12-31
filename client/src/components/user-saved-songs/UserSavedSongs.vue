@@ -1,33 +1,36 @@
 <template>
   <div class="usr-saved-songs-content">
-    <div class="usr-saved-songs-data" v-if="contentLoaded">
+    <div class="usr-saved-songs-data">
       <p class="usr-saved-songs-title">Estas son tus canciones guardadas</p>
-      <p>Mostrando las
-        <span class="usr-saved-songs-accent">
-        {{ loadedSavedTracksAmount }}
-        </span> canciones más recientes.
-      </p>
-      <p>Tienes <span class="usr-saved-songs-accent">{{ getUserSavedTracks.total }}</span> en total.</p>
-      <div class="usr-saved-songs-load-more-wrapper">
-        <!--
-        <Button
-          v-bind:class="{ 'usr-saved-songs-btn-load-more': loadingMore || this.maxPlaylist() }"
-          font-size="0.8rem"
-          padding="5px"
-          width="130px"
-          border="none"
-          color="#00D66E"
-          @click.native="loadMore()">
-          {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
-        </Button>
-         -->
-        <Loading v-if="loadingMore"></Loading>
-      </div>
-      <div class="usr-saved-songs-wrapper">
-        <!-- wip -->
-        <SongTrack v-for="track of userSavedTracks" :key="track.id" :track="track"></SongTrack>
-      </div>
+      <div v-if="contentLoaded">
+        <p>Mostrando las
+          <span class="usr-saved-songs-accent">
+          {{ loadedSavedTracksAmount }}
+          </span> canciones más recientes.
+        </p>
+        <p>Tienes <span class="usr-saved-songs-accent">{{ getUserSavedTracks.total }}</span> en total.</p>
+        <div class="usr-saved-songs-load-more-wrapper">
+          <!--
+          <Button
+            v-bind:class="{ 'usr-saved-songs-btn-load-more': loadingMore || this.maxPlaylist() }"
+            font-size="0.8rem"
+            padding="5px"
+            width="130px"
+            border="none"
+            color="#00D66E"
+            @click.native="loadMore()">
+            {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
+          </Button>
+           -->
+          <Loading v-if="loadingMore"></Loading>
+        </div>
+        <div class="usr-saved-songs-wrapper">
+          <!-- wip -->
+          <SongTrack v-for="track of userSavedTracks" :key="track.id" :track="track"></SongTrack>
+        </div>
     </div>
+    </div>
+
     <Loading v-if="!contentLoaded"></Loading>
   </div>
 </template>
@@ -107,13 +110,21 @@ export default class UserSavedSongs extends Vue {
 
 <style lang="scss" scoped>
   @import '../../styles/_variables.scss';
+
   .usr-saved-songs-content {
-    margin: 2rem 0 0 0;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 90%;
-    .usr-saved-songs-data {
 
+    .usr-saved-songs-data .usr-saved-songs-accent {
+      color: $color-sp-accent-green;
+    }
+
+    .usr-saved-songs-title {
+      font-size: 1.5rem;
+      margin: 0 0 1rem 0;
     }
 
     .usr-saved-songs-wrapper {
