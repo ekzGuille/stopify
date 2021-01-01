@@ -1,22 +1,25 @@
 <template>
   <div class="usr-top-songs-content">
     <div class="usr-top-songs-data" v-if="contentLoaded">
-      Top Songs
+      <SongTrack v-for="track of topTracks" :key="track.id" :track="track"></SongTrack>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import {
+  Component, Prop, Vue, Watch,
+} from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import { wait } from '@/utils/functions';
-import { TrackItem, UserSavedTracks } from '@/types/custom';
-import { QueryAPI } from '@/types/vuex';
-import Loading from '../loading/Loading.vue';
+import { TrackItem, UserTopTracks } from '@/types/custom';
+import { QueryTopResources } from '@/types/vuex';
+import Loading from '@/components/loading/Loading.vue';
+import SongTrack from '@/components/track/SongTrack.vue';
 
 @Component({
-  components: { Loading },
+  components: { Loading, SongTrack },
   computed: {
     ...mapGetters('user', ['getUserTopTracks']),
   },
@@ -30,23 +33,34 @@ export default class UserTopSongs extends Vue {
 
   contentLoaded = false;
 
-  // getUserSavedTracks!: UserSavedTracks;
+  getUserTopTracks!: UserTopTracks;
 
-  queryUserSavedTracks!: (attrs: QueryAPI) => Promise<void>;
+  topTracks: TrackItem[] = [];
+
+  queryUserTopTracks!: (attrs: QueryTopResources) => Promise<void>;
 
   updateAccessToken!: () => Promise<void>;
 
+  @Watch('longTerm')
+  async onTermChange() {
+    await this.queryData();
+  }
+
   async mounted() {
-    /* if (!this.getUserSavedTracks) {
-      await this.updateAccessToken();
-      await this.queryUserSavedTracks({});
-      // this.contentLoaded = true;
-    } else {
-      // this.contentLoaded = true;
-    } */
-    // NOTE: Es necesario el timeout?
-    await wait(250);
+    await this.queryData();
+  }
+
+  async queryData() {
+    this.contentLoaded = false;
+    await this.updateAccessToken();
+    await this.queryUserTopTracks({ longTerm: this.longTerm });
+    // await wait(250);
+    this.updateValues();
     this.contentLoaded = true;
+  }
+
+  updateValues() {
+    this.topTracks = this.getUserTopTracks.items;
   }
 }
 </script>

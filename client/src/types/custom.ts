@@ -22,7 +22,7 @@ interface UserQuery {
   offset: number;
 }
 
-export interface UserPlaylist extends UserQuery{
+export interface UserPlaylist extends UserQuery {
   items: PlaylistItem[];
 }
 

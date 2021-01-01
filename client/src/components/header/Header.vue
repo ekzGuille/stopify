@@ -37,7 +37,7 @@ import router from '@/router';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
 import { goHome } from '@/utils/functions/routes';
-import Button from '../button/Button.vue';
+import Button from '@/components/button/Button.vue';
 
 @Component({
   components: {

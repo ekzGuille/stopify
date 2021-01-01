@@ -44,14 +44,13 @@ export function mapTrack(track: SpotifyTrackItem): TrackItem {
 }
 
 const state: VuexStateUser = {
-  userInformation: localStorage.getItem(UserData.profileData)
-    ? JSON.parse(localStorage.getItem(UserData.profileData) || '{}') : null,
+  userInformation: JSON.parse(localStorage.getItem(UserData.profileData) ?? 'null'),
   userPlaylists: null,
   userSavedTracks: null,
   userTopArtists: null,
   userTopTracks: null,
-  isTopSongs: !!localStorage.getItem(UserData.isTopSongs),
-  isTopLongTerm: !!localStorage.getItem(UserData.isTopLongTerm),
+  isTopSongs: JSON.parse(localStorage.getItem(UserData.isTopSongs) ?? 'false'),
+  isTopLongTerm: JSON.parse(localStorage.getItem(UserData.isTopLongTerm) ?? 'false'),
 };
 
 const getters = {
@@ -92,7 +91,7 @@ const actions = {
   },
   async queryUserPlaylists({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
     { queryOffset }: QueryAPI) {
-    const storedPlaylists = state.userPlaylists ? state.userPlaylists.items : [];
+    const storedPlaylists = state.userPlaylists?.items ?? [];
 
     try {
       // Mostrar las últimas 10 añadidas
@@ -130,7 +129,7 @@ const actions = {
   },
   async queryUserSavedTracks({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
     { queryOffset }: QueryAPI) {
-    const storedSavedTracks = state.userSavedTracks ? state.userSavedTracks.items : [];
+    const storedSavedTracks = state.userSavedTracks?.items ?? [];
 
     try {
       // Mostrar las últimas 10 añadidas
@@ -150,8 +149,8 @@ const actions = {
       const payloadData: UserSavedTracks = {
         limit,
         total,
-        offset,
-        items: [...storedSavedTracks, ...items.map((item: SpotifySavedTrackItem) => ({
+        offset, // Habilitar cuando haya paginador
+        items: [/* ...storedSavedTracks, */...items.map((item: SpotifySavedTrackItem) => ({
           added_at: item.added_at,
           ...mapTrack(item.track),
         }))],
@@ -163,8 +162,8 @@ const actions = {
     }
   },
   async queryUserTopTracks({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
-    { queryOffset, type, longTerm }: QueryTopResources) {
-    const storedTopTracks = state.userTopTracks ? state.userTopTracks.items : [];
+    { queryOffset, longTerm, type }: QueryTopResources) {
+    const storedTopTracks = state.userTopTracks?.items ?? [];
 
     try {
       // Mostrar las últimas 10 añadidas
@@ -174,7 +173,7 @@ const actions = {
         time_range: longTerm ? 'long_term' : 'short_term',
       };
       const { data }: AxiosResponse<SpotifyTopTracks> = await axios
-        .get(`${API_SPOTIFY}/v1/me/top/${type}?${new URLSearchParams(queryStringData).toString()}`, {
+        .get(`${API_SPOTIFY}/v1/me/top/${type ?? 'tracks'}?${new URLSearchParams(queryStringData).toString()}`, {
           headers: { Authorization: `Bearer ${credentialsState.accessToken}` },
         });
 
@@ -186,7 +185,7 @@ const actions = {
         limit,
         total,
         offset,
-        items: [...storedTopTracks, ...items.map(mapTrack)],
+        items: items.map(mapTrack),
       };
 
       commit('setUserTopTracks', payloadData);
@@ -196,7 +195,7 @@ const actions = {
   },
   async queryUserTopArtist({ commit, dispatch, state }: ActionContext<VuexStateUser, any>,
     { queryOffset, type, longTerm }: QueryTopResources) {
-    const storedTopArtists = state.userTopArtists ? state.userTopArtists.items : [];
+    const storedTopArtists = state.userTopArtists?.items ?? [];
 
     try {
       // Mostrar las últimas 10 añadidas
@@ -206,7 +205,7 @@ const actions = {
         time_range: longTerm ? 'long_term' : 'short_term',
       };
       const { data }: AxiosResponse<SpotifyTopArtists> = await axios
-        .get(`${API_SPOTIFY}/me/top/${type}?${new URLSearchParams(queryStringData).toString()}`, {
+        .get(`${API_SPOTIFY}/v1/me/top/${type ?? 'artists'}?${new URLSearchParams(queryStringData).toString()}`, {
           headers: { Authorization: `Bearer ${credentialsState.accessToken}` },
         });
 
@@ -218,7 +217,7 @@ const actions = {
         limit,
         total,
         offset,
-        items: [...storedTopArtists, ...items.map((item: SpotifyArtist) => ({
+        items: items.map((item: SpotifyArtist) => ({
           followers: item.followers,
           genres: item.genres,
           href: item.href,
@@ -226,7 +225,7 @@ const actions = {
           image: item.images[0],
           name: item.name,
           popularity: item.popularity,
-        }))],
+        })),
       };
 
       commit('setUserTopArtists', payloadData);

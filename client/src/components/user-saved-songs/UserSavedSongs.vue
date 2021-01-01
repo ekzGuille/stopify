@@ -80,8 +80,8 @@ export default class UserSavedSongs extends Vue {
     }
     // NOTE: Es necesario el timeout?
     await wait(250);
-    this.contentLoaded = true;
     this.updateValues();
+    this.contentLoaded = true;
   }
 
   async loadMore() {

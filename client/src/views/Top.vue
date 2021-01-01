@@ -4,9 +4,9 @@
       <span class="top-title">¿Qué quieres ver?</span>
       <div class="toggle-rows">
         <div class="top-row">
-          <span v-bind:class="{'top-unselected': getIsTopSongs}">Canciones</span>
+          <span v-bind:class="{'top-unselected': getIsTopSongs}">Artistas</span>
           <FancyToggle id="type" :checked="getIsTopSongs" @clicked="setTypeToggle"/>
-          <span v-bind:class="{'top-unselected': !getIsTopSongs}">Artistas</span>
+          <span v-bind:class="{'top-unselected': !getIsTopSongs}">Canciones</span>
         </div>
         <div class="top-row">
           <span v-bind:class="{'top-unselected': getIsTopLongTerm}">Últimos</span>
@@ -17,15 +17,15 @@
     </div>
     <div class="top-text">
       <span>Mostrando tus </span>
-      <span v-if="getIsTopSongs"><span class="top-text-accent">artistas</span> más escuchados</span>
-      <span v-if="!getIsTopSongs"><span class="top-text-accent">canciones</span> más escuchadas</span>
+      <span v-if="!getIsTopSongs"><span class="top-text-accent">artistas</span> más escuchados</span>
+      <span v-if="getIsTopSongs"><span class="top-text-accent">canciones</span> más escuchadas</span>
       <span> desde </span>
       <span v-if="getIsTopLongTerm" class="top-text-accent">siempre</span>
       <span v-if="!getIsTopLongTerm" class="top-text-accent">el último mes</span>
       <span>.</span>
     </div>
-    <UserTopArtists v-if="getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopArtists>
-    <UserTopSongs v-if="!getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopSongs>
+    <UserTopSongs v-if="getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopSongs>
+    <UserTopArtists v-if="!getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopArtists>
   </div>
 </template>
 

@@ -1,19 +1,21 @@
 <template>
   <div class="usr-top-artists-content">
     <div class="usr-top-artists-data" v-if="contentLoaded">
-      Top Artists
+      <p v-for="artist of topArtists" :key="artist.id">{{ artist.name }}</p>
     </div>
     <Loading v-if="!contentLoaded"></Loading>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import {
+  Component, Prop, Vue, Watch,
+} from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import { wait } from '@/utils/functions';
-import { UserSavedTracks } from '@/types/custom';
-import { QueryAPI } from '@/types/vuex';
-import Loading from '../loading/Loading.vue';
+import { Artist, UserTopArtists as TopArtists } from '@/types/custom';
+import { QueryTopResources } from '@/types/vuex';
+import Loading from '@/components/loading/Loading.vue';
 
 @Component({
   components: { Loading },
@@ -30,23 +32,34 @@ export default class UserTopArtists extends Vue {
 
   contentLoaded = false;
 
-  // getUserTopArtists!: UserSavedTracks;
+  getUserTopArtists!: TopArtists;
 
-  queryUserSavedTracks!: (attrs: QueryAPI) => Promise<void>;
+  queryUserTopArtist!: (attrs: QueryTopResources) => Promise<void>;
 
   updateAccessToken!: () => Promise<void>;
 
+  topArtists: Artist[] = [];
+
+  @Watch('longTerm')
+  async onTermChange() {
+    await this.queryData();
+  }
+
   async mounted() {
-    /* if (!this.getUserTopArtists) {
-      await this.updateAccessToken();
-      await this.queryUserSavedTracks({});
-      // this.contentLoaded = true;
-    } else {
-      // this.contentLoaded = true;
-    } */
-    // NOTE: Es necesario el timeout?
-    await wait(250);
+    await this.queryData();
+  }
+
+  async queryData() {
+    this.contentLoaded = false;
+    await this.updateAccessToken();
+    await this.queryUserTopArtist({ longTerm: this.longTerm });
+    // await wait(250);
+    this.updateValues();
     this.contentLoaded = true;
+  }
+
+  updateValues() {
+    this.topArtists = this.getUserTopArtists.items;
   }
 }
 </script>

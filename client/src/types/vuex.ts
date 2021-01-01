@@ -39,6 +39,6 @@ interface SpotifyQuery {
 export type QueryAPI = SpotifyQuery
 
 export interface QueryTopResources extends SpotifyQuery {
-  type: 'artists' | 'tracks';
+  type?: 'artists' | 'tracks';
   longTerm: boolean;
 }
