@@ -19,24 +19,24 @@
           @click.native="loadMore()">
           {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
         </Button>
-        <Loading v-if="loadingMore"></Loading>
+        <Loading v-if="loadingMore"/>
       </div>
       <div class="usr-pl-playlist-wrapper">
-        <Playlist v-for="playlist of userPlaylists" :key="playlist.id" :playlist="playlist"></Playlist>
+        <Playlist v-for="playlist in userPlaylists" :key="playlist.id" :playlist="playlist"/>
       </div>
     </div>
-    <Loading v-if="!contentLoaded"></Loading>
+    <Loading v-if="!contentLoaded"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
-import { Item, UserPlaylist } from '@/types/spotify';
+import { PlaylistItem, UserPlaylist } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
-import Playlist from '@/components/user-playlists/Playlist.vue';
+import Playlist from '@/components/playlist/Playlist.vue';
 import Button from '@/components/button/Button.vue';
-import { QueryPlaylistAttributes } from '@/types/vuex';
+import { QueryAPI } from '@/types/vuex';
 
 @Component({
   components: { Button, Loading, Playlist },
@@ -49,26 +49,24 @@ import { QueryPlaylistAttributes } from '@/types/vuex';
   },
 })
 export default class UserPlaylists extends Vue {
-  @Prop({ required: true }) userId!: string;
-
   contentLoaded = false;
 
   loadingMore = false;
 
   loadedPlaylistAmount!: number;
 
-  userPlaylists!: Item[];
+  userPlaylists!: PlaylistItem[];
 
   getUserPlaylists!: UserPlaylist;
 
-  queryUserPlaylists!: (attrs: QueryPlaylistAttributes) => Promise<void>;
+  queryUserPlaylists!: (attrs: QueryAPI) => Promise<void>;
 
   updateAccessToken!: () => Promise<void>;
 
   async mounted() {
     if (!this.getUserPlaylists) {
       await this.updateAccessToken();
-      await this.queryUserPlaylists({ userId: this.userId });
+      await this.queryUserPlaylists({});
       this.contentLoaded = true;
     } else {
       this.contentLoaded = true;
@@ -80,7 +78,7 @@ export default class UserPlaylists extends Vue {
     if (!this.loadingMore && !this.maxPlaylist()) {
       this.loadingMore = true;
       const queryOffset = this.getUserPlaylists.limit + this.getUserPlaylists.offset;
-      await this.queryUserPlaylists({ userId: this.userId, queryOffset });
+      await this.queryUserPlaylists({ queryOffset });
       this.updateValues();
       this.loadingMore = false;
     }

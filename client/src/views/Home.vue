@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="home-wrapper" v-bind:class="{ 'home-wrapper-centered': !isLogged }">
     <main>
-      <div v-if="!isLogged" class="no-logged">
+      <div v-if="!isLogged" class="home-no-logged">
         <span>Inicia sesión para disfrutar de todas las características</span>
         <Button
           font-size="1.1rem"
@@ -12,8 +12,8 @@
           Iniciar sesión
         </Button>
       </div>
-      <div v-if="isLogged" class="content">
-        Bienvenido
+      <div v-if="isLogged" class="home-logged">
+        <UserSavedSongs></UserSavedSongs>
       </div>
     </main>
   </div>
@@ -21,12 +21,14 @@
 
 <script>
 import Button from '@/components/button/Button.vue';
+import UserSavedSongs from '@/components/user-saved-songs/UserSavedSongs.vue';
 import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Home',
   components: {
     Button,
+    UserSavedSongs,
   },
   computed: {
     ...mapState('credentials', ['isLogged']),
@@ -38,18 +40,20 @@ export default {
 </script>
 
 <style lang="scss">
-  //TODO scoped quitado
 @import '/../styles/_variables.scss';
-div.home {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.home-wrapper {
+  margin: 2rem 0 0 0;
+  &.home-wrapper-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   width: 100%;
   overflow: scroll;
   height: calc(100% - #{$header-height});
   /*overflow: hidden; // TODO: Quitar dependiendo del contenido a albergar*/
 
-    div.no-logged {
+  .home-no-logged {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,6 +62,13 @@ div.home {
       font-size: 1.8rem;
       margin: 5% 0;
     }
+  }
+  .home-logged {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
   }
 }
 </style>

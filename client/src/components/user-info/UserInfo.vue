@@ -22,19 +22,18 @@
             </svg>
           </div>
           <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
-          <NoImage
-            v-if="!getUserInformation.image"
-            type="user"
-          ></NoImage>
+          <NoImage v-if="!getUserInformation.image" type="user"/>
           <span :class="`usr-info-flag flag-icon flag-icon-${getUserInformation.country.toLowerCase()}`"></span>
         </div>
         <p class="usr-info-open-sp-wrapper">Ver perfil completo en
-          <a class="usr-info-accent" :href="getUserInformation.spotifyProfileUrl" target="_blank">Spotify</a>
+          <a class="usr-info-accent"
+             :href="getUserInformation.spotifyProfileUrl"
+             target="_blank"
+             rel="noopener noreferrer">Spotify</a>
         </p>
       </div>
       <div class="usr-info-playlist-wrapper">
-        <UserPlaylists :v-if="getUserInformation && getUserInformation.id"
-                       :userId="getUserInformation.id"></UserPlaylists>
+        <UserPlaylists :v-if="getUserInformation && getUserInformation.id"></UserPlaylists>
       </div>
       <div class="usr-info-playlist-scrolltop-wrapper">
         <div class="usr-info-playlist-scrolltop" @click="scroll">
@@ -49,7 +48,7 @@
       </div>
     </div>
     <div class="usr-loading-wrapper" v-if="!contentLoaded">
-      <Loading></Loading>
+      <Loading/>
     </div>
   </div>
 </template>
@@ -57,7 +56,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
-import { UserProfile } from '@/types/spotify';
+import { UserProfile } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
 import UserPlaylists from '@/components/user-playlists/UserPlaylists.vue';
 import NoImage from '@/components/no-image/NoImage.vue';
@@ -89,7 +88,7 @@ export default class UserInfo extends Vue {
 
   async mounted() {
     // NOTE: Es necesario el timeout?
-    await wait(250);
+    // await wait(250);
     this.contentLoaded = true;
 
     // scroll
@@ -127,7 +126,6 @@ export default class UserInfo extends Vue {
 @import '../../styles/_variables.scss';
 
 .usr-info-content {
-  margin-top: 3%;
   display: flex;
   flex-direction: column;
   align-items: center;

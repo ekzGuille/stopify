@@ -1,6 +1,6 @@
 <template>
   <div class="no-image-cover">
-    <div class="no-image-song" v-if="type === 'song'">
+    <div class="no-image-song" v-if="type === 'track'">
       <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
            stroke-width="0.5" fill="none"
            stroke-linecap="round" stroke-linejoin="round">
@@ -23,9 +23,9 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
-@Component({})
+@Component
 export default class NoImage extends Vue {
-  @Prop() type!: 'song' | 'user';
+  @Prop() type!: 'track' | 'user';
 }
 </script>
 

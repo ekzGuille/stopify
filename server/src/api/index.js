@@ -9,7 +9,7 @@ const {
 } = spotifyConfig;
 
 const REDIRECT_URI = process.env.NODE_ENV === 'production' ? env.SPOTIFY_CALLBACK_REDIRECT : 'http://localhost:5000/callback';
-const FRONT_URL = process.env.NODE_ENV === 'production' ? env.FRONT_URL : 'http://localhost:8080/redirect';
+const FRONT_URL = process.env.NODE_ENV === 'production' ? env.FRONT_URL : 'http://localhost:8080/#/redirect';
 
 const router = express.Router();
 
@@ -58,7 +58,6 @@ router.get('/callback', async (req, res) => {
 
       if (status === 200) {
         const { access_token, refresh_token, expires_in } = data;
-
         // Devolver al frontal la informacion del login
         res.redirect(`${FRONT_URL}?${new URLSearchParams({
           access_token,

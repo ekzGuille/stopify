@@ -1,45 +1,5 @@
-export interface SPUserProfile {
-  country: string;
-  display_name: string;
-  email: string;
-  external_urls: SPExternalUrls;
-  followers: SPFollowers;
+interface SpotifyResponse {
   href: string;
-  id: string;
-  images: SPImage[];
-  product: string;
-  type: string;
-  uri: string;
-}
-
-export interface UserProfile {
-  id: string;
-  display_name: string;
-  image: string;
-  product: string;
-  spotifyProfileUrl: string;
-  country: string;
-  followersCount: number;
-}
-
-export interface SPExternalUrls {
-  spotify: string;
-}
-
-export interface SPFollowers {
-  href: null;
-  total: number;
-}
-
-export interface SPImage {
-  height: null;
-  url: string;
-  width: null;
-}
-
-export interface SPUserPlaylist {
-  href: string;
-  items: SPItem[];
   limit: number;
   next: null;
   offset: number;
@@ -47,52 +7,152 @@ export interface SPUserPlaylist {
   total: number;
 }
 
-export interface UserPlaylist {
-  limit: number;
-  total: number;
-  items: Item[];
-  offset: number;
+export interface SpotifyUserProfile {
+  country: string;
+  display_name: string;
+  email: string;
+  external_urls: Record<string, string>;
+  followers: SpotifyFollowers;
+  href: string;
+  id: string;
+  images: SpotifyImage[];
+  product: string;
+  type: string;
+  uri: string;
 }
 
-export interface SPItem {
+export interface SpotifyFollowers {
+  href: null;
+  total: number;
+}
+
+export interface SpotifyImage {
+  height: null;
+  url: string;
+  width: null;
+}
+
+export interface SpotifyUserPlaylist extends SpotifyResponse {
+  items: SpotifyPlaylistItem[];
+}
+
+export interface SpotifyPlaylistItem {
   collaborative: boolean;
-  external_urls: SPExternalUrls;
+  external_urls: Record<string, string>;
   href: string;
   id: string;
   images: any[];
   name: string;
-  owner: SPOwner;
+  owner: SpotifyOwner;
   public: boolean;
   snapshot_id: string;
-  tracks: SPTracks;
+  tracks: SpotifyPlaylistTracks;
   type: string;
   uri: string;
 }
 
-export interface Item {
-  url: string;
-  id: string;
-  image: Image;
-  name: string;
-  public: boolean;
-  trackCount: number;
-}
-
-export interface Image {
-  height: number;
-  url: string;
-  width: number;
-}
-
-export interface SPOwner {
-  external_urls: SPExternalUrls;
+export interface SpotifyOwner {
+  external_urls: Record<string, string>;
   href: string;
   id: string;
   type: string;
   uri: string;
 }
 
-export interface SPTracks {
+export interface SpotifyPlaylistTracks {
   href: string;
   total: number;
+}
+
+export interface SpotifySavedTracks extends SpotifyResponse {
+  items: SpotifySavedTrackItem[];
+}
+
+export interface SpotifyTopArtists extends SpotifyResponse {
+  items: SpotifyArtist[];
+}
+
+export interface SpotifyTopTracks extends SpotifyResponse {
+  items: SpotifyTrackItem[];
+}
+
+export interface SpotifySavedTrackItem {
+  added_at: Date;
+  track: SpotifyTrackItem;
+}
+
+export interface SpotifyTrackItem {
+  album: SpotifyAlbum;
+  artists: SpotifyArtist[];
+  available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
+  external_ids: Record<string, string>;
+  external_urls: Record<string, string>;
+  href: string;
+  id: string;
+  is_local: boolean;
+  is_playable: boolean;
+  name: string;
+  popularity: number;
+  preview_url: string;
+  track_number: number;
+  type: Type.Track;
+  uri: string;
+  linked_from: SpotifyLinkedFrom;
+}
+
+export interface SpotifyAlbum {
+  album_type: AlbumType;
+  artists: SpotifyArtist[];
+  external_urls: Record<string, string>;
+  href: string;
+  id: string;
+  images: SpotifyImage[];
+  name: string;
+  release_date: Date;
+  release_date_precision: ReleaseDatePrecision;
+  total_tracks: number;
+  type: Type.Album;
+  uri: string;
+}
+
+export interface SpotifyArtist {
+  external_urls: Record<string, string>;
+  followers: SpotifyFollowers;
+  genres: string[];
+  href: string;
+  popularity: number;
+  images: SpotifyImage[];
+  id: string;
+  name: string;
+  type: Type.Artist;
+  uri: string;
+}
+
+export interface SpotifyLinkedFrom {
+  external_urls: Record<string, string>;
+  href: string;
+  id: string;
+  type: Type.Track;
+  uri: string;
+}
+
+export enum ReleaseDatePrecision {
+  Day = 'day',
+  Month = 'month',
+  Year = 'year',
+}
+
+export enum Type {
+  Album = 'album',
+  Track = 'track',
+  Artist = 'artist',
+}
+
+export enum AlbumType {
+  Single = 'single',
+  Album = 'album',
+  Compilation = 'compilation',
 }

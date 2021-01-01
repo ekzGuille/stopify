@@ -3,20 +3,19 @@
     <div class="rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
     <div class="rdr-login-title" v-if="!isLogged">No se ha podido hacer el login</div>
     <div class="rdr-login-description">Volviendo al inicio...</div>
-    <Loading v-if="queryData"></Loading>
+    <Loading v-if="queryData"/>
   </div>
 </template>
 
 <script lang="ts">
 
-import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
 import { UserCredentials } from '@/utils/constants';
 import { VuexLocalStorage } from '@/types/vuex';
 import { goHome } from '@/utils/functions/routes';
-import { UserProfile } from '@/types/spotify';
+import { UserProfile } from '@/types/custom';
 import { wait } from '@/utils/functions';
 
 @Component({
@@ -33,10 +32,13 @@ import { wait } from '@/utils/functions';
   },
 })
 export default class Redirect extends Vue {
-  storeLocalData!: (
-    {
-      accessToken, refreshToken, loginError, expiresIn, lastRefresh,
-    }: VuexLocalStorage) => void;
+  storeLocalData!: ({
+    accessToken,
+    refreshToken,
+    loginError,
+    expiresIn,
+    lastRefresh,
+  }: VuexLocalStorage) => void;
 
   queryData = true;
 

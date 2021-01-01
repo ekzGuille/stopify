@@ -18,6 +18,7 @@ export default {
 <style lang="scss">
 @import '/../styles/_variables.scss';
 div.me-wrapper {
+  margin: 2rem 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
