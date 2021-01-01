@@ -1,9 +1,13 @@
 <template>
   <div class="usr-top-songs-content">
     <div class="usr-top-songs-data" v-if="contentLoaded">
-      <SongTrack v-for="track of topTracks" :key="track.id" :track="track"></SongTrack>
+      <SmallTrack
+        v-for="(track, index) in topTracks"
+        :key="track.id"
+        :track="track"
+        :index="index"/>
     </div>
-    <Loading v-if="!contentLoaded"></Loading>
+    <Loading v-if="!contentLoaded"/>
   </div>
 </template>
 
@@ -16,10 +20,10 @@ import { wait } from '@/utils/functions';
 import { TrackItem, UserTopTracks } from '@/types/custom';
 import { QueryTopResources } from '@/types/vuex';
 import Loading from '@/components/loading/Loading.vue';
-import SongTrack from '@/components/track/SongTrack.vue';
+import SmallTrack from '@/components/track/SmallTrack.vue';
 
 @Component({
-  components: { Loading, SongTrack },
+  components: { SmallTrack, Loading },
   computed: {
     ...mapGetters('user', ['getUserTopTracks']),
   },
@@ -68,6 +72,17 @@ export default class UserTopSongs extends Vue {
 <style lang="scss" scoped>
   @import '../../styles/_variables.scss';
 
+  .usr-top-songs-content {
+    .usr-top-songs-data {
+      margin-top: 0.5rem;
+    }
+  }
+
   @media (max-width: $breakpoint-tablet) {
+    .usr-top-songs-content {
+      .usr-top-songs-data {
+        margin-top: 1rem;
+      }
+    }
   }
 </style>

@@ -4,28 +4,30 @@
       <span class="top-title">¿Qué quieres ver?</span>
       <div class="toggle-rows">
         <div class="top-row">
-          <span v-bind:class="{'top-unselected': getIsTopSongs}">Artistas</span>
+          <span class="normal-text" v-bind:class="{'top-unselected': getIsTopSongs}">Artistas</span>
           <FancyToggle id="type" :checked="getIsTopSongs" @clicked="setTypeToggle"/>
-          <span v-bind:class="{'top-unselected': !getIsTopSongs}">Canciones</span>
+          <span class="normal-text" v-bind:class="{'top-unselected': !getIsTopSongs}">Canciones</span>
         </div>
         <div class="top-row">
-          <span v-bind:class="{'top-unselected': getIsTopLongTerm}">Últimos</span>
+          <span class="normal-text" v-bind:class="{'top-unselected': getIsTopLongTerm}">Últimos</span>
           <FancyToggle id="time" :checked="getIsTopLongTerm" @clicked="setTimeToggle"/>
-          <span v-bind:class="{'top-unselected': !getIsTopLongTerm}">Siempre</span>
+          <span class="normal-text" v-bind:class="{'top-unselected': !getIsTopLongTerm}">Siempre</span>
         </div>
       </div>
     </div>
     <div class="top-text">
-      <span>Mostrando tus </span>
-      <span v-if="!getIsTopSongs"><span class="top-text-accent">artistas</span> más escuchados</span>
-      <span v-if="getIsTopSongs"><span class="top-text-accent">canciones</span> más escuchadas</span>
-      <span> desde </span>
-      <span v-if="getIsTopLongTerm" class="top-text-accent">siempre</span>
-      <span v-if="!getIsTopLongTerm" class="top-text-accent">el último mes</span>
-      <span>.</span>
+      <span class="normal-text">Mostrando tus 10 </span>
+      <span class="normal-text" v-if="!getIsTopSongs"><span class="top-text-accent">artistas</span> más escuchados</span>
+      <span class="normal-text" v-if="getIsTopSongs"><span class="top-text-accent">canciones</span> más escuchadas</span>
+      <span class="normal-text"> desde </span>
+      <span v-if="getIsTopLongTerm" class="top-text-accent normal-text">siempre</span>
+      <span v-if="!getIsTopLongTerm" class="top-text-accent normal-text">el último mes</span>
+      <span class="normal-text">.</span>
     </div>
-    <UserTopSongs v-if="getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopSongs>
-    <UserTopArtists v-if="!getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopArtists>
+    <div class="top-content">
+      <UserTopSongs v-if="getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopSongs>
+      <UserTopArtists v-if="!getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopArtists>
+    </div>
   </div>
 </template>
 
@@ -83,8 +85,9 @@ export default Vue.extend({
   height: calc(100% - #{$header-height});
   margin: 2rem 0 0 0;
   width: 100%;
+  overflow: scroll;
 
-.top-title {
+  .top-title {
   font-size: 1.5rem;
 }
 
@@ -114,10 +117,21 @@ export default Vue.extend({
       color: $color-sp-accent-green;
     }
   }
+
+  .top-content {
+    margin: 0 0 2.5rem 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 @media (max-width: $breakpoint-tablet) {
   .top-wrapper {
+    margin: 1rem 0 0 0;
+    .top-title {
+      font-size: 1.2rem;
+    }
     .top-chooser {
       width: 80%;
       .toggle-rows {

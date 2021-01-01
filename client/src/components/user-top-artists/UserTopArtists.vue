@@ -1,9 +1,14 @@
 <template>
   <div class="usr-top-artists-content">
     <div class="usr-top-artists-data" v-if="contentLoaded">
-      <p v-for="artist of topArtists" :key="artist.id">{{ artist.name }}</p>
+      <SmallArtist
+        v-for="(artist, index) in topArtists"
+        :key="artist.id"
+        :artist="artist"
+        :index="index"
+      />
     </div>
-    <Loading v-if="!contentLoaded"></Loading>
+    <Loading v-if="!contentLoaded"/>
   </div>
 </template>
 
@@ -16,9 +21,10 @@ import { wait } from '@/utils/functions';
 import { Artist, UserTopArtists as TopArtists } from '@/types/custom';
 import { QueryTopResources } from '@/types/vuex';
 import Loading from '@/components/loading/Loading.vue';
+import SmallArtist from '@/components/artist/SmallArtist.vue';
 
 @Component({
-  components: { Loading },
+  components: { SmallArtist, Loading },
   computed: {
     ...mapGetters('user', ['getUserTopArtists']),
   },

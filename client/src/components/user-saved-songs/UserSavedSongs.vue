@@ -22,16 +22,16 @@
             {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
           </Button>
            -->
-          <Loading v-if="loadingMore"></Loading>
+          <Loading v-if="loadingMore"/>
         </div>
         <div class="usr-saved-songs-wrapper">
           <!-- wip -->
-          <SongTrack v-for="track of userSavedTracks" :key="track.id" :track="track"></SongTrack>
+          <FullTrack v-for="track in userSavedTracks" :key="track.id" :track="track"/>
         </div>
     </div>
     </div>
 
-    <Loading v-if="!contentLoaded"></Loading>
+    <Loading v-if="!contentLoaded"/>
   </div>
 </template>
 
@@ -42,11 +42,11 @@ import { TrackItem, UserSavedTracks } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
 import Button from '@/components/button/Button.vue';
 import { QueryAPI } from '@/types/vuex';
-import SongTrack from '@/components/track/SongTrack.vue';
+import FullTrack from '@/components/track/FullTrack.vue';
 import { wait } from '@/utils/functions';
 
 @Component({
-  components: { Button, Loading, SongTrack },
+  components: { FullTrack, Button, Loading },
   computed: {
     ...mapGetters('user', ['getUserSavedTracks']),
   },
@@ -116,7 +116,8 @@ export default class UserSavedSongs extends Vue {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 90%;
+    width: 100%;
+    margin-bottom: 2rem;
 
     .usr-saved-songs-data .usr-saved-songs-accent {
       color: $color-sp-accent-green;

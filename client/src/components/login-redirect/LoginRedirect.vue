@@ -3,7 +3,7 @@
     <div class="rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
     <div class="rdr-login-title" v-if="!isLogged">No se ha podido hacer el login</div>
     <div class="rdr-login-description">Volviendo al inicio...</div>
-    <Loading v-if="queryData"></Loading>
+    <Loading v-if="queryData"/>
   </div>
 </template>
 

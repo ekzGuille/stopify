@@ -19,13 +19,13 @@
           @click.native="loadMore()">
           {{ this.maxPlaylist() ? 'No tienes más para mostrar' : 'Cargar más' }}
         </Button>
-        <Loading v-if="loadingMore"></Loading>
+        <Loading v-if="loadingMore"/>
       </div>
       <div class="usr-pl-playlist-wrapper">
-        <Playlist v-for="playlist of userPlaylists" :key="playlist.id" :playlist="playlist"></Playlist>
+        <Playlist v-for="playlist in userPlaylists" :key="playlist.id" :playlist="playlist"/>
       </div>
     </div>
-    <Loading v-if="!contentLoaded"></Loading>
+    <Loading v-if="!contentLoaded"/>
   </div>
 </template>
 
