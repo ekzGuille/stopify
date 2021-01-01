@@ -17,9 +17,11 @@ const state: VuexStateCredential = {
 const getters = {};
 
 const actions = {
-  storeLocalData({ commit }: ActionContext<VuexStateCredential, any>, {
-    accessToken, refreshToken, loginError, expiresIn, lastRefresh,
-  }: VuexLocalStorage) {
+  storeLocalData(
+    { commit }: ActionContext<VuexStateCredential, any>, {
+      accessToken, refreshToken, loginError, expiresIn, lastRefresh,
+    }: VuexLocalStorage,
+  ) {
     let loginChecker = null;
     let isLogged = null;
     if (accessToken) {
@@ -48,12 +50,8 @@ const actions = {
     window.location.href = `${BACKEND_URL}/login`;
   },
   logOut({ commit }: ActionContext<VuexStateCredential, any>) {
-    localStorage.removeItem(UserCredentials.accessToken);
-    localStorage.removeItem(UserCredentials.refreshToken);
-    localStorage.removeItem(UserCredentials.loginError);
-    localStorage.removeItem(UserCredentials.expiresIn);
-    localStorage.removeItem(UserCredentials.lastTokenRefresh);
-    localStorage.removeItem(UserData.profileData);
+    Object.values(UserCredentials).forEach((item) => localStorage.removeItem(item));
+    Object.values(UserData).forEach((item) => localStorage.removeItem(item));
     commit('logOut');
   },
   async updateAccessToken({ commit, state }: ActionContext<VuexStateCredential, any>) {

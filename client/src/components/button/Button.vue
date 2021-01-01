@@ -25,12 +25,12 @@ export default class Button extends Vue {
 
   get cssVariables() {
     return {
-      '--font-size': this.$props.fontSize,
-      '--padding': this.$props.padding,
-      '--width': this.$props.width,
-      '--bg-color': this.$props.bgColor,
+      '--font-size': this.fontSize,
+      '--padding': this.padding,
+      '--width': this.width,
+      '--bg-color': this.bgColor,
       '--color': this.color,
-      '--border': this.$props.border,
+      '--border': this.border,
     };
   }
 }

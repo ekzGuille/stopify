@@ -22,10 +22,7 @@
             </svg>
           </div>
           <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
-          <NoImage
-            v-if="!getUserInformation.image"
-            type="user"
-          ></NoImage>
+          <NoImage v-if="!getUserInformation.image" type="user"/>
           <span :class="`usr-info-flag flag-icon flag-icon-${getUserInformation.country.toLowerCase()}`"></span>
         </div>
         <p class="usr-info-open-sp-wrapper">Ver perfil completo en
@@ -51,7 +48,7 @@
       </div>
     </div>
     <div class="usr-loading-wrapper" v-if="!contentLoaded">
-      <Loading></Loading>
+      <Loading/>
     </div>
   </div>
 </template>
@@ -91,7 +88,7 @@ export default class UserInfo extends Vue {
 
   async mounted() {
     // NOTE: Es necesario el timeout?
-    await wait(250);
+    // await wait(250);
     this.contentLoaded = true;
 
     // scroll
@@ -129,7 +126,6 @@ export default class UserInfo extends Vue {
 @import '../../styles/_variables.scss';
 
 .usr-info-content {
-  margin-top: 3%;
   display: flex;
   flex-direction: column;
   align-items: center;

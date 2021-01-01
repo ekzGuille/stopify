@@ -42,6 +42,7 @@ export default {
 <style lang="scss">
 @import '/../styles/_variables.scss';
 .home-wrapper {
+  margin: 2rem 0 0 0;
   &.home-wrapper-centered {
     display: flex;
     justify-content: center;

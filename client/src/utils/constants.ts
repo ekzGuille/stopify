@@ -8,4 +8,6 @@ export const UserCredentials = {
 
 export const UserData = {
   profileData: 'profile_data',
+  isTopSongs: 'is_top_songs',
+  isTopLongTerm: 'is_long_term',
 };

@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
-@Component({})
+@Component
 export default class NoImage extends Vue {
   @Prop() type!: 'track' | 'user';
 }

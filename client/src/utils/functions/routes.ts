@@ -5,10 +5,3 @@ export async function goHome() {
     await router.push({ name: 'Home' });
   }
 }
-
-/**
- * @deprecated
- */
-export function foo() {
-  console.log('bar');
-}
