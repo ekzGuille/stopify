@@ -14,7 +14,7 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import Loading from '@/components/loading/Loading.vue';
 import { UserCredentials } from '@/utils/constants';
 import { VuexLocalStorage } from '@/types/vuex';
-import { goHome } from '@/utils/functions/routes';
+import { goTop } from '@/utils/functions/routes';
 import { UserProfile } from '@/types/custom';
 import { wait } from '@/utils/functions';
 
@@ -64,7 +64,7 @@ export default class Redirect extends Vue {
     } else {
       await wait(1500);
     }
-    await goHome();
+    await goTop();
     this.queryData = false;
   }
 }
