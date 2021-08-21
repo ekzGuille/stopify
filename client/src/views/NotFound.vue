@@ -1,13 +1,16 @@
 <template>
-<div class="not-found">
-  <div class="error-title">Ooops😳</div>
-  <div class="error-descriptcion">aquí no hay nada...</div>
-</div>
+  <NotFoundRoute/>
 </template>
 
 <script lang="ts">
+
+import NotFoundRoute from '@/components/not-found-route/NotFoundRoute.vue';
+
 export default {
   name: 'NotFound',
+  components: {
+    NotFoundRoute,
+  },
 };
 </script>
 
@@ -25,7 +28,7 @@ export default {
       &.error-title {
         font-size: 3rem;
       }
-      &.error-descriptcion {
+      &.error-description {
         font-size: 2rem;
       }
     }
