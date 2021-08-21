@@ -73,14 +73,23 @@ export default class UserTopSongs extends Vue {
   @import '../../styles/_variables.scss';
 
   .usr-top-songs-content {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+
     .usr-top-songs-data {
       margin-top: 0.5rem;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
-
   @media (max-width: $breakpoint-tablet) {
     .usr-top-songs-content {
+      width: 100%;
       .usr-top-songs-data {
+        width: 80%;
         margin-top: 1rem;
       }
     }

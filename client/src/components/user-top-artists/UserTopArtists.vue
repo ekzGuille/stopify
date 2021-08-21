@@ -72,6 +72,11 @@ export default class UserTopArtists extends Vue {
 
 <style lang="scss" scoped>
   @import '../../styles/_variables.scss';
+  .usr-top-artists-content {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+  }
 
   @media (max-width: $breakpoint-tablet) {
   }
