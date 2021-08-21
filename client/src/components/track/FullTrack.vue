@@ -28,11 +28,11 @@ import { lengthNormalizer } from '@/utils/functions';
   components: { NoImage, Loading },
 })
 export default class FullTrack extends Vue {
-    @Prop({ required: true }) track!: TrackItem;
+  @Prop({ required: true }) track!: TrackItem;
 
-    fixLength(toFixString: string, offset?: number) {
-      return lengthNormalizer(toFixString, offset);
-    }
+  fixLength(toFixString: string, offset?: number) {
+    return lengthNormalizer(toFixString, offset);
+  }
 }
 
 </script>

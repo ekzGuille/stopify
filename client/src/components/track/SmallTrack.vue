@@ -3,7 +3,7 @@
     <span class="track-number-index">{{ index + 1 }})</span>
     <a :href="track.url" target="_blank" class="track-title-wrapper" rel="noopener noreferrer">
       <img v-if="track.image" class="track-cover" :src="track.image.url" :alt="track.name">
-      <NoImage v-else type="track"/>
+      <NoImage v-else class="track-cover" type="track"/>
       <span class="track-title">{{ track.name }}</span>
     </a>
 <!--    <div class="track-artists-wrapper">-->
@@ -29,13 +29,13 @@ import { lengthNormalizer } from '@/utils/functions';
   components: { NoImage, Loading },
 })
 export default class SmallTrack extends Vue {
-    @Prop({ required: true }) track!: TrackItem;
+  @Prop({ required: true }) track!: TrackItem;
 
-    @Prop({ required: true }) index!: number
+  @Prop({ required: true }) index!: number;
 
-    fixLength(toFixString: string, offset?: number) {
-      return lengthNormalizer(toFixString, offset);
-    }
+  fixLength(toFixString: string, offset?: number) {
+    return lengthNormalizer(toFixString, offset);
+  }
 }
 
 </script>
@@ -70,8 +70,8 @@ export default class SmallTrack extends Vue {
 
       .track-cover {
         margin-right: 1rem;
-        width: 50px;
-        height: 50px;
+        //width: 50px;
+        //height: 50px;
         object-fit: cover;
         transition: transform 250ms;
         &:hover {
