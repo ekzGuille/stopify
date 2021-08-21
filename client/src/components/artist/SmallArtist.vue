@@ -3,7 +3,7 @@
     <span class="artist-number-index">{{ index + 1 }})</span>
     <div class="artist-title-wrapper">
       <img v-if="artist.image" class="artist-cover" :src="artist.image.url" :alt="artist.name">
-      <NoImage v-if="!artist.image" type="track"/>
+      <NoImage v-else type="track"/>
       <span class="artist-title">{{ artist.name }}</span>
     </div>
   </div>

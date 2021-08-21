@@ -2,7 +2,7 @@
   <div class="track-content">
     <a :href="track.url" target="_blank" class="track-title-wrapper" rel="noopener noreferrer">
       <img v-if="track.image" class="track-cover" :src="track.image.url" :alt="track.name">
-      <NoImage v-if="!track.image" type="track"/>
+      <NoImage v-else type="track"/>
       <span class="track-title">{{ fixLength(track.name) }}</span>
     </a>
     <div class="track-artists-wrapper">
