@@ -18,3 +18,9 @@ export async function goMe() {
     await router.push({ name: Routes.Me.name });
   }
 }
+
+export async function go(routeName: keyof typeof Routes) {
+  if (router.currentRoute.name !== Routes[routeName].name) {
+    await router.push({ name: Routes[routeName].name });
+  }
+}

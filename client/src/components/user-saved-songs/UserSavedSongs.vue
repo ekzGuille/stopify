@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import { TrackItem, UserSavedTracks } from '@/types/custom';
 import Loading from '@/components/loading/Loading.vue';
@@ -44,6 +44,8 @@ import Button from '@/components/button/Button.vue';
 import { QueryAPI } from '@/types/vuex';
 import FullTrack from '@/components/track/FullTrack.vue';
 import { wait } from '@/utils/functions';
+import { Routes } from '@/utils/constants';
+import { go } from '@/utils/functions/routes';
 
 @Component({
   components: { FullTrack, Button, Loading },
@@ -56,6 +58,8 @@ import { wait } from '@/utils/functions';
   },
 })
 export default class UserSavedSongs extends Vue {
+  @Prop() routeRedirection!: keyof typeof Routes;
+
   contentLoaded = false;
 
   loadingMore = false;
@@ -71,6 +75,14 @@ export default class UserSavedSongs extends Vue {
   updateAccessToken!: () => Promise<void>;
 
   async mounted() {
+    /*
+    NOTE: Skip component loading because this feature is WIP
+    redirecting to 'Top' feature
+     */
+    if (this.routeRedirection) {
+      await go(this.routeRedirection);
+      return;
+    }
     if (!this.getUserSavedTracks) {
       await this.updateAccessToken();
       await this.queryUserSavedTracks({});
