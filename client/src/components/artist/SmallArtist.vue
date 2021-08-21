@@ -1,11 +1,11 @@
 <template>
   <div class="artist-content">
     <span class="artist-number-index">{{ index + 1 }})</span>
-    <div class="artist-title-wrapper">
+    <a :href="artist.url" target="_blank" class="artist-title-wrapper" rel="noopener noreferrer">
       <img v-if="artist.image" :style="getWidthHeight" class="artist-cover" :src="artist.image.url" :alt="artist.name">
       <NoImage v-else type="track" class="artist-cover" :height="height" :width="width"/>
       <span class="artist-title">{{ artist.name }}</span>
-    </div>
+    </a>
   </div>
 </template>
 
