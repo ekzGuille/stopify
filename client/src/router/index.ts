@@ -6,6 +6,7 @@ import NotFound from '@/views/NotFound.vue';
 import Top from '@/views/Top.vue';
 import Me from '@/views/Me.vue';
 import store from '@/store';
+import { Routes } from '@/utils/constants';
 
 Vue.use(VueRouter);
 
@@ -28,30 +29,31 @@ const checkIfNotAuthenticated = (to: Route, from: Route, next: NavigationGuardNe
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    redirect: Routes.Top.route,
+    name: Routes.Home.name,
+    // component: Home,
   },
   {
-    path: '/redirect',
-    name: 'Redirect',
+    path: Routes.Redirect.route,
+    name: Routes.Redirect.name,
     component: Redirect,
     beforeEnter: checkIfNotAuthenticated,
   },
   {
-    path: '/top',
-    name: 'Top',
+    path: Routes.Top.route,
+    name: Routes.Top.name,
     component: Top,
     beforeEnter: checkIfAuthenticated,
   },
   {
-    path: '/me',
-    name: 'Me',
+    path: Routes.Me.route,
+    name: Routes.Me.name,
     component: Me,
     beforeEnter: checkIfAuthenticated,
   },
   {
-    path: '*',
-    name: 'NotFound',
+    path: Routes.NotFound.route,
+    name: Routes.NotFound.name,
     component: NotFound,
   },
 ];
