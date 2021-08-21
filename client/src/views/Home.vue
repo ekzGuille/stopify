@@ -13,7 +13,9 @@
         </Button>
       </div>
       <div v-if="isLogged" class="home-logged">
-        <UserSavedSongs></UserSavedSongs>
+        <!-- Redirecting to Top route in order to skip this functionality.
+         Remove input to have normal behaviour -->
+        <UserSavedSongs route-redirection="Top"></UserSavedSongs>
       </div>
     </main>
   </div>

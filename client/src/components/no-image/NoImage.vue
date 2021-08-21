@@ -1,5 +1,5 @@
 <template>
-  <div class="no-image-cover">
+  <div class="no-image-cover" :style="cssVariables">
     <div class="no-image-song" v-if="type === 'track'">
       <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
            stroke-width="0.5" fill="none"
@@ -26,6 +26,17 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 @Component
 export default class NoImage extends Vue {
   @Prop() type!: 'track' | 'user';
+
+  @Prop() width!: string;
+
+  @Prop() height!: string;
+
+  get cssVariables() {
+    return {
+      '--width': this.width,
+      '--height': this.height,
+    };
+  }
 }
 </script>
 
@@ -37,13 +48,13 @@ export default class NoImage extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
   background: $color-sp-grey;
 
   svg {
-    width: 4rem;
-    height: 4rem;
+    width: 45%;
+    height: 45%;
     stroke: $color-sp-stroke-light-grey;
   }
 }
@@ -59,8 +70,8 @@ export default class NoImage extends Vue {
   background: $color-sp-grey;
 
   svg {
-    width: 7rem;
-    height: 7rem;
+    width: 80%;
+    height: 80%;
     stroke: $color-sp-stroke-light-grey;
   }
 }
@@ -71,8 +82,8 @@ export default class NoImage extends Vue {
     height: 150px;
 
     svg {
-      width: 5rem;
-      height: 5rem;
+      width: 50%;
+      height: 50%;
     }
   }
 }

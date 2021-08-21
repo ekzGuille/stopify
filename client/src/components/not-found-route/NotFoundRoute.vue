@@ -1,7 +1,7 @@
 <template>
   <div class="not-found">
-    <div class="error-title">Ooops😳</div>
-    <div class="error-description">aquí no hay nada...</div>
+    <div class="error error-title">Ooops😳</div>
+    <div class="error error-description">aquí no hay nada...</div>
     <Button
       font-size="1.1rem"
       padding="12px"
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.not-found {
+.not-found {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,7 @@ div.not-found {
   width: 100%;
   height: 100%;
 
-  div {
+  .error {
     margin: 1%;
 
     &.error-title {

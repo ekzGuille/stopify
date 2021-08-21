@@ -2,8 +2,8 @@
   <div class="artist-content">
     <span class="artist-number-index">{{ index + 1 }})</span>
     <div class="artist-title-wrapper">
-      <img v-if="artist.image" class="artist-cover" :src="artist.image.url" :alt="artist.name">
-      <NoImage v-else type="track"/>
+      <img v-if="artist.image" :style="getWidthHeight" class="artist-cover" :src="artist.image.url" :alt="artist.name">
+      <NoImage v-else type="track" class="artist-cover" :height="height" :width="width"/>
       <span class="artist-title">{{ artist.name }}</span>
     </div>
   </div>
@@ -24,8 +24,19 @@ export default class SmallArtist extends Vue {
 
   @Prop({ required: true }) index!: number
 
+  width = '50px';
+
+  height = '50px'
+
   fixLength(toFixString: string, offset?: number) {
     return lengthNormalizer(toFixString, offset);
+  }
+
+  get getWidthHeight() {
+    return {
+      '--width': this.width,
+      '--height': this.height,
+    };
   }
 }
 
@@ -61,8 +72,10 @@ export default class SmallArtist extends Vue {
 
       .artist-cover {
         margin-right: 1rem;
-        width: 50px;
-        height: 50px;
+        width: var(--width);
+        height: var(--height);
+        min-width: var(--width);
+        min-height: var(--height);
         object-fit: cover;
         transition: transform 250ms;
         &:hover {

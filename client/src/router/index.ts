@@ -29,9 +29,8 @@ const checkIfNotAuthenticated = (to: Route, from: Route, next: NavigationGuardNe
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    redirect: Routes.Top.route,
     name: Routes.Home.name,
-    // component: Home,
+    component: Home,
   },
   {
     path: Routes.Redirect.route,
