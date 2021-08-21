@@ -2,7 +2,7 @@
   <div class="playlist-content">
     <a :href="playlist.url" target="_blank" :title="playlist.name"
        class="playlist-pl-title" rel="noopener noreferrer">
-      <img v-if="!playlist.image" class="playlist-cover" :src="playlist.image.url" :alt="playlist.name">
+      <img v-if="playlist.image" class="playlist-cover" :src="playlist.image.url" :alt="playlist.name">
       <NoImage v-else type="track"/>
       <div class="playlist-title">{{ fixLength(playlist.name) }}</div>
     </a>
