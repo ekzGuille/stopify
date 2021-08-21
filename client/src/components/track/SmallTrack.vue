@@ -2,8 +2,8 @@
   <div class="track-content">
     <span class="track-number-index">{{ index + 1 }})</span>
     <a :href="track.url" target="_blank" class="track-title-wrapper" rel="noopener noreferrer">
-      <img v-if="track.image" class="track-cover" :src="track.image.url" :alt="track.name">
-      <NoImage v-else class="track-cover" type="track"/>
+      <img v-if="track.image" :style="getWidthHeight" class="track-cover" :src="track.image.url" :alt="track.name">
+      <NoImage v-else class="track-cover" type="track" :height="height" :width="width"/>
       <span class="track-title">{{ track.name }}</span>
     </a>
 <!--    <div class="track-artists-wrapper">-->
@@ -35,6 +35,17 @@ export default class SmallTrack extends Vue {
 
   fixLength(toFixString: string, offset?: number) {
     return lengthNormalizer(toFixString, offset);
+  }
+
+  width = '50px';
+
+  height = '50px';
+
+  get getWidthHeight() {
+    return {
+      '--width': this.width,
+      '--height': this.height,
+    };
   }
 }
 
@@ -70,8 +81,10 @@ export default class SmallTrack extends Vue {
 
       .track-cover {
         margin-right: 1rem;
-        //width: 50px;
-        //height: 50px;
+        width: var(--width);
+        height: var(--height);
+        min-width: var(--width);
+        min-height: var(--height);
         object-fit: cover;
         transition: transform 250ms;
         &:hover {
@@ -115,10 +128,6 @@ export default class SmallTrack extends Vue {
         max-width: 250px;
         min-width: 250px;
 
-        .track-cover {
-          width: 50px;
-          height: 50px;
-        }
         .track-title {
           font-size: 1rem;
         }
