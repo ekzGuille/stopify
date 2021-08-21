@@ -3,7 +3,7 @@
     <a :href="playlist.url" target="_blank" :title="playlist.name"
        class="playlist-pl-title" rel="noopener noreferrer">
       <img v-if="playlist.image" class="playlist-cover" :src="playlist.image.url" :alt="playlist.name">
-      <NoImage v-if="!playlist.image" type="song"/>
+      <NoImage v-else type="track" class="playlist-cover"/>
       <div class="playlist-title">{{ fixLength(playlist.name) }}</div>
     </a>
   </div>
@@ -32,14 +32,14 @@ export default class UserPlaylists extends Vue {
 <style lang="scss" scoped>
   @import '../../styles/_variables.scss';
 
-  div.playlist-content {
+  .playlist-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 2rem;
     min-height: 220px;
 
-    a.playlist-pl-title {
+    .playlist-pl-title {
       text-decoration: none;
       margin-top: 4%;
       width: 180px;
@@ -50,6 +50,10 @@ export default class UserPlaylists extends Vue {
       }
 
       img.playlist-cover {
+        margin-bottom: -5px;
+      }
+
+      .playlist-cover {
         width: 180px;
         height: 180px;
         object-fit: cover;

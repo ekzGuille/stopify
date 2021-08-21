@@ -220,7 +220,7 @@ const actions = {
         items: items.map((item: SpotifyArtist) => ({
           followers: item.followers,
           genres: item.genres,
-          href: item.href,
+          url: item.external_urls.spotify,
           id: item.id,
           image: item.images[0],
           name: item.name,

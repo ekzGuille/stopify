@@ -1,9 +1,9 @@
 <template>
-  <button
+  <a
     class="login-btn"
    :style="cssVariables">
     <slot/>
-  </button>
+  </a>
 </template>
 
 <script lang="ts">
@@ -40,6 +40,7 @@ export default class Button extends Vue {
 @import '../../styles/_variables.scss';
 
 .login-btn {
+  display: block;
   text-transform: uppercase;
   background-color: var(--bg-color);
   font-weight: bold;

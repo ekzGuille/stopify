@@ -1,8 +1,8 @@
 <template>
   <div class="rdr-redirect">
-    <div class="rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
-    <div class="rdr-login-title" v-if="!isLogged">No se ha podido hacer el login</div>
-    <div class="rdr-login-description">Volviendo al inicio...</div>
+    <div class="rdr-login rdr-login-title" v-if="isLogged">¡Login satisfactorio!</div>
+    <div class="rdr-login rdr-login-title" v-else>No se ha podido hacer el login</div>
+    <div class="rdr-login rdr-login-description">Volviendo al inicio...</div>
     <Loading v-if="queryData"/>
   </div>
 </template>
@@ -71,14 +71,14 @@ export default class Redirect extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  div.rdr-redirect {
+  .rdr-redirect {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
 
-    div {
+    .rdr-login {
       margin: 1%;
       &.rdr-login-title {
         font-size: 3rem;

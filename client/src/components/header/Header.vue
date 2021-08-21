@@ -20,7 +20,7 @@
         Cerrar sesión
       </Button>
       <Button
-        v-if="!isLogged"
+        v-else
         font-size="0.8rem"
         padding="8px"
         width="150px"
@@ -95,13 +95,13 @@ header {
         cursor: pointer;
       }
     }
-    a.router-link-exact-active {
+    .router-link-exact-active {
       font-weight: bold;
       color: $color-sp-accent-green;
     }
   }
 
-  h3.header-name {
+  .header-name {
     &:hover {
       cursor: pointer;
     }

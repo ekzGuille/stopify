@@ -13,7 +13,7 @@ export default class Loading extends Vue {
 <style lang="scss" scoped>
   @import '../../styles/_variables.scss';
 
-  div.loading {
+  .loading {
     display: inline-block;
     border: 4px solid $color-sp-background-dark;
     border-left-color: $color-sp-accent-green;

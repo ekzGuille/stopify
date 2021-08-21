@@ -100,23 +100,23 @@ export default class UserPlaylists extends Vue {
 <style lang="scss" scoped>
 @import '../../styles/_variables.scss';
 
-div.usr-pl-content {
+.usr-pl-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  div.usr-pl-data {
+  .usr-pl-data {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    p.usr-pl-title {
+    .usr-pl-title {
       font-size: 2rem;
     }
     p {
-      span.usr-pl-accent {
+      .usr-pl-accent {
         color: $color-sp-accent-green;
       }
     }
@@ -148,7 +148,7 @@ div.usr-pl-content {
       }
     }
 
-    div.usr-pl-playlist-wrapper {
+    .usr-pl-playlist-wrapper {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -161,14 +161,14 @@ div.usr-pl-content {
 }
 
 @media (max-width: $breakpoint-tablet) {
-  div.usr-pl-content {
+  .usr-pl-content {
     width: auto;
-    div.usr-pl-data {
+    .usr-pl-data {
       width: auto;
-      p.usr-pl-title {
+      .usr-pl-title {
         font-size: 1.5rem;
       }
-      div.usr-pl-playlist-wrapper {
+      .usr-pl-playlist-wrapper {
         display: flex;
         flex-wrap: nowrap;
         height: auto;

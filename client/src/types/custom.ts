@@ -64,7 +64,7 @@ export interface TrackItem {
 export interface Artist {
   followers: SpotifyFollowers;
   genres: string[];
-  href: string;
+  url: string;
   popularity: number;
   image: SpotifyImage;
   id: string;
