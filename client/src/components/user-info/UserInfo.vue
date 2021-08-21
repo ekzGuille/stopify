@@ -22,7 +22,7 @@
             </svg>
           </div>
           <img class="usr-info-profile" v-if="getUserInformation.image" :src="getUserInformation.image" alt="profile">
-          <NoImage v-if="!getUserInformation.image" type="user"/>
+          <NoImage v-else type="user"/>
           <span :class="`usr-info-flag flag-icon flag-icon-${getUserInformation.country.toLowerCase()}`"></span>
         </div>
         <p class="usr-info-open-sp-wrapper">Ver perfil completo en
@@ -35,8 +35,8 @@
       <div class="usr-info-playlist-wrapper">
         <UserPlaylists :v-if="getUserInformation && getUserInformation.id"></UserPlaylists>
       </div>
-      <div class="usr-info-playlist-scrolltop-wrapper">
-        <div class="usr-info-playlist-scrolltop" @click="scroll">
+      <div class="usr-info-playlist-scrollTop-wrapper">
+        <div class="usr-info-playlist-scrollTop" @click="scroll">
           <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
                fill="none"  stroke-linecap="round" stroke-linejoin="round" >
             <line x1="12" y1="19" x2="12" y2="5">
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="usr-loading-wrapper" v-if="!contentLoaded">
+    <div class="usr-loading-wrapper" v-else>
       <Loading/>
     </div>
   </div>
@@ -96,7 +96,7 @@ export default class UserInfo extends Vue {
 
     // query elements
     setTimeout(() => {
-      this.favButton = this.$el.querySelector('.usr-info-playlist-scrolltop-wrapper') || undefined;
+      this.favButton = this.$el.querySelector('.usr-info-playlist-scrollTop-wrapper') || undefined;
     });
 
     if (!this.toScrollElement) return;
@@ -202,14 +202,14 @@ export default class UserInfo extends Vue {
       flex-direction: column;
       width: 65%;
     }
-    .usr-info-playlist-scrolltop-wrapper {
+    .usr-info-playlist-scrollTop-wrapper {
       position: absolute;
       bottom: 20px;
       right: 20px;
       display: none;
       opacity: 0;
 
-      .usr-info-playlist-scrolltop {
+      .usr-info-playlist-scrollTop {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -274,12 +274,12 @@ export default class UserInfo extends Vue {
         width: auto;
       }
 
-      .usr-info-playlist-scrolltop-wrapper.hide {
+      .usr-info-playlist-scrollTop-wrapper.hide {
         display: none;
         opacity: 0;
       }
 
-      .usr-info-playlist-scrolltop-wrapper.show {
+      .usr-info-playlist-scrollTop-wrapper.show {
         display: initial;
         opacity: 1;
       }

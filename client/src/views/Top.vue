@@ -18,15 +18,15 @@
     <div class="top-text">
       <span class="normal-text">Mostrando tus 10 </span>
       <span class="normal-text" v-if="!getIsTopSongs"><span class="top-text-accent">artistas</span> más escuchados</span>
-      <span class="normal-text" v-if="getIsTopSongs"><span class="top-text-accent">canciones</span> más escuchadas</span>
+      <span class="normal-text" v-else><span class="top-text-accent">canciones</span> más escuchadas</span>
       <span class="normal-text"> desde </span>
       <span v-if="getIsTopLongTerm" class="top-text-accent normal-text">siempre</span>
-      <span v-if="!getIsTopLongTerm" class="top-text-accent normal-text">el último mes</span>
+      <span v-else class="top-text-accent normal-text">el último mes</span>
       <span class="normal-text">.</span>
     </div>
     <div class="top-content">
       <UserTopSongs v-if="getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopSongs>
-      <UserTopArtists v-if="!getIsTopSongs" :long-term="getIsTopLongTerm"></UserTopArtists>
+      <UserTopArtists v-else :long-term="getIsTopLongTerm"></UserTopArtists>
     </div>
   </div>
 </template>
@@ -103,7 +103,7 @@ export default Vue.extend({
         display: flex;
         flex-direction: row;
         margin: 2% 5%;
-
+        align-items: center;
         span {
           margin: 0 5%;
         }
@@ -139,16 +139,6 @@ export default Vue.extend({
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        .top-row {
-          display: flex;
-          flex-direction: row;
-          margin: 2% 5%;
-
-          span {
-            margin: 0 5%;
-          }
-        }
       }
     }
     .top-text {

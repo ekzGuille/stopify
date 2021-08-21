@@ -7,7 +7,7 @@
         :track="track"
         :index="index"/>
     </div>
-    <Loading v-if="!contentLoaded"/>
+    <Loading v-else/>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     <span class="track-number-index">{{ index + 1 }})</span>
     <a :href="track.url" target="_blank" class="track-title-wrapper" rel="noopener noreferrer">
       <img v-if="track.image" class="track-cover" :src="track.image.url" :alt="track.name">
-      <NoImage v-if="!track.image" type="track"/>
+      <NoImage v-else type="track"/>
       <span class="track-title">{{ track.name }}</span>
     </a>
 <!--    <div class="track-artists-wrapper">-->

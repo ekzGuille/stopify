@@ -20,7 +20,7 @@
         Cerrar sesión
       </Button>
       <Button
-        v-if="!isLogged"
+        v-else
         font-size="0.8rem"
         padding="8px"
         width="150px"
