@@ -161,11 +161,11 @@ export default class UserInfo extends Vue {
           width: 35px;
           left: 25%;
 
-          span.usr-info-followers-count {
+          .usr-info-followers-count {
             font-size: 1rem;
             margin-right: 5px;
           }
-          svg.usr-info-followers-icon {
+          .usr-info-followers-icon {
             width: 15px;
             height: 15px;
           }
@@ -183,7 +183,7 @@ export default class UserInfo extends Vue {
           width: 35px;
         }
       }
-      p.usr-info-open-sp-wrapper {
+      .usr-info-open-sp-wrapper {
         margin: 4% 2%;
         font-size: 1.5rem;
         display: block;
@@ -265,7 +265,7 @@ export default class UserInfo extends Vue {
             }
           }
 
-        p.usr-info-open-sp-wrapper {
+        .usr-info-open-sp-wrapper {
           font-size: 1.3rem;
         }
       }
